@@ -25,6 +25,7 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 androidx-material = { group = "com.google.android.material", name = "material", version.ref = "androidx-material" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+shifthackz-mvi = "com.github.ShiftHackZ:AndroidCoreMVI:1.0.1"
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

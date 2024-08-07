@@ -51,7 +51,7 @@ internal fun HomeScreen() {
         )
         Chart(
             items = chantedRounds(),
-            modifier = Modifier.fillMaxWidth().height(200.dp),
+            modifier = Modifier.fillMaxWidth().height(180.dp),
         )
     }
 }

@@ -5,22 +5,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.ParagraphStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.drawText
+import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import presentation.screen.home.ChantedRound
 
 @Composable
 fun Chart(items: List<ChantedRound>, modifier: Modifier = Modifier) {
+    val textMeasurer = rememberTextMeasurer()
     Canvas(modifier = modifier) {
         val padding = 20.dp.toPx()
         val width = size.width - 2 * padding
         val height = size.height - 2 * padding
-        val minX = 1f
+        val minX = 0f
         val maxX = 16f
-        val minY = 1f
+        val minY = 0f
         val maxY = 10f
 
         fun scaleX(x: Int): Float {
-            return padding + (x) / (maxX - minX) * width
+            return (padding + (x - minX) / (maxX - minX) * width) - 28
         }
 
         fun scaleY(y: Int): Float {
@@ -30,16 +36,30 @@ fun Chart(items: List<ChantedRound>, modifier: Modifier = Modifier) {
         // Draw axes
         drawLine(
             color = Color.Black,
-            start = Offset(padding, padding),
-            end = Offset(padding, size.height - padding),
+            start = Offset(x = padding, y = padding - 16),
+            end = Offset(x = padding, y = size.height - padding),
             strokeWidth = 2f
         )
         drawLine(
             color = Color.Black,
-            start = Offset(padding, size.height - padding),
-            end = Offset(size.width - padding, size.height - padding),
+            start = Offset(x = padding, y = size.height - padding),
+            end = Offset(x = size.width - padding, y = size.height - padding),
             strokeWidth = 2f
         )
+
+        // Draw X and Y axis labels
+        fun drawLabels(index: Int, x: Float, y: Float) = drawText(
+            textMeasurer = textMeasurer,
+            text = buildAnnotatedString { withStyle(ParagraphStyle()) { append("$index") } },
+            topLeft = Offset(x, y)
+        )
+
+        drawLabels(1, scaleX(1) - 2, size.height - padding)
+        drawLabels(8, scaleX(8) - 16, size.height - padding)
+        drawLabels(16, scaleX(16) - 16, size.height - padding)
+        drawLabels(1, 16f, scaleY(1) - 24)
+        drawLabels(5, 13f, scaleY(5) - 24)
+        drawLabels(10, 4f, scaleY(10) - 24)
 
         // Draw data points and lines
         items.forEachIndexed { index, item ->
@@ -64,14 +84,3 @@ fun Chart(items: List<ChantedRound>, modifier: Modifier = Modifier) {
         }
     }
 }
-
-
-
-// Draw X and Y axis labels
-//        drawContext.canvas.nativeCanvas.drawTex//.nativeCanvas.drawTextLine("1", padding / 2, size.height - padding, paint)
-//        drawContext.canvas.nativeCanvas.drawTextBlob().drawText("8", scaleX(8), size.height - padding, paint)
-//        drawContext.canvas.nativeCanvas.drawText("16", size.width - padding, size.height - padding, paint)
-
-//        drawContext.canvas.nativeCanvas.drawText("1", padding, size.height - padding + 20, paint)
-//        drawContext.canvas.nativeCanvas.drawText("5", padding - 20, scaleY(5), paint)
-//        drawContext.canvas.nativeCanvas.drawText("10", padding - 20, scaleY(10), paint)

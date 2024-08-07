@@ -18,8 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import presentation.screen.home.composable.ButtonsBlock
 import presentation.screen.home.composable.ChantedRounds
 import presentation.screen.home.composable.Chart
+import presentation.screen.home.composable.ShlokaBlock
 import presentation.screen.home.composable.TimerBox
 
 @Composable
@@ -53,5 +55,7 @@ internal fun HomeScreen() {
             items = chantedRounds(),
             modifier = Modifier.fillMaxWidth().height(180.dp),
         )
+        ButtonsBlock(Modifier.fillMaxWidth().height(140.dp))
+        ShlokaBlock()
     }
 }

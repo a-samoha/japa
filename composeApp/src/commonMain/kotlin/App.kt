@@ -3,7 +3,7 @@ import androidx.compose.runtime.Composable
 import presentation.screen.home.HomeScreen
 
 @Composable
-fun App() {
+internal fun App() {
     MaterialTheme {
         HomeScreen()
     }

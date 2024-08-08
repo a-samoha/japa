@@ -1,4 +1,4 @@
-package presentation.screen.home
+package presentation.screen.home.model
 
 data class ChantedRound(
     val index: Int,

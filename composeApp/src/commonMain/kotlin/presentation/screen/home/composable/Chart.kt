@@ -11,7 +11,7 @@ import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import presentation.screen.home.ChantedRound
+import presentation.screen.home.model.ChantedRound
 
 @Composable
 fun Chart(items: List<ChantedRound>, modifier: Modifier = Modifier) {

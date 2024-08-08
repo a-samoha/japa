@@ -24,8 +24,8 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import presentation.screen.home.ChantedRound
-import presentation.screen.home.chantedRounds
+import presentation.screen.home.model.ChantedRound
+import presentation.screen.home.model.chantedRounds
 
 
 @Composable
@@ -61,7 +61,10 @@ internal fun ChantedRounds(modifier: Modifier = Modifier) {
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text(text = "${it.index}.", fontSize = 20.sp)
+                Text(
+                    text = if (it.index < 10) "  ${it.index}." else "${it.index}.",
+                    fontSize = 20.sp
+                )
                 Text(text = it.time, Modifier.padding(horizontal = 16.dp), fontSize = 20.sp)
                 CircularText(text = "${it.points}")
             }

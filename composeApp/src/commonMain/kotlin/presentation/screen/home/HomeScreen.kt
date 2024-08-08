@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.VerticalDivider
@@ -23,6 +24,7 @@ import presentation.screen.home.composable.ChantedRounds
 import presentation.screen.home.composable.Chart
 import presentation.screen.home.composable.ShlokaBlock
 import presentation.screen.home.composable.TimerBox
+import presentation.screen.home.model.chantedRounds
 
 @Composable
 internal fun HomeScreen() {
@@ -40,22 +42,19 @@ internal fun HomeScreen() {
             TimerBox(Modifier.weight(1f).fillMaxSize())
             VerticalDivider(
                 color = Color.Gray,
-                modifier = Modifier
-                    .width(1.dp)
+                modifier = Modifier.width(1.dp).padding(top = 16.dp)
             )
             ChantedRounds()
         }
         HorizontalDivider(
             color = Color.Gray,
-            modifier = Modifier
-                .fillMaxWidth()
-                .width(1.dp)
+            modifier = Modifier.fillMaxWidth().width(1.dp).padding(horizontal = 16.dp)
         )
         Chart(
             items = chantedRounds(),
-            modifier = Modifier.fillMaxWidth().height(180.dp),
+            modifier = Modifier.padding(start = 16.dp).fillMaxWidth().height(180.dp),
         )
         ButtonsBlock(Modifier.fillMaxWidth().height(140.dp))
-        ShlokaBlock()
+        ShlokaBlock(Modifier.weight(1f).fillMaxSize())
     }
 }

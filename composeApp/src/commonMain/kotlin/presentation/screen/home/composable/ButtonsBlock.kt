@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.Icon
@@ -44,7 +45,7 @@ internal fun ButtonsBlock(modifier: Modifier = Modifier) {
         ) {
             Icon(
                 Icons.Rounded.Settings,
-                contentDescription = "Favorite",
+                contentDescription = "Settings",
                 tint = Color.Red,
                 modifier = Modifier.size(48.dp)
             )
@@ -61,7 +62,7 @@ internal fun ButtonsBlock(modifier: Modifier = Modifier) {
         ) {
             Icon(
                 Icons.Rounded.PlayArrow,
-                contentDescription = "Favorite",
+                contentDescription = "Play/Stop",
                 tint = Color.Red,
                 modifier = Modifier.size(72.dp)
             )
@@ -78,6 +79,7 @@ internal fun ButtonsBlock(modifier: Modifier = Modifier) {
         ) {
             Icon(
                 painter = painterResource(Res.drawable.ic_pause),
+                //Icons.Rounded.Delete,
                 contentDescription = "Pause",
                 tint = Color.Red,
                 modifier = Modifier.size(48.dp)

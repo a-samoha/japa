@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stop_watch_text">%2$d:%2$d</string>
+    <string name="shloka">Шлока</string>
+    <string name="synonyms">Дослівно</string>
+    <string name="translation">Переклад</string>
+</resources>

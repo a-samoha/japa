@@ -58,21 +58,23 @@ internal fun StopWatch(
         }
     }
 
-
-
     Box(
         modifier,
         contentAlignment = Alignment.Center,
     ) {
-//        val totalSeconds = elapsedTime
-//        val minutes = totalSeconds / 60
-//        val seconds = totalSeconds % 60
-//        val timeFormatted = "$minutes:$seconds" //String.format("%02d:%02d", minutes, seconds)
-
         Text(
             modifier = Modifier.padding(horizontal = 6.dp),
-            text = "0${elapsedTime / 60}:0${elapsedTime % 60}",
+            text = elapsedTime.toFormatedString(),
             fontSize = 40.sp
         )
+    }
+}
+
+internal fun Long.toFormatedString(): String {
+    return when {
+        this / 60 < 10 && this % 60 < 10 -> "0${this / 60}:0${this % 60}"
+        this / 60 < 10 && this % 60 > 9 -> "0${this / 60}:${this % 60}"
+        this / 60 > 9 && this % 60 < 10 -> "${this / 60}:0${this % 60}"
+        else -> "${this / 60}:${this % 60}"
     }
 }

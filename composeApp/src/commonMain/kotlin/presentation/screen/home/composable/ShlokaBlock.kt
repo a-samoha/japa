@@ -28,6 +28,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import japa.composeapp.generated.resources.Res
+import japa.composeapp.generated.resources.shloka
+import japa.composeapp.generated.resources.synonyms
+import japa.composeapp.generated.resources.translation
+import org.jetbrains.compose.resources.stringResource
 import presentation.screen.home.model.ShlokaModel
 
 @Composable
@@ -57,7 +62,7 @@ internal fun ShlokaBlock(modifier: Modifier = Modifier) {
                 ShlokaSection(
                     visible = isShlokaVisible,
                     onToggleVisibility = { isShlokaVisible = !isShlokaVisible },
-                    title = "Shloka",
+                    title = stringResource(Res.string.shloka),
                     content = shlokaModel.shloka,
                     modifier = Modifier.align(Alignment.Start)
                 )
@@ -69,7 +74,7 @@ internal fun ShlokaBlock(modifier: Modifier = Modifier) {
                 ShlokaSection(
                     visible = isSynonymsVisible,
                     onToggleVisibility = { isSynonymsVisible = !isSynonymsVisible },
-                    title = "Synonyms",
+                    title = stringResource(Res.string.synonyms),
                     content = shlokaModel.synonyms,
                     modifier = Modifier.align(Alignment.Start)
                 )
@@ -81,7 +86,7 @@ internal fun ShlokaBlock(modifier: Modifier = Modifier) {
                 ShlokaSection(
                     visible = isTranslationVisible,
                     onToggleVisibility = { isTranslationVisible = !isTranslationVisible },
-                    title = "Translation",
+                    title = stringResource(Res.string.translation),
                     content = shlokaModel.translation,
                     modifier = Modifier.align(Alignment.Start)
                 )

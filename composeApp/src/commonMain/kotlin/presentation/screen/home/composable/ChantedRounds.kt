@@ -65,7 +65,7 @@ internal fun ChantedRounds(modifier: Modifier = Modifier) {
                     text = if (it.index < 10) "  ${it.index}." else "${it.index}.",
                     fontSize = 20.sp
                 )
-                Text(text = it.time, Modifier.padding(horizontal = 16.dp), fontSize = 20.sp)
+                Text(text = it.duration, Modifier.padding(horizontal = 16.dp), fontSize = 20.sp)
                 CircularText(text = "${it.points}")
             }
         }

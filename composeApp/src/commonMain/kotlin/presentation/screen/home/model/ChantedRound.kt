@@ -2,7 +2,7 @@ package presentation.screen.home.model
 
 data class ChantedRound(
     val index: Int,
-    val time: String,
+    val duration: String,
     val points: Int,
     val start: String = "00:00",
     val end: String = "00:00",

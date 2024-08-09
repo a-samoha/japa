@@ -23,13 +23,18 @@ import presentation.screen.home.composable.ButtonsBlock
 import presentation.screen.home.composable.ChantedRounds
 import presentation.screen.home.composable.Chart
 import presentation.screen.home.composable.ShlokaBlock
-import presentation.screen.home.composable.TimerBox
+import presentation.screen.home.composable.StopWatch
+import presentation.screen.home.composable.StopWatchState.CHANT
+import presentation.screen.home.composable.StopWatchState.PAUSE
+import presentation.screen.home.composable.StopWatchState.STOP
 import presentation.screen.home.model.chantedRounds
 
 @Composable
 internal fun HomeScreen() {
 
     var showContent by remember { mutableStateOf(false) }
+
+    var stopwatchState by remember { mutableStateOf(STOP) }
 
     Column(
         Modifier.fillMaxSize(),
@@ -39,7 +44,11 @@ internal fun HomeScreen() {
             Modifier.fillMaxWidth().height(194.dp),
             horizontalArrangement = Arrangement.End,
         ) {
-            TimerBox(Modifier.weight(1f).fillMaxSize())
+            StopWatch(
+                modifier = Modifier.weight(1f).fillMaxSize(),
+                state = stopwatchState,
+                onStop = { startTime, elapsedTime, endTime -> println("startTime $startTime, elapsedTime $elapsedTime, endTime $endTime") }
+            )
             VerticalDivider(
                 color = Color.Gray,
                 modifier = Modifier.width(1.dp).padding(top = 16.dp)
@@ -54,7 +63,12 @@ internal fun HomeScreen() {
             items = chantedRounds(),
             modifier = Modifier.padding(start = 16.dp).fillMaxWidth().height(180.dp),
         )
-        ButtonsBlock(Modifier.fillMaxWidth().height(140.dp))
+        ButtonsBlock(
+            Modifier.fillMaxWidth().height(140.dp),
+            onSettingsClick = { println("test onSettingsClick") },
+            onPlayStopClick = { stopwatchState = if (stopwatchState != CHANT) CHANT else STOP },
+            onPauseClick = { stopwatchState = PAUSE },
+        )
         ShlokaBlock(Modifier.weight(1f).fillMaxSize())
     }
 }

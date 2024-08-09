@@ -2,7 +2,7 @@ package presentation.screen.home.model
 
 data class ShlokaModel(
     val title: String = "Бг. 4.34",
-    val shloka: String = "пракр̣тім̇ сва̄м авашт̣абгйа\nвіср̣джа̄мі пунах̣ пунах̣\nбгӯта-ґра̄мам імам̇ кр̣тснам\nаваш́ам̇ пракр̣тер ваш́а̄т",
-    val synonyms: String = "prakṛtim — the material nature; svām — of My personal Self; avaṣṭabhya — entering into; visṛjāmi — I create; punaḥ punaḥ — again and again; bhūta-grāmam — all the cosmic manifestations; imam — these; kṛtsnam — in total; avaśam — automatically; prakṛteḥ — of the force of nature; vaśāt — under obligation.",
-    val translation: String = "The whole cosmic order is under Me. Under My will it is automatically manifested again and again, and under My will it is annihilated at the end."
+    val shloka: String = "тад віддгі пран̣іпа̄тена\nпаріпраш́нена севайа̄\nупадекшйанті те джн̃а̄нам̇\nджн̃а̄нінас таттва-дарш́інах̣",
+    val synonyms: String = "тат—таке знання про різні жертвопринесення; віддгі—намагайся зрозуміти; пран̣іпа̄тена—наближаючись до духовного вчителя; паріпраш́нена—смиренними запитаннями; севайа̄—виконуючи служіння; упадекшйанті—вони посвятять; те—тебе; джн̃а̄нам—в знання; джн̃а̄нінах̣—той, хто усвідомив себе: таттва—істини; дарш́інах̣—провидці.",
+    val translation: String = "Просто намагайся пізнати істину, звернувшись до духовного вчителя. Розпитуй його смиренно і служи йому. Душі, що усвідомили себе, можуть дати тобі знання, бо вони бачать істину."
 )

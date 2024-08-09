@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.Icon
@@ -23,10 +22,12 @@ import japa.composeapp.generated.resources.ic_pause
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-internal fun ButtonsBlock(modifier: Modifier = Modifier) {
-    fun onSettingsClick() {}
-    fun onPlayStopClick() {}
-    fun onPauseClick() {}
+internal fun ButtonsBlock(
+    modifier: Modifier = Modifier,
+    onSettingsClick: () -> Unit,
+    onPlayStopClick: () -> Unit,
+    onPauseClick: () -> Unit,
+) {
 
     Row(
         modifier = modifier,
@@ -34,7 +35,7 @@ internal fun ButtonsBlock(modifier: Modifier = Modifier) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(
-            onClick = ::onSettingsClick,
+            onClick = onSettingsClick,
             Modifier
                 .size(72.dp)
                 .border(1.dp, Color.Gray, CircleShape)
@@ -51,7 +52,7 @@ internal fun ButtonsBlock(modifier: Modifier = Modifier) {
             )
         }
         IconButton(
-            onClick = ::onPlayStopClick,
+            onClick = onPlayStopClick,
             Modifier
                 .size(100.dp)
                 .border(1.dp, Color.Gray, CircleShape)
@@ -68,7 +69,7 @@ internal fun ButtonsBlock(modifier: Modifier = Modifier) {
             )
         }
         IconButton(
-            onClick = ::onPauseClick,
+            onClick = onPauseClick,
             Modifier
                 .size(72.dp)
                 .border(1.dp, Color.Gray, CircleShape)
@@ -78,8 +79,7 @@ internal fun ButtonsBlock(modifier: Modifier = Modifier) {
                 )
         ) {
             Icon(
-                painter = painterResource(Res.drawable.ic_pause),
-                //Icons.Rounded.Delete,
+                painter = painterResource(Res.drawable.ic_pause), //Icons.Rounded.Delete,
                 contentDescription = "Pause",
                 tint = Color.Red,
                 modifier = Modifier.size(48.dp)

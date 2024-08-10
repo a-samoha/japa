@@ -12,10 +12,6 @@ This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop.
 
 https://bhagavadgita.io/
 
-https://www.youtube.com/watch?v=g4XSWQ7QT8g
-https://www.youtube.com/watch?v=7Wl-G8aXxDA
-https://www.youtube.com/watch?v=ZxBUd2TbVGk
-
 Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
 [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform),
 [Kotlin/Wasm](https://kotl.in/wasm/)…
@@ -24,3 +20,11 @@ We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public S
 If you face any issues, please report them on [GitHub](https://github.com/JetBrains/compose-multiplatform/issues).
 
 You can open the web application by running the `:composeApp:wasmJsBrowserDevelopmentRun` Gradle task.
+
+https://www.youtube.com/watch?v=g4XSWQ7QT8g
+https://www.youtube.com/watch?v=7Wl-G8aXxDA
+https://www.youtube.com/watch?v=ZxBUd2TbVGk
+
+https://github.com/blackstoneaudio/Kormatter
+https://github.com/pearxteam/kormatter
+https://jonas-rodehorst.dev/blog/koltin-string-formatting

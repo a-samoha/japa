@@ -35,23 +35,30 @@ internal fun StopWatch(
     LaunchedEffect(state) {
         when (state) {
             StopWatchState.CHANT -> {
-                if (startTime == null) startTime = currentTimeMillis()//System.currentTimeMillis()
-                running = true
+                if (!running) {
+                    startTime = currentTimeMillis()
+                    running = true
+                }
                 while (running) {
-                    delay(1000L) // Delay for 1 second
-                    elapsedTime = currentTimeMillis() - (startTime ?: currentTimeMillis())
+                    delay(1000L) // Задержка в 1 секунду
+                    elapsedTime += currentTimeMillis() - (startTime ?: currentTimeMillis())
+                    startTime = currentTimeMillis()
                 }
             }
             StopWatchState.PAUSE -> {
-                running = false
+                if (running) {
+                    elapsedTime += currentTimeMillis() - (startTime ?: currentTimeMillis())
+                    running = false
+                }
             }
             StopWatchState.STOP -> {
-                running = false
-                if (startTime != null) {
-                    val endTime = currentTimeMillis()
-                    val duration = endTime - (startTime ?: endTime)
-                    onStop(startTime!!, duration, endTime)
+                if (running) {
+                    elapsedTime += currentTimeMillis() - (startTime ?: currentTimeMillis())
+                    running = false
                 }
+                val endTime = currentTimeMillis()
+                val duration = elapsedTime
+                onStop(startTime ?: endTime, duration, endTime)
                 startTime = null
                 elapsedTime = 0L
             }

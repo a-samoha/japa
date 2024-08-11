@@ -50,6 +50,8 @@ ERRORS handling:
     - uninstall java jre with instructions above
     - [download](https://www.oracle.com/pe/java/technologies/downloads/#jdk22-mac) and install jdk last version (v22).
 
+[Show all files in macOS Finder](https://apple.stackexchange.com/a/34872)
+
 https://bhagavadgita.io/
 
 https://www.youtube.com/watch?v=g4XSWQ7QT8g

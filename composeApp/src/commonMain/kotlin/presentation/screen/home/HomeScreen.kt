@@ -47,7 +47,7 @@ internal fun HomeScreen() {
             StopWatch(
                 modifier = Modifier.weight(1f).fillMaxSize(),
                 state = stopwatchState,
-                onStop = { startTime, elapsedTime, endTime -> println("startTime $startTime, elapsedTime $elapsedTime, endTime $endTime") }
+                onStop = { startTime, elapsedTime, endTime -> println("test onStop startTime $startTime, elapsedTime $elapsedTime, endTime $endTime") }
             )
             VerticalDivider(
                 color = Color.Gray,

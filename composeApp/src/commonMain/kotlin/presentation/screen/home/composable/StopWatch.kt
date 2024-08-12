@@ -36,29 +36,21 @@ internal fun StopWatch(
         when (state) {
             StopWatchState.CHANT -> {
                 if (!running) {
-                    startTime = currentTimeMillis()
+                    if (startTime == null) startTime = currentTimeMillis()
                     running = true
                 }
                 while (running) {
-                    delay(1000L) // Задержка в 1 секунду
-                    elapsedTime += currentTimeMillis() - (startTime ?: currentTimeMillis())
-                    startTime = currentTimeMillis()
+                    delay(1000L)
+                    elapsedTime += 1
                 }
             }
             StopWatchState.PAUSE -> {
-                if (running) {
-                    elapsedTime += currentTimeMillis() - (startTime ?: currentTimeMillis())
-                    running = false
-                }
+                running = false
             }
             StopWatchState.STOP -> {
-                if (running) {
-                    elapsedTime += currentTimeMillis() - (startTime ?: currentTimeMillis())
-                    running = false
-                }
+                running = false
                 val endTime = currentTimeMillis()
-                val duration = elapsedTime
-                onStop(startTime ?: endTime, duration, endTime)
+                onStop(startTime ?: endTime, elapsedTime, endTime)
                 startTime = null
                 elapsedTime = 0L
             }

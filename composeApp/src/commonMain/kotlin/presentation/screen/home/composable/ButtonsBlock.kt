@@ -40,11 +40,14 @@ internal fun ButtonsBlock(
     onPauseClick: () -> Unit,
 ) {
 
+    var isPlaying by remember { mutableStateOf(false) }
+
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
+        // 'Settings' button
         IconButton(
             onClick = onSettingsClick,
             Modifier
@@ -53,41 +56,54 @@ internal fun ButtonsBlock(
                 .background(
                     MaterialTheme.colorScheme.primaryContainer,
                     CircleShape
-                )
+                ),
         ) {
             Icon(
                 Icons.Rounded.Settings,
                 contentDescription = "Settings",
                 tint = Color.Red,
-                modifier = Modifier.size(48.dp)
+                modifier = Modifier.size(48.dp),
             )
         }
-        RotatingIconButton(onPlayStopClick)
+        // 'Play/Stop' button
+        RotatingIconButton(
+            isPlaying = isPlaying,
+            changeIsPlayingState = { isPlaying = !isPlaying },
+            onPlayStopClick,
+        )
+        // 'Pause' button
         IconButton(
-            onClick = onPauseClick,
+            onClick = {
+                isPlaying = false
+                onPauseClick()
+            },
             Modifier
                 .size(72.dp)
                 .border(1.dp, Color.Gray, CircleShape)
                 .background(
                     MaterialTheme.colorScheme.primaryContainer,
                     CircleShape
-                )
+                ),
         ) {
             Icon(
                 painter = painterResource(Res.drawable.ic_pause), //Icons.Rounded.Delete,
                 contentDescription = "Pause",
                 tint = Color.Red,
-                modifier = Modifier.size(48.dp)
+                modifier = Modifier.size(48.dp),
             )
         }
     }
 }
 
 @Composable
-fun RotatingIconButton(onPlayStopClick: () -> Unit) {
-    var isPlaying by remember { mutableStateOf(false) }
+fun RotatingIconButton(
+    isPlaying: Boolean,
+    changeIsPlayingState: () -> Unit,
+    onPlayStopClick: () -> Unit,
+) {
+
     var rotationState by remember { mutableStateOf(0f) }
-    var alphaState by remember { mutableStateOf(1f) } // Alpha state
+    var alphaState by remember { mutableStateOf(1f) }
 
     val rotation by animateFloatAsState( // 'play/stop' icon rotation animation
         targetValue = rotationState,
@@ -107,7 +123,7 @@ fun RotatingIconButton(onPlayStopClick: () -> Unit) {
             coroutineScope.launch {
                 alphaState = 0.1f
                 delay(500)
-                isPlaying = !isPlaying
+                changeIsPlayingState()
                 alphaState = 1f
             }
             rotationState = if (isPlaying) 0f else 360f
@@ -119,7 +135,7 @@ fun RotatingIconButton(onPlayStopClick: () -> Unit) {
             .background(
                 MaterialTheme.colorScheme.primaryContainer,
                 CircleShape
-            )
+            ),
     ) {
         if (isPlaying)
             Icon(
@@ -128,7 +144,7 @@ fun RotatingIconButton(onPlayStopClick: () -> Unit) {
                 tint = Color.Red.copy(alpha = alpha),
                 modifier = Modifier
                     .size(48.dp)
-                    .graphicsLayer(rotationZ = rotation)
+                    .graphicsLayer(rotationZ = rotation),
             ) else
             Icon(
                 imageVector = Icons.Rounded.PlayArrow,
@@ -136,7 +152,7 @@ fun RotatingIconButton(onPlayStopClick: () -> Unit) {
                 tint = Color.Red.copy(alpha = alpha),
                 modifier = Modifier
                     .size(72.dp)
-                    .graphicsLayer(rotationZ = rotation)
+                    .graphicsLayer(rotationZ = rotation),
             )
     }
 }

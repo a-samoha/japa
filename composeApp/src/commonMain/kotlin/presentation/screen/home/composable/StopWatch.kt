@@ -30,13 +30,13 @@ internal fun StopWatch(
     var elapsedTime by remember { mutableStateOf(0L) }
     var running by remember { mutableStateOf(false) }
 
-    fun currentTimeMillis() = Clock.System.now().epochSeconds
+    fun currentTimeSeconds() = Clock.System.now().epochSeconds
 
     LaunchedEffect(state) {
         when (state) {
             StopWatchState.CHANT -> {
                 if (!running) {
-                    if (startTime == null) startTime = currentTimeMillis()
+                    if (startTime == null) startTime = currentTimeSeconds()
                     running = true
                 }
                 while (running) {
@@ -49,7 +49,7 @@ internal fun StopWatch(
             }
             StopWatchState.STOP -> {
                 running = false
-                val endTime = currentTimeMillis()
+                val endTime = currentTimeSeconds()
                 onStop(startTime ?: endTime, elapsedTime, endTime)
                 startTime = null
                 elapsedTime = 0L

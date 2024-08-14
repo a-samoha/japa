@@ -15,25 +15,27 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import kotlinx.datetime.Clock
+import presentation.screen.home.model.ChantedRound
 
 enum class StopWatchState {
-    CHANT, PAUSE, STOP
+    DEFAULT, CHANT, PAUSE, STOP
 }
 
 @Composable
-internal fun StopWatch(
+internal fun JapaStopWatch(
     modifier: Modifier = Modifier,
     state: StopWatchState,
-    onStop: (Long, Long, Long) -> Unit
+    onStop: (ChantedRound) -> Unit
 ) {
     var startTime by remember { mutableStateOf<Long?>(null) }
     var elapsedTime by remember { mutableStateOf(0L) }
     var running by remember { mutableStateOf(false) }
 
-    fun currentTimeSeconds() = Clock.System.now().epochSeconds
+    fun currentTimeSeconds() = Clock.System.now().toEpochMilliseconds()
 
     LaunchedEffect(state) {
         when (state) {
+            StopWatchState.DEFAULT -> Unit
             StopWatchState.CHANT -> {
                 if (!running) {
                     if (startTime == null) startTime = currentTimeSeconds()
@@ -49,8 +51,13 @@ internal fun StopWatch(
             }
             StopWatchState.STOP -> {
                 running = false
-                val endTime = currentTimeSeconds()
-                onStop(startTime ?: endTime, elapsedTime, endTime)
+                onStop(
+                    ChantedRound(
+                        duration = elapsedTime.toFormatedString(),
+                        startTimestamp = startTime ?: 0L,
+                        endTimestamp = currentTimeSeconds()
+                    )
+                )
                 startTime = null
                 elapsedTime = 0L
             }

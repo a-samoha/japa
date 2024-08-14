@@ -1,11 +1,11 @@
 package presentation.screen.home.model
 
 data class ChantedRound(
-    val index: Int,
-    val duration: String,
-    val points: Int,
-    val start: String = "00:00",
-    val end: String = "00:00",
+    val index: Int = 1,
+    val duration: String = "",
+    val points: Int = 0,
+    val startTimestamp: Long = 0L,
+    val endTimestamp: Long = 0L,
 )
 
 fun chantedRounds(): List<ChantedRound> =

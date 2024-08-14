@@ -22,19 +22,21 @@ import androidx.compose.ui.unit.dp
 import presentation.screen.home.composable.ButtonsBlock
 import presentation.screen.home.composable.ChantedRounds
 import presentation.screen.home.composable.Chart
+import presentation.screen.home.composable.JapaStopWatch
 import presentation.screen.home.composable.ShlokaBlock
-import presentation.screen.home.composable.StopWatch
 import presentation.screen.home.composable.StopWatchState.CHANT
+import presentation.screen.home.composable.StopWatchState.DEFAULT
 import presentation.screen.home.composable.StopWatchState.PAUSE
 import presentation.screen.home.composable.StopWatchState.STOP
+import presentation.screen.home.model.ChantedRound
 import presentation.screen.home.model.chantedRounds
+import kotlin.random.Random
 
 @Composable
 internal fun HomeScreen() {
 
-    var showContent by remember { mutableStateOf(false) }
-
-    var stopwatchState by remember { mutableStateOf(STOP) }
+    var chantedRoundsState by remember { mutableStateOf(emptyList<ChantedRound>()) }
+    var stopwatchState by remember { mutableStateOf(DEFAULT) }
 
     Column(
         Modifier.fillMaxSize(),
@@ -44,16 +46,20 @@ internal fun HomeScreen() {
             Modifier.fillMaxWidth().height(194.dp),
             horizontalArrangement = Arrangement.End,
         ) {
-            StopWatch(
+            JapaStopWatch(
                 modifier = Modifier.weight(1f).fillMaxSize(),
                 state = stopwatchState,
-                onStop = { startTime, elapsedTime, endTime -> println("test onStop startTime $startTime, elapsedTime $elapsedTime, endTime $endTime") }
+                onStop = { cr ->
+                    val crIndexed = cr.copy(index = chantedRoundsState.size + 1)
+                    val crFinal = crIndexed.copy(points = Random.nextInt(1, 11))
+                    chantedRoundsState = chantedRoundsState + crFinal
+                }
             )
             VerticalDivider(
                 color = Color.Gray,
                 modifier = Modifier.width(1.dp).padding(top = 16.dp)
             )
-            ChantedRounds()
+            ChantedRounds(items = chantedRoundsState)
         }
         HorizontalDivider(
             color = Color.Gray,
@@ -63,6 +69,10 @@ internal fun HomeScreen() {
             items = chantedRounds(),
             modifier = Modifier.padding(start = 16.dp).fillMaxWidth().height(180.dp),
         )
+        /**
+         * Buttons do not know about [JapaStopWatch]
+         * Look for chanting results in StopWatch onStop() lambda.
+         */
         ButtonsBlock(
             Modifier.fillMaxWidth().height(140.dp),
             onSettingsClick = { println("test onSettingsClick") },

@@ -25,48 +25,65 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import presentation.screen.home.model.ChantedRound
-import presentation.screen.home.model.chantedRounds
-
 
 @Composable
-internal fun ChantedRounds(modifier: Modifier = Modifier) {
-    val listState = rememberLazyListState()
-    val items = chantedRounds()
-
-    // Scroll to the last item after first rendering
+internal fun ChantedRounds(
+    modifier: Modifier = Modifier,
+    items: List<ChantedRound>,
+) {
+    // scroll to the last item after rendering
+    val scrollingState = rememberLazyListState()
     LaunchedEffect(items) {
-        listState.animateScrollToItem(items.size - 1)
+        scrollingState.animateScrollToItem(if (items.isEmpty()) 0 else items.lastIndex)
     }
 
-    val contentPadding = PaddingValues(start = 16.dp, top = 6.dp, end = 16.dp, bottom = 6.dp)
+    val contentPadding = PaddingValues(horizontal = 16.dp, vertical = 6.dp)
 
     LazyColumn(
-        state = listState,
+        state = scrollingState,
         contentPadding = contentPadding,
         modifier = modifier
     ) {
-        items(
-            items = chantedRounds(),
-            key = ChantedRound::index
-        ) {
-            Row(
-                modifier = Modifier
-                    .padding(vertical = 8.dp)
-                    .border(1.dp, Color.Gray, RoundedCornerShape(4.dp))
-                    .background(
-                        MaterialTheme.colorScheme.primaryContainer,
-                        RoundedCornerShape(4.dp)
+        if (items.isEmpty()) {
+            // show hint text
+            item {
+                Box(
+                    modifier = Modifier
+                        .size(174.dp)
+                        .padding(16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Здесь будет список прочитанных кругов",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.Gray
                     )
-                    .padding(start = 14.dp, end = 12.dp, top = 4.dp, bottom = 4.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically,
+                }
+            }
+        } else {
+            items(
+                items = items,
+                key = ChantedRound::index
             ) {
-                Text(
-                    text = if (it.index < 10) "  ${it.index}." else "${it.index}.",
-                    fontSize = 20.sp
-                )
-                Text(text = it.duration, Modifier.padding(horizontal = 16.dp), fontSize = 20.sp)
-                CircularText(text = "${it.points}")
+                Row(
+                    modifier = Modifier
+                        .padding(vertical = 8.dp)
+                        .border(1.dp, Color.Gray, RoundedCornerShape(4.dp))
+                        .background(
+                            MaterialTheme.colorScheme.primaryContainer,
+                            RoundedCornerShape(4.dp)
+                        )
+                        .padding(start = 14.dp, end = 12.dp, top = 4.dp, bottom = 4.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = if (it.index < 10) "  ${it.index}." else "${it.index}.",
+                        fontSize = 20.sp
+                    )
+                    Text(text = it.duration, Modifier.padding(horizontal = 16.dp), fontSize = 20.sp)
+                    CircularText(text = "${it.points}")
+                }
             }
         }
     }

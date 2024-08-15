@@ -29,7 +29,6 @@ import presentation.screen.home.composable.StopWatchState.DEFAULT
 import presentation.screen.home.composable.StopWatchState.PAUSE
 import presentation.screen.home.composable.StopWatchState.STOP
 import presentation.screen.home.model.ChantedRound
-import presentation.screen.home.model.chantedRounds
 import kotlin.random.Random
 
 @Composable
@@ -66,7 +65,7 @@ internal fun HomeScreen() {
             modifier = Modifier.fillMaxWidth().width(1.dp).padding(horizontal = 16.dp)
         )
         Chart(
-            items = chantedRounds(),
+            items = chantedRoundsState,
             modifier = Modifier.padding(start = 16.dp).fillMaxWidth().height(180.dp),
         )
         /**

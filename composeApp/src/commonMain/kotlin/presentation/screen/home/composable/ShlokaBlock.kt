@@ -2,6 +2,8 @@ package presentation.screen.home.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -44,21 +46,17 @@ internal fun ShlokaBlock(modifier: Modifier = Modifier) {
 
     val shlokaModel = ShlokaModel()
 
-    Column(modifier = modifier.padding(top = 16.dp, bottom = 16.dp, end = 16.dp)) {
-        // Заголовок
+    Column(modifier = modifier.padding(16.dp)) {
         Text(
             text = shlokaModel.title,
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth().padding(start = 48.dp)
+            modifier = Modifier.fillMaxWidth()
         )
-
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Прокручиваемая область
         LazyColumn {
             item {
-                // Первый блок: Шлока
                 ShlokaSection(
                     visible = isShlokaVisible,
                     onToggleVisibility = { isShlokaVisible = !isShlokaVisible },
@@ -66,11 +64,9 @@ internal fun ShlokaBlock(modifier: Modifier = Modifier) {
                     content = shlokaModel.shloka,
                     modifier = Modifier.align(Alignment.Start)
                 )
-
                 Spacer(modifier = Modifier.height(8.dp))
             }
             item {
-                // Второй блок: Синонимы
                 ShlokaSection(
                     visible = isSynonymsVisible,
                     onToggleVisibility = { isSynonymsVisible = !isSynonymsVisible },
@@ -78,11 +74,9 @@ internal fun ShlokaBlock(modifier: Modifier = Modifier) {
                     content = shlokaModel.synonyms,
                     modifier = Modifier.align(Alignment.Start)
                 )
-
                 Spacer(modifier = Modifier.height(8.dp))
             }
             item {
-                // Третий блок: Перевод
                 ShlokaSection(
                     visible = isTranslationVisible,
                     onToggleVisibility = { isTranslationVisible = !isTranslationVisible },
@@ -99,47 +93,44 @@ internal fun ShlokaBlock(modifier: Modifier = Modifier) {
 fun ShlokaSection(
     visible: Boolean,
     onToggleVisibility: () -> Unit,
-    title: String?,
+    title: String,
     content: String,
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = modifier) {
-        // Кнопка для переключения видимости
-        IconButton(
-            modifier = Modifier
-                .padding(start = 16.dp, top = 8.dp, end = 8.dp, bottom = 8.dp)
-                .border(1.dp, Color.Gray, CircleShape)
-                .background(
-                    MaterialTheme.colorScheme.primaryContainer,
-                    CircleShape
-                ).size(24.dp),
-            onClick = onToggleVisibility,
+    Column {
+        Row(
+            modifier = modifier.fillMaxWidth()
+                .clickable { onToggleVisibility() },
+            horizontalArrangement = Arrangement.Center
         ) {
-            Icon(
-                imageVector = if (visible) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
-                contentDescription = null
+            Text(
+                text = title,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(start = 48.dp, top = 8.dp, bottom = 8.dp)
             )
+            IconButton(
+                modifier = Modifier
+                    .padding(start = 16.dp, top = 8.dp, end = 8.dp, bottom = 8.dp)
+                    .border(1.dp, Color.Gray, CircleShape)
+                    .background(
+                        MaterialTheme.colorScheme.primaryContainer,
+                        CircleShape
+                    ).size(24.dp),
+                onClick = onToggleVisibility,
+            ) {
+                Icon(
+                    imageVector = if (visible) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                    contentDescription = null
+                )
+            }
         }
-
-        // Отображаем содержимое только если оно видимо
-        Column {
-            title?.let {
-                Text(
-                    text = title,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp)
-                )
-            }
-            if (visible) {
-                Text(
-                    text = content,
-                    style = MaterialTheme.typography.bodyMedium,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
+        if (visible) {
+            Text(
+                text = content,
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
     }
 }

@@ -53,9 +53,7 @@ internal fun HomeScreen() {
                 state = stopwatchState.value,
                 onStop = { cr ->
                     lastChantedRound = cr.copy(index = chantedRoundsState.size + 1)
-                    //val crFinal = crIndexed.copy(points = Random.nextInt(1, 11))
                     showJapaPointsDialogState.value = true
-                    //chantedRoundsState = chantedRoundsState + crIndexed
                 }
             )
             VerticalDivider(

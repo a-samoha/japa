@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.PlayArrow
-import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -47,7 +47,7 @@ internal fun ButtonsBlock(
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        // 'Settings' button
+        // region 'Settings' button
         IconButton(
             onClick = onSettingsClick,
             Modifier
@@ -59,19 +59,21 @@ internal fun ButtonsBlock(
                 ),
         ) {
             Icon(
-                Icons.Rounded.Settings,
+                Icons.Rounded.MoreVert,
                 contentDescription = "Settings",
-                tint = Color.Red,
-                modifier = Modifier.size(48.dp),
+                tint = Color.DarkGray,
+                modifier = Modifier.size(48.dp).graphicsLayer(rotationZ = 90f),
             )
         }
-        // 'Play/Stop' button
+        // endregion
+        // region 'Play/Stop' button
         RotatingIconButton(
             isPlaying = isPlaying,
             changeIsPlayingState = { isPlaying = !isPlaying },
             onPlayStopClick,
         )
-        // 'Pause' button
+        // endregion
+        // region 'Pause' button
         IconButton(
             onClick = {
                 isPlaying = false
@@ -88,10 +90,11 @@ internal fun ButtonsBlock(
             Icon(
                 painter = painterResource(Res.drawable.ic_pause), //Icons.Rounded.Delete,
                 contentDescription = "Pause",
-                tint = Color.Red,
+                tint = Color.DarkGray,
                 modifier = Modifier.size(48.dp),
             )
         }
+        // endregion
     }
 }
 
@@ -141,7 +144,7 @@ fun RotatingIconButton(
             Icon(
                 painter = painterResource(Res.drawable.ic_stop),
                 contentDescription = "Play/Stop",
-                tint = Color.Red.copy(alpha = alpha),
+                tint = Color.DarkGray.copy(alpha = alpha),
                 modifier = Modifier
                     .size(48.dp)
                     .graphicsLayer(rotationZ = rotation),
@@ -149,7 +152,7 @@ fun RotatingIconButton(
             Icon(
                 imageVector = Icons.Rounded.PlayArrow,
                 contentDescription = "Play/Stop",
-                tint = Color.Red.copy(alpha = alpha),
+                tint = Color.DarkGray.copy(alpha = alpha),
                 modifier = Modifier
                     .size(72.dp)
                     .graphicsLayer(rotationZ = rotation),

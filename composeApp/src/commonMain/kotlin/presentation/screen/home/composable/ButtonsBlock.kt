@@ -15,6 +15,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,12 +36,20 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 internal fun ButtonsBlock(
     modifier: Modifier = Modifier,
+    stopwatchState: MutableState<StopWatchState>,
     onSettingsClick: () -> Unit,
     onPlayStopClick: () -> Unit,
     onPauseClick: () -> Unit,
 ) {
 
     var isPlaying by remember { mutableStateOf(false) }
+
+    isPlaying = when(stopwatchState.value){
+        StopWatchState.DEFAULT -> false
+        StopWatchState.CHANT -> true
+        StopWatchState.PAUSE -> false
+        StopWatchState.STOP -> false
+    }
 
     Row(
         modifier = modifier,
@@ -68,7 +77,7 @@ internal fun ButtonsBlock(
         // endregion
         // region 'Play/Stop' button
         RotatingIconButton(
-            isPlaying = isPlaying,
+            isPlayingState = isPlaying,
             changeIsPlayingState = { isPlaying = !isPlaying },
             onPlayStopClick,
         )
@@ -100,7 +109,7 @@ internal fun ButtonsBlock(
 
 @Composable
 fun RotatingIconButton(
-    isPlaying: Boolean,
+    isPlayingState: Boolean,
     changeIsPlayingState: () -> Unit,
     onPlayStopClick: () -> Unit,
 ) {
@@ -129,7 +138,7 @@ fun RotatingIconButton(
                 changeIsPlayingState()
                 alphaState = 1f
             }
-            rotationState = if (isPlaying) 0f else 360f
+            rotationState = if (isPlayingState) 0f else 360f
             onPlayStopClick()
         },
         modifier = Modifier
@@ -140,7 +149,7 @@ fun RotatingIconButton(
                 CircleShape
             ),
     ) {
-        if (isPlaying)
+        if (isPlayingState)
             Icon(
                 painter = painterResource(Res.drawable.ic_stop),
                 contentDescription = "Play/Stop",

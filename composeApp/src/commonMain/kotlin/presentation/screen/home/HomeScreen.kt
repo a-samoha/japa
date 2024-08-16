@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import presentation.screen.home.composable.ButtonsBlock
 import presentation.screen.home.composable.ChantedRounds
 import presentation.screen.home.composable.Chart
+import presentation.screen.home.composable.JapaPointsDialog
 import presentation.screen.home.composable.JapaStopWatch
 import presentation.screen.home.composable.ShlokaBlock
 import presentation.screen.home.composable.StopWatchState.CHANT
@@ -29,13 +30,15 @@ import presentation.screen.home.composable.StopWatchState.DEFAULT
 import presentation.screen.home.composable.StopWatchState.PAUSE
 import presentation.screen.home.composable.StopWatchState.STOP
 import presentation.screen.home.model.ChantedRound
-import kotlin.random.Random
 
 @Composable
 internal fun HomeScreen() {
 
     var chantedRoundsState by remember { mutableStateOf(emptyList<ChantedRound>()) }
-    var stopwatchState by remember { mutableStateOf(DEFAULT) }
+    val stopwatchState = remember { mutableStateOf(DEFAULT) }
+    val showJapaPointsDialogState = remember { mutableStateOf(false) }
+
+    var lastChantedRound: ChantedRound? = null
 
     Column(
         Modifier.fillMaxSize(),
@@ -47,11 +50,12 @@ internal fun HomeScreen() {
         ) {
             JapaStopWatch(
                 modifier = Modifier.weight(1f).fillMaxSize(),
-                state = stopwatchState,
+                state = stopwatchState.value,
                 onStop = { cr ->
-                    val crIndexed = cr.copy(index = chantedRoundsState.size + 1)
-                    val crFinal = crIndexed.copy(points = Random.nextInt(1, 11))
-                    chantedRoundsState = chantedRoundsState + crFinal
+                    lastChantedRound = cr.copy(index = chantedRoundsState.size + 1)
+                    //val crFinal = crIndexed.copy(points = Random.nextInt(1, 11))
+                    showJapaPointsDialogState.value = true
+                    //chantedRoundsState = chantedRoundsState + crIndexed
                 }
             )
             VerticalDivider(
@@ -74,10 +78,21 @@ internal fun HomeScreen() {
          */
         ButtonsBlock(
             Modifier.fillMaxWidth().height(140.dp),
+            stopwatchState,
             onSettingsClick = { println("test onSettingsClick") },
-            onPlayStopClick = { stopwatchState = if (stopwatchState != CHANT) CHANT else STOP },
-            onPauseClick = { stopwatchState = PAUSE },
+            onPlayStopClick = {
+                stopwatchState.value = if (stopwatchState.value != CHANT) CHANT else STOP
+            },
+            onPauseClick = { stopwatchState.value = PAUSE },
         )
         ShlokaBlock(Modifier.weight(1f).fillMaxSize())
+    }
+
+    JapaPointsDialog(
+        showDialog = showJapaPointsDialogState,
+    ) { chosenPoints ->
+        lastChantedRound = lastChantedRound?.copy(points = chosenPoints)
+        lastChantedRound?.let { chantedRoundsState = chantedRoundsState + it }
+        if (stopwatchState.value != CHANT) stopwatchState.value = CHANT
     }
 }

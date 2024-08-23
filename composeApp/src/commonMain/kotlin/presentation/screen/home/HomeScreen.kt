@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
@@ -58,13 +57,13 @@ internal fun HomeScreen() {
             )
             VerticalDivider(
                 color = Color.Gray,
-                modifier = Modifier.width(1.dp).padding(top = 16.dp)
+                modifier = Modifier.padding(top = 16.dp)
             )
             ChantedRounds(items = chantedRoundsState)
         }
         HorizontalDivider(
             color = Color.Gray,
-            modifier = Modifier.fillMaxWidth().width(1.dp).padding(horizontal = 16.dp)
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
         )
         Chart(
             items = chantedRoundsState,
@@ -93,4 +92,21 @@ internal fun HomeScreen() {
         lastChantedRound?.let { chantedRoundsState = chantedRoundsState + it }
         if (stopwatchState.value != CHANT) stopwatchState.value = CHANT
     }
+
+//    if (showJapaPointsDialogState.value) {
+//        CustomDialogWithResultExample(
+//            onDismiss = {
+//                showJapaPointsDialogState.value = !showJapaPointsDialogState.value
+//                println("Dialog dismissed!")
+//            },
+//            onNegativeClick = {
+//                showJapaPointsDialogState.value = !showJapaPointsDialogState.value
+//                println("Negative Button Clicked!")
+//            },
+//            onPositiveClick = { color ->
+//                showJapaPointsDialogState.value = !showJapaPointsDialogState.value
+//                println("Selected color: $color")
+//            }
+//        )
+//    }
 }

@@ -3,8 +3,10 @@ package presentation.screen.home.composable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -20,6 +22,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,6 +34,15 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.layoutId
+import japa.composeapp.generated.resources.Res
+import japa.composeapp.generated.resources.absentmindedness
+import japa.composeapp.generated.resources.complete_indifference
+import japa.composeapp.generated.resources.emotion_of_humility
+import japa.composeapp.generated.resources.persistent_efforts
+import japa.composeapp.generated.resources.strong_drowsiness
+import japa.composeapp.generated.resources.the_mind_was_attracted
+import japa.composeapp.generated.resources.understanding_distraction
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,19 +50,22 @@ fun JapaPointsDialog(
     showDialog: MutableState<Boolean>,
     onDismissRequest: (chosenPoints: Int) -> Unit,
 ) {
+    val scrollingState = rememberScrollState()
+    LaunchedEffect("scrollHorizontal") {
+        scrollingState.animateScrollTo(800) // scroll 800 px
+    }
     if (showDialog.value) {
         BasicAlertDialog(
-            modifier = Modifier.padding(vertical = 32.dp),
             onDismissRequest = {},
             content = {
                 Card(
                     modifier = Modifier
                         .verticalScroll(rememberScrollState())
-                        .horizontalScroll(rememberScrollState()),
+                        .horizontalScroll(scrollingState),
                     shape = RoundedCornerShape(1.dp)
                 ) {
                     ConstraintLayout(
-                        modifier = Modifier.width(576.dp).height(820.dp),
+                        modifier = Modifier.width(552.dp).height(732.dp),
                         constraintSet = constraints(),
                     ) {
                         Column(
@@ -118,7 +133,7 @@ private fun constraints(): ConstraintSet = ConstraintSet {
     val dividerHor = createRefFor("dividerHor")
     val pramada = createRefFor("pramada")
     val pointsColumn = createRefFor("pointsColumn")
-    val h40 = createGuidelineFromTop(fraction = 0.399f)
+    val h40 = createGuidelineFromTop(fraction = 0.401f)
 
     constrain(cheshta) {
         top.linkTo(parent.top)
@@ -148,66 +163,139 @@ fun PointsColumn(
     showDialog: MutableState<Boolean>,
     onDismissRequest: (chosenPoints: Int) -> Unit,
 ) {
-
     val pointsList = listOf(
-        "Розум привабився смаком святих імен. Переважно повна увага" to 10,
-        "Повторювання з емоцією смирення, поява смаку, ентузіазм" to 9,
-        "Наполегливі зусилля. Молитва розкаювання, пошук смирення" to 8,
-        "Розуміння розсіяності, зусилля в уважності попри різні думки" to 7,
-        "Розсіяність. Інколи є розуміння неуважності. Нетривале зосередження. Планування справ. Прагнення мат. насолод та здобутків" to 6,
-        "Розсіяність. Інколи є розуміння неуважності. Нетривале зосередження. Планування справ. Прагнення мат. насолод та здобутків" to 5,
-        "Повна байдужість. Думки про мат. плоди. Розглядання речей навколо. Дуже нудне повторювання" to 4,
-        "Повна байдужість. Думки про мат. плоди. Розглядання речей навколо. Дуже нудне повторювання" to 3,
-        "Сильна сонливість, тупість, апатія, відраза до повторювання" to 2,
-        "Сильна сонливість, тупість, апатія, відраза до повторювання" to 1
+        Triple(
+            stringResource(Res.string.the_mind_was_attracted),
+            10,
+            Color(0.05882353f, 0.99215686f, 0.7176471f)
+        ),
+        Triple(
+            stringResource(Res.string.emotion_of_humility),
+            9,
+            Color(0.05882353f, 0.99215686f, 0.7176471f)
+        ),
+        Triple(
+            stringResource(Res.string.persistent_efforts),
+            8,
+            Color(0.05882353f, 0.99215686f, 0.7176471f)
+        ),
+        Triple(
+            stringResource(Res.string.understanding_distraction),
+            7,
+            Color(0.05882353f, 0.99215686f, 0.7176471f) // 15, 253, 183 RGB
+        ),
+        Triple(
+            stringResource(Res.string.absentmindedness),
+            65,
+            Color(0.99215686f, 0.95686275f, 0f) // 253, 244, 0 RGB
+        ),
+        Triple(
+            stringResource(Res.string.complete_indifference),
+            43,
+            Color(0.99215686f, 0.6549019f, 0.07058824f) // 253, 167, 18 RGB
+        ),
+        Triple(
+            stringResource(Res.string.strong_drowsiness),
+            21,
+            Color(0.99215686f, 0.24705882f, 0.34117648f) // 253, 63, 87 RGB
+        ),
     )
 
     Column(
-        modifier = modifier.width(380.dp),
+        modifier = modifier.width(356.dp),
     ) {
-        for (item in pointsList) {
-            Row(
-                modifier = Modifier
-                    .height(80.dp)
-                    .clickable {
-                        onDismissRequest(item.second)
-                        showDialog.value = false
-                    }
-                    .padding(vertical = 4.dp)
-                    .background(
-                        color = Color(
-                            0.05882353f,
-                            0.99215686f,
-                            0.7176471f
-                        )
-                    ),
-                verticalAlignment = Alignment.CenterVertically
+        for (point in pointsList) {
+            PointRow(point, showDialog, onDismissRequest)
+        }
+    }
+}
+
+@Composable
+fun PointRow(
+    triple: Triple<String, Int, Color>,
+    showDialog: MutableState<Boolean>,
+    onDismissRequest: (chosenPoints: Int) -> Unit,
+) {
+    if (triple.second <= 10) {
+        val point = triple.second
+        Row(
+            modifier = Modifier.height(72.dp)
+                .clickable {
+                    onDismissRequest(point)
+                    showDialog.value = false
+                }.background(color = triple.third),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                modifier = Modifier.width(304.dp).padding(horizontal = 8.dp),
+                text = triple.first,
+                style = MaterialTheme.typography.bodyLarge,
+            )
+            VerticalDivider(
+                thickness = 2.dp,
+                color = Color.Gray,
+            )
+            Box(
+                modifier = Modifier.size(48.dp),
+                contentAlignment = Alignment.Center,
             ) {
                 Text(
-                    text = item.first,
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier
-                        .width(354.dp)
-                        .padding(end = 16.dp)
-                )
-                VerticalDivider(
-                    thickness = 2.dp,
-                    color = Color.Gray
-                )
-                Text(
-                    text = "${item.second}",
+                    text = "$point",
                     style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.size(24.dp)
-                )
-                VerticalDivider(
-                    thickness = 2.dp,
-                    color = Color.Gray
                 )
             }
-            HorizontalDivider(
+            VerticalDivider(
                 thickness = 2.dp,
-                color = Color.Gray
+                color = Color.Gray,
             )
         }
+        HorizontalDivider(
+            thickness = 2.dp,
+            color = Color.Gray,
+        )
+    } else {
+        Box(contentAlignment = Alignment.CenterStart) {
+            Column {
+                val points = "${triple.second}".map { it.digitToInt() }
+                for (point in points) {
+                    Row(
+                        modifier = Modifier.height(72.dp)
+                            .clickable {
+                                onDismissRequest(point)
+                                showDialog.value = false
+                            }.background(color = triple.third),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Spacer(modifier = Modifier.width(304.dp).padding(horizontal = 8.dp))
+                        VerticalDivider(
+                            thickness = 2.dp,
+                            color = Color.Gray,
+                        )
+                        Box(
+                            modifier = Modifier.size(48.dp),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Text(
+                                text = "$point",
+                                style = MaterialTheme.typography.titleMedium,
+                            )
+                        }
+                        VerticalDivider(
+                            thickness = 2.dp,
+                            color = Color.Gray,
+                        )
+                    }
+                }
+            }
+            Text(
+                modifier = Modifier.width(304.dp).padding(horizontal = 8.dp),
+                text = triple.first,
+                style = MaterialTheme.typography.bodyLarge,
+            )
+        }
+        HorizontalDivider(
+            thickness = 2.dp,
+            color = Color.Gray,
+        )
     }
 }

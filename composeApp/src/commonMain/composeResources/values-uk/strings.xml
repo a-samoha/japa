@@ -4,4 +4,11 @@
     <string name="shloka">Шлока</string>
     <string name="synonyms">Дослівно</string>
     <string name="translation">Переклад</string>
+    <string name="the_mind_was_attracted">Розум привабився смаком святих імен. Переважно повна увага.</string>
+    <string name="emotion_of_humility">Повторювання з емоцією смирення, поява смаку, ентузіазм.</string>
+    <string name="persistent_efforts">Наполегливі зусилля. Молитва розкаяння, пошук смирення.</string>
+    <string name="understanding_distraction">Розуміння розсіяності, зусилля в уважності попри різні думки.</string>
+    <string name="absentmindedness">Розсіяність. Інколи є розуміння неуважності. Нетривале зосередження. Планування справ. Прагнення мат. насолод та здобутків.</string>
+    <string name="complete_indifference">Повна байдужість. Думки про мат. плоди. Розглядання речей навколо. Дуже нудне повторювання.</string>
+    <string name="strong_drowsiness">Сильна сонливість, тупість, апатія, відраза до повторювання.</string>
 </resources>

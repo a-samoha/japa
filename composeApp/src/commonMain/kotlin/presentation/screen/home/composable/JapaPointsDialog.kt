@@ -133,7 +133,7 @@ private fun constraints(): ConstraintSet = ConstraintSet {
     val dividerHor = createRefFor("dividerHor")
     val pramada = createRefFor("pramada")
     val pointsColumn = createRefFor("pointsColumn")
-    val h40 = createGuidelineFromTop(fraction = 0.401f)
+    val h40 = createGuidelineFromTop(fraction = 0.402f)
 
     constrain(cheshta) {
         top.linkTo(parent.top)
@@ -201,9 +201,7 @@ fun PointsColumn(
         ),
     )
 
-    Column(
-        modifier = modifier.width(356.dp),
-    ) {
+    Column(modifier = modifier.width(356.dp)) {
         for (point in pointsList) {
             PointRow(point, showDialog, onDismissRequest)
         }
@@ -216,6 +214,7 @@ fun PointRow(
     showDialog: MutableState<Boolean>,
     onDismissRequest: (chosenPoints: Int) -> Unit,
 ) {
+    val pointTextSize = 28.sp
     if (triple.second <= 10) {
         val point = triple.second
         Row(
@@ -241,6 +240,7 @@ fun PointRow(
             ) {
                 Text(
                     text = "$point",
+                    fontSize = pointTextSize,
                     style = MaterialTheme.typography.titleMedium,
                 )
             }
@@ -277,6 +277,7 @@ fun PointRow(
                         ) {
                             Text(
                                 text = "$point",
+                                fontSize = pointTextSize,
                                 style = MaterialTheme.typography.titleMedium,
                             )
                         }
@@ -291,6 +292,11 @@ fun PointRow(
                 modifier = Modifier.width(304.dp).padding(horizontal = 8.dp),
                 text = triple.first,
                 style = MaterialTheme.typography.bodyLarge,
+            )
+            HorizontalDivider(
+                modifier = Modifier.padding(start = 304.dp),
+                thickness = 2.dp,
+                color = Color.Gray,
             )
         }
         HorizontalDivider(

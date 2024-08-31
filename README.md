@@ -54,9 +54,13 @@ ERRORS handling:
 
 https://bhagavadgita.io/
 
-https://www.youtube.com/watch?v=g4XSWQ7QT8g
-https://www.youtube.com/watch?v=7Wl-G8aXxDA
-https://www.youtube.com/watch?v=ZxBUd2TbVGk
+Lackner [KMP](https://www.youtube.com/watch?v=RSBO1C_Du2U&list=PLQkwcJG4YTCS55alEYv3J8CD4BXhqLUuk&pp=iAQB)  
+[Navigation KMP](https://www.youtube.com/watch?v=g4XSWQ7QT8g) 
+[KMM](https://www.youtube.com/watch?v=7Wl-G8aXxDA&list=PLQkwcJG4YTCQxZMQdhR2_TNYa-jwnXUGJ&pp=iAQB)
+
+Medium (KMP)
+[background](https://medium.com/@OlgaDery/kotlin-multiplatform-evaluation-part-2-how-to-design-background-functionality-42eb74416d87)
+[DataStore](https://medium.com/@stevdza-san/datastore-in-a-compose-multiplatform-for-ios-android-complete-guide-aa9370cdf33d)
 
 https://github.com/blackstoneaudio/Kormatter
 https://github.com/pearxteam/kormatter

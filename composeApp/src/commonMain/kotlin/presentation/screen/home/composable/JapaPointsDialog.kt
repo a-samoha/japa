@@ -65,7 +65,7 @@ fun JapaPointsDialog(
                     shape = RoundedCornerShape(1.dp)
                 ) {
                     ConstraintLayout(
-                        modifier = Modifier.width(552.dp).height(732.dp),
+                        modifier = Modifier.width(520.dp).height(732.dp),
                         constraintSet = constraints(),
                     ) {
                         Column(
@@ -201,7 +201,7 @@ fun PointsColumn(
         ),
     )
 
-    Column(modifier = modifier.width(356.dp)) {
+    Column(modifier = modifier.width(324.dp)) {
         for (point in pointsList) {
             PointRow(point, showDialog, onDismissRequest)
         }
@@ -214,11 +214,10 @@ fun PointRow(
     showDialog: MutableState<Boolean>,
     onDismissRequest: (chosenPoints: Int) -> Unit,
 ) {
-    val pointTextSize = 28.sp
     if (triple.second <= 10) {
         val point = triple.second
         Row(
-            modifier = Modifier.height(72.dp)
+            modifier = Modifier.height(pointRowHeight.dp)
                 .clickable {
                     onDismissRequest(point)
                     showDialog.value = false
@@ -226,7 +225,7 @@ fun PointRow(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                modifier = Modifier.width(304.dp).padding(horizontal = 8.dp),
+                modifier = Modifier.width(pointDescrTextWidth.dp).padding(horizontal = padding.dp),
                 text = triple.first,
                 style = MaterialTheme.typography.bodyLarge,
             )
@@ -240,7 +239,7 @@ fun PointRow(
             ) {
                 Text(
                     text = "$point",
-                    fontSize = pointTextSize,
+                    fontSize = pointDescrTextSize.sp,
                     style = MaterialTheme.typography.titleMedium,
                 )
             }
@@ -259,25 +258,28 @@ fun PointRow(
                 val points = "${triple.second}".map { it.digitToInt() }
                 for (point in points) {
                     Row(
-                        modifier = Modifier.height(72.dp)
+                        modifier = Modifier.height(pointRowHeight.dp)
                             .clickable {
                                 onDismissRequest(point)
                                 showDialog.value = false
                             }.background(color = triple.third),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Spacer(modifier = Modifier.width(304.dp).padding(horizontal = 8.dp))
+                        Spacer(
+                            modifier = Modifier.width(pointDescrTextWidth.dp)
+                                .padding(horizontal = padding.dp)
+                        )
                         VerticalDivider(
                             thickness = 2.dp,
                             color = Color.Gray,
                         )
                         Box(
-                            modifier = Modifier.size(48.dp),
+                            modifier = Modifier.size(pointValueBoxSize.dp),
                             contentAlignment = Alignment.Center,
                         ) {
                             Text(
                                 text = "$point",
-                                fontSize = pointTextSize,
+                                fontSize = pointDescrTextSize.sp,
                                 style = MaterialTheme.typography.titleMedium,
                             )
                         }
@@ -289,12 +291,12 @@ fun PointRow(
                 }
             }
             Text(
-                modifier = Modifier.width(304.dp).padding(horizontal = 8.dp),
+                modifier = Modifier.width(pointDescrTextWidth.dp).padding(horizontal = padding.dp),
                 text = triple.first,
                 style = MaterialTheme.typography.bodyLarge,
             )
             HorizontalDivider(
-                modifier = Modifier.padding(start = 304.dp),
+                modifier = Modifier.padding(start = pointDescrTextWidth.dp),
                 thickness = 2.dp,
                 color = Color.Gray,
             )
@@ -305,3 +307,9 @@ fun PointRow(
         )
     }
 }
+
+private const val pointRowHeight = 72
+private const val pointValueBoxSize = 48
+private const val pointDescrTextWidth = 272
+private const val pointDescrTextSize = 28
+private const val padding = 8

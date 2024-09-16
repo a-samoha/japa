@@ -53,8 +53,7 @@ internal fun HomeScreen() {
                 onStop = { cr ->
                     lastChantedRound = cr.copy(index = chantedRoundsState.size + 1)
                     showJapaPointsDialogState.value = true
-                }
-            )
+                })
             VerticalDivider(
                 color = Color.Gray,
                 modifier = Modifier.padding(top = 16.dp)
@@ -69,6 +68,7 @@ internal fun HomeScreen() {
             items = chantedRoundsState,
             modifier = Modifier.padding(start = 16.dp).fillMaxWidth().height(180.dp),
         )
+
         /**
          * Buttons do not know about [JapaStopWatch]
          * Look for chanting results in StopWatch onStop() lambda.

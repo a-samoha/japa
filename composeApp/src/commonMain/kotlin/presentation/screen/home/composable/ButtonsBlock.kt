@@ -32,6 +32,7 @@ import japa.composeapp.generated.resources.ic_stop
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
+import utils.currentTimestamp
 
 @Composable
 internal fun ButtonsBlock(
@@ -44,7 +45,7 @@ internal fun ButtonsBlock(
 
     var isPlaying by remember { mutableStateOf(false) }
 
-    isPlaying = when(stopwatchState.value){
+    isPlaying = when (stopwatchState.value) {
         StopWatchState.DEFAULT -> false
         StopWatchState.CHANT -> true
         StopWatchState.PAUSE -> false
@@ -56,7 +57,7 @@ internal fun ButtonsBlock(
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        // region 'Settings' button
+        // region "Settings" button
         IconButton(
             onClick = onSettingsClick,
             Modifier
@@ -75,14 +76,16 @@ internal fun ButtonsBlock(
             )
         }
         // endregion
-        // region 'Play/Stop' button
+
+        // region "Play/Stop" button
         RotatingIconButton(
             isPlayingState = isPlaying,
             changeIsPlayingState = { isPlaying = !isPlaying },
             onPlayStopClick,
         )
         // endregion
-        // region 'Pause' button
+
+        // region "Pause" button
         IconButton(
             onClick = {
                 isPlaying = false
@@ -116,6 +119,8 @@ fun RotatingIconButton(
 
     var rotationState by remember { mutableStateOf(0f) }
     var alphaState by remember { mutableStateOf(1f) }
+    var lastClickTime by remember { mutableStateOf(0L) }
+    val debounceInterval = 3000L // click debounce interval (3s)
 
     val rotation by animateFloatAsState( // 'play/stop' icon rotation animation
         targetValue = rotationState,
@@ -132,14 +137,17 @@ fun RotatingIconButton(
 
     IconButton(
         onClick = {
-            coroutineScope.launch {
-                alphaState = 0.1f
-                delay(500)
-                changeIsPlayingState()
-                alphaState = 1f
+            if (currentTimestamp() - lastClickTime >= debounceInterval) {
+                coroutineScope.launch {
+                    alphaState = 0.1f
+                    delay(500)
+                    changeIsPlayingState()
+                    alphaState = 1f
+                }
+                rotationState = if (isPlayingState) 0f else 360f
+                onPlayStopClick()
+                lastClickTime = currentTimestamp()
             }
-            rotationState = if (isPlayingState) 0f else 360f
-            onPlayStopClick()
         },
         modifier = Modifier
             .size(100.dp)

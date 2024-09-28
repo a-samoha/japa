@@ -1,6 +1,5 @@
 package presentation.screen.home
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,7 +13,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -34,18 +32,14 @@ import presentation.screen.home.model.ChantedRound
 internal fun HomeScreen() {
 
     var chantedRoundsState by remember { mutableStateOf(emptyList<ChantedRound>()) }
-    val stopwatchState = remember { mutableStateOf(DEFAULT) }
     val showJapaPointsDialogState = remember { mutableStateOf(false) }
+    val stopwatchState = remember { mutableStateOf(DEFAULT) }
 
     var lastChantedRound: ChantedRound? = null
 
-    Column(
-        Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    Column {
         Row(
             Modifier.fillMaxWidth().height(194.dp),
-            horizontalArrangement = Arrangement.End,
         ) {
             JapaStopWatch(
                 modifier = Modifier.weight(1f).fillMaxSize(),
@@ -54,16 +48,20 @@ internal fun HomeScreen() {
                     lastChantedRound = cr.copy(index = chantedRoundsState.size + 1)
                     showJapaPointsDialogState.value = true
                 })
+
             VerticalDivider(
                 color = Color.Gray,
                 modifier = Modifier.padding(top = 16.dp)
             )
+
             ChantedRounds(items = chantedRoundsState)
         }
+
         HorizontalDivider(
             color = Color.Gray,
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
         )
+
         Chart(
             items = chantedRoundsState,
             modifier = Modifier.padding(start = 16.dp).fillMaxWidth().height(180.dp),
@@ -82,6 +80,7 @@ internal fun HomeScreen() {
             },
             onPauseClick = { stopwatchState.value = PAUSE },
         )
+
         ShlokaBlock(Modifier.weight(1f).fillMaxSize())
     }
 
@@ -92,21 +91,4 @@ internal fun HomeScreen() {
         lastChantedRound?.let { chantedRoundsState = chantedRoundsState + it }
         if (stopwatchState.value != CHANT) stopwatchState.value = CHANT
     }
-
-//    if (showJapaPointsDialogState.value) {
-//        CustomDialogWithResultExample(
-//            onDismiss = {
-//                showJapaPointsDialogState.value = !showJapaPointsDialogState.value
-//                println("Dialog dismissed!")
-//            },
-//            onNegativeClick = {
-//                showJapaPointsDialogState.value = !showJapaPointsDialogState.value
-//                println("Negative Button Clicked!")
-//            },
-//            onPositiveClick = { color ->
-//                showJapaPointsDialogState.value = !showJapaPointsDialogState.value
-//                println("Selected color: $color")
-//            }
-//        )
-//    }
 }

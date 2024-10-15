@@ -4,9 +4,9 @@ import App
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import com.temetnosce.japa.utils.AndroidScreenLockManager
-import lackner.BatteryManager
 
 class MainActivity : ComponentActivity() {
 
@@ -16,7 +16,11 @@ class MainActivity : ComponentActivity() {
         AndroidScreenLockManager(this).keepScreenOn(true) // Enable screen stay-on behavior
 
         setContent {
-            App(batteryManager = remember { BatteryManager(applicationContext) })
+            App()
         }
     }
 }
+
+@Preview(showSystemUi = true)
+@Composable
+fun AppAndroidPreview() = App()

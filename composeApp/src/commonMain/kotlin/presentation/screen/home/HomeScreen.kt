@@ -1,6 +1,5 @@
 package presentation.screen.home
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,18 +7,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import lackner.BatteryManager
 import presentation.screen.home.composable.ButtonsBlock
 import presentation.screen.home.composable.ChantedRounds
 import presentation.screen.home.composable.Chart
@@ -33,9 +29,7 @@ import presentation.screen.home.composable.StopWatchState.STOP
 import presentation.screen.home.model.ChantedRound
 
 @Composable
-internal fun HomeScreen(
-    batteryManager: BatteryManager,
-) {
+internal fun HomeScreen() {
 
     var chantedRoundsState by remember { mutableStateOf(emptyList<ChantedRound>()) }
     val showJapaPointsDialogState = remember { mutableStateOf(false) }
@@ -44,7 +38,6 @@ internal fun HomeScreen(
     var lastChantedRound: ChantedRound? = null
 
     Column {
-        // region JapaStopWatch
         Row(
             Modifier.fillMaxWidth().height(194.dp),
         ) {
@@ -89,15 +82,6 @@ internal fun HomeScreen(
         )
 
         ShlokaBlock(Modifier.weight(1f).fillMaxSize())
-
-        Box(
-            modifier = Modifier.fillMaxWidth(),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(
-                text = "The current battery level is ${batteryManager.getBatteryLevel()}"
-            )
-        }
     }
 
     JapaPointsDialog(

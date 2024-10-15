@@ -17,7 +17,11 @@ Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-mu
 We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
 If you face any issues, please report them on [GitHub](https://github.com/JetBrains/compose-multiplatform/issues).
 
-You can open the web application by running the `:composeApp:wasmJsBrowserDevelopmentRun` Gradle task.
+[To run the desktop app](https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-create-first-app.html#run-your-application-on-desktop)
+Or just click "Play" btn in the file 'main.kt' in desktopMain module
+
+[To run the web application](https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-create-first-app.html#run-your-web-application) 
+Or try running the `:composeApp:wasmJsBrowserDevelopmentRun` Gradle task.
 
 To run iosApp:
 - install 'XCode' (Apple developer tool) in 'App Store'
@@ -49,6 +53,9 @@ ERRORS handling:
   - handling:
     - uninstall java jre with instructions above
     - [download](https://www.oracle.com/pe/java/technologies/downloads/#jdk22-mac) and install jdk last version (v22).
+- ERROR: 'Execution failed for task ':kotlinStoreYarnLock'.'
+  - handling:
+    run in AS terminal - $ ./gradlew kotlinUpgradeYarnLock
 
 [Show all files in macOS Finder](https://apple.stackexchange.com/a/34872)
 

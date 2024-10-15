@@ -19,6 +19,9 @@ If you face any issues, please report them on [GitHub](https://github.com/JetBra
 
 [To run the desktop app](https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-create-first-app.html#run-your-application-on-desktop)
 Or just click "Play" btn in the file 'main.kt' in desktopMain module
+- ERROR 'No MainKt'
+  - handling:
+    - run in AS terminal - $ ./gradlew run 
 
 [To run the web application](https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-create-first-app.html#run-your-web-application) 
 Or try running the `:composeApp:wasmJsBrowserDevelopmentRun` Gradle task.

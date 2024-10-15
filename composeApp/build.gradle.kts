@@ -1,7 +1,6 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
@@ -12,7 +11,6 @@ plugins {
 }
 
 kotlin {
-    @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         moduleName = "composeApp"
         browser {
@@ -56,6 +54,10 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+
+            /* From Lackner video */
+            implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -66,6 +68,13 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.kotlinx.datetime)
             implementation(libs.constraintlayout.compose.multiplatform)
+
+            /* From Lackner video */
+            api(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.lifecycle.viewmodel)
+            implementation(libs.navigation.compose)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

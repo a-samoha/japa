@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
-import presentation.screen.home.model.ChantedRound
+import domain.entity.ChantedRound
 import utils.currentTimestamp
 
 enum class StopWatchState {

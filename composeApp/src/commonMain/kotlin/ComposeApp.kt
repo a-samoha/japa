@@ -7,7 +7,7 @@ import org.koin.compose.KoinContext
 import presentation.screen.home.HomeScreen
 
 @Composable
-internal fun App() {
+internal fun ComposeApp() {
     MaterialTheme {
         KoinContext {
             // val dbClient = koinInject<DbClient>()

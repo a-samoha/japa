@@ -1,4 +1,4 @@
-package presentation.screen.home.model
+package domain.entity
 
 data class ChantedRound(
     val index: Int = 1,

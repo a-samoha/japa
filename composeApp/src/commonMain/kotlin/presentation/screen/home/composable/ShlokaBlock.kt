@@ -35,7 +35,7 @@ import japa.composeapp.generated.resources.shloka
 import japa.composeapp.generated.resources.synonyms
 import japa.composeapp.generated.resources.translation
 import org.jetbrains.compose.resources.stringResource
-import presentation.screen.home.model.ShlokaModel
+import domain.entity.Shloka
 
 @Composable
 internal fun ShlokaBlock(modifier: Modifier = Modifier) {
@@ -44,11 +44,11 @@ internal fun ShlokaBlock(modifier: Modifier = Modifier) {
     var isSynonymsVisible by remember { mutableStateOf(true) }
     var isTranslationVisible by remember { mutableStateOf(true) }
 
-    val shlokaModel = ShlokaModel()
+    val shloka = Shloka()
 
     Column(modifier = modifier.padding(16.dp)) {
         Text(
-            text = shlokaModel.title,
+            text = shloka.title,
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
@@ -61,7 +61,7 @@ internal fun ShlokaBlock(modifier: Modifier = Modifier) {
                     visible = isShlokaVisible,
                     onToggleVisibility = { isShlokaVisible = !isShlokaVisible },
                     title = stringResource(Res.string.shloka),
-                    content = shlokaModel.shloka,
+                    content = shloka.shloka,
                     modifier = Modifier.align(Alignment.Start)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -71,7 +71,7 @@ internal fun ShlokaBlock(modifier: Modifier = Modifier) {
                     visible = isSynonymsVisible,
                     onToggleVisibility = { isSynonymsVisible = !isSynonymsVisible },
                     title = stringResource(Res.string.synonyms),
-                    content = shlokaModel.synonyms,
+                    content = shloka.synonyms,
                     modifier = Modifier.align(Alignment.Start)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -81,7 +81,7 @@ internal fun ShlokaBlock(modifier: Modifier = Modifier) {
                     visible = isTranslationVisible,
                     onToggleVisibility = { isTranslationVisible = !isTranslationVisible },
                     title = stringResource(Res.string.translation),
-                    content = shlokaModel.translation,
+                    content = shloka.translation,
                     modifier = Modifier.align(Alignment.Start)
                 )
             }

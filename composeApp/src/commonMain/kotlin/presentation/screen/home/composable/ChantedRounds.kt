@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import presentation.screen.home.model.ChantedRound
+import domain.entity.ChantedRound
 
 @Composable
 internal fun ChantedRounds(

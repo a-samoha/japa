@@ -1,6 +1,6 @@
 package com.temetnosce.japa
 
-import App
+import ComposeApp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,11 +16,11 @@ class MainActivity : ComponentActivity() {
         AndroidScreenLockManager(this).keepScreenOn(true) // Enable screen stay-on behavior
 
         setContent {
-            App()
+            ComposeApp()
         }
     }
 }
 
 @Preview(showSystemUi = true)
 @Composable
-fun AppAndroidPreview() = App()
+fun AppAndroidPreview() = ComposeApp()

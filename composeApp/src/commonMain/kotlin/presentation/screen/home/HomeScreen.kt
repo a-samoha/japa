@@ -26,7 +26,7 @@ import presentation.screen.home.composable.StopWatchState.CHANT
 import presentation.screen.home.composable.StopWatchState.DEFAULT
 import presentation.screen.home.composable.StopWatchState.PAUSE
 import presentation.screen.home.composable.StopWatchState.STOP
-import presentation.screen.home.model.ChantedRound
+import domain.entity.ChantedRound
 
 @Composable
 internal fun HomeScreen() {

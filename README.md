@@ -60,7 +60,7 @@ ERRORS handling:
   - handling:
     run in AS terminal - $ ./gradlew kotlinUpgradeYarnLock
 
-[Show all files in macOS Finder](https://apple.stackexchange.com/a/34872)
+to [Show all files in macOS Finder](https://apple.stackexchange.com/a/34872) open Finder and click 'comand+shift+h'
 
 https://bhagavadgita.io/
 

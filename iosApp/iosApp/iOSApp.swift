@@ -4,7 +4,7 @@ import SwiftUI
 struct iOSApp: App {
     var body: some Scene {
         WindowGroup {
-            IosScreenLockManager().keepScreenOn(true)
+            // IosScreenLockManager().keepScreenOn(true)
             ContentView()
         }
     }

@@ -7,29 +7,30 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import font
+import japa.composeapp.generated.resources.Res
+import japa.composeapp.generated.resources.space_mono_bold
+import japa.composeapp.generated.resources.space_mono_bold_italic
+import japa.composeapp.generated.resources.space_mono_italic
+import japa.composeapp.generated.resources.space_mono_regular
+import org.jetbrains.compose.resources.Font
 
 // Set of Material typography styles to start with
 @Composable
 fun AppTypography(): Typography {
     val spaceMono = FontFamily(
-        font(
-            name = "SpaceMono Regular",
-            res = "font/space_mono_regular.ttf",
+        Font(
+            Res.font.space_mono_regular,
         ),
-        font(
-            name = "SpaceMono Italic",
-            res = "font/space_mono_italic.ttf",
-            style = FontStyle.Italic
-        ),
-        font(
-            name = "SpaceMono Bold",
-            res = "font/space_mono_bold.ttf",
+        Font(
+            Res.font.space_mono_bold,
             weight = FontWeight.Bold
         ),
-        font(
-            name = "SpaceMono Bold Italic",
-            res = "font/space_mono_bold_italic.ttf",
+        Font(
+            Res.font.space_mono_italic,
+            style = FontStyle.Italic
+        ),
+        Font(
+            Res.font.space_mono_bold_italic,
             weight = FontWeight.Bold,
             style = FontStyle.Italic
         ),

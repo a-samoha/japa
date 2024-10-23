@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import domain.entity.ChantedRound
+import domain.entity.Shloka
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import presentation.screen.home.components.ButtonsBlock
 import presentation.screen.home.components.ChantedRounds
@@ -28,6 +29,7 @@ import presentation.screen.home.components.StopWatchState.CHANT
 import presentation.screen.home.components.StopWatchState.DEFAULT
 import presentation.screen.home.components.StopWatchState.PAUSE
 import presentation.screen.home.components.StopWatchState.STOP
+import presentation.theme.JapaAppTheme
 
 @Composable
 internal fun HomeScreen() {
@@ -102,8 +104,15 @@ private fun HomeContent(
 
 }
 
-@Preview()
+@Preview
 @Composable
 private fun HomePreview() {
-
+    JapaAppTheme {
+        HomeContent(
+            state = HomeState(
+                false,
+                Shloka()
+            )
+        )
+    }
 }

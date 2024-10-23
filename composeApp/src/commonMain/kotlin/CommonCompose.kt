@@ -5,10 +5,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import org.koin.compose.KoinContext
 import presentation.screen.home.HomeScreen
+import presentation.theme.JapaAppTheme
 
 @Composable
-internal fun ComposeApp() {
-    MaterialTheme {
+internal fun CommonCompose() {
+    JapaAppTheme {
         KoinContext {
             // val dbClient = koinInject<DbClient>()
             NavHost(

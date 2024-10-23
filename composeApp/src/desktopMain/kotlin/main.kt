@@ -11,7 +11,7 @@ fun main() {
             onCloseRequest = ::exitApplication,
             title = "Japa",
         ) {
-            ComposeApp()
+            CommonCompose()
         }
     }
 }

@@ -9,6 +9,6 @@ fun main() {
     initKoin()
 
     ComposeViewport(document.body!!) {
-        ComposeApp()
+        CommonCompose()
     }
 }

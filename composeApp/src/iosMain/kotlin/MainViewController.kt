@@ -3,4 +3,4 @@ import di.initKoin
 
 fun MainViewController() = ComposeUIViewController(
     configure = { initKoin() }
-) { ComposeApp() }
+) { CommonCompose() }

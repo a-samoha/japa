@@ -1,4 +1,4 @@
-package presentation.screen.home.composable
+package presentation.screen.home.components
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.runtime.Composable

@@ -16,17 +16,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import presentation.screen.home.composable.ButtonsBlock
-import presentation.screen.home.composable.ChantedRounds
-import presentation.screen.home.composable.Chart
-import presentation.screen.home.composable.JapaPointsDialog
-import presentation.screen.home.composable.JapaStopWatch
-import presentation.screen.home.composable.ShlokaBlock
-import presentation.screen.home.composable.StopWatchState.CHANT
-import presentation.screen.home.composable.StopWatchState.DEFAULT
-import presentation.screen.home.composable.StopWatchState.PAUSE
-import presentation.screen.home.composable.StopWatchState.STOP
 import domain.entity.ChantedRound
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import presentation.screen.home.components.ButtonsBlock
+import presentation.screen.home.components.ChantedRounds
+import presentation.screen.home.components.Chart
+import presentation.screen.home.components.JapaPointsDialog
+import presentation.screen.home.components.JapaStopWatch
+import presentation.screen.home.components.ShlokaBlock
+import presentation.screen.home.components.StopWatchState.CHANT
+import presentation.screen.home.components.StopWatchState.DEFAULT
+import presentation.screen.home.components.StopWatchState.PAUSE
+import presentation.screen.home.components.StopWatchState.STOP
 
 @Composable
 internal fun HomeScreen() {
@@ -91,4 +92,18 @@ internal fun HomeScreen() {
         lastChantedRound?.let { chantedRoundsState = chantedRoundsState + it }
         if (stopwatchState.value != CHANT) stopwatchState.value = CHANT
     }
+}
+
+@Composable
+private fun HomeContent(
+    state: HomeState,
+    modifier: Modifier = Modifier,
+) {
+
+}
+
+@Preview()
+@Composable
+private fun HomePreview() {
+
 }

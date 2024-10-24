@@ -1,6 +1,5 @@
-package utils
-
 import platform.UIKit.UIApplication
+import utils.ScreenLockManager
 
 class IosScreenLockManager : ScreenLockManager {
 

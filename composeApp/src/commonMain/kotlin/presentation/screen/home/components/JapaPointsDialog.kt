@@ -47,14 +47,14 @@ import org.jetbrains.compose.resources.stringResource
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun JapaPointsDialog(
-    showDialog: MutableState<Boolean>,
+    showDialog: Boolean,
     onDismissRequest: (chosenPoints: Int) -> Unit,
 ) {
     val scrollingState = rememberScrollState()
     LaunchedEffect("scrollHorizontal") {
         scrollingState.animateScrollTo(800) // scroll 800 px
     }
-    if (showDialog.value) {
+    if (showDialog) {
         BasicAlertDialog(
             onDismissRequest = {},
             content = {
@@ -118,7 +118,7 @@ fun JapaPointsDialog(
                         }
                         PointsColumn(
                             Modifier.layoutId("pointsColumn"),
-                            showDialog,
+//                            showDialog,
                             onDismissRequest
                         )
                     }
@@ -160,7 +160,7 @@ private fun constraints(): ConstraintSet = ConstraintSet {
 @Composable
 fun PointsColumn(
     modifier: Modifier,
-    showDialog: MutableState<Boolean>,
+//    showDialog: MutableState<Boolean>,
     onDismissRequest: (chosenPoints: Int) -> Unit,
 ) {
     val pointsList = listOf(
@@ -203,7 +203,7 @@ fun PointsColumn(
 
     Column(modifier = modifier.width(324.dp)) {
         for (point in pointsList) {
-            PointRow(point, showDialog, onDismissRequest)
+            PointRow(point, onDismissRequest)
         }
     }
 }
@@ -211,7 +211,7 @@ fun PointsColumn(
 @Composable
 fun PointRow(
     triple: Triple<String, Int, Color>,
-    showDialog: MutableState<Boolean>,
+//    showDialog: MutableState<Boolean>,
     onDismissRequest: (chosenPoints: Int) -> Unit,
 ) {
     if (triple.second <= 10) {
@@ -220,7 +220,7 @@ fun PointRow(
             modifier = Modifier.height(pointRowHeight.dp)
                 .clickable {
                     onDismissRequest(point)
-                    showDialog.value = false
+//                    showDialog.value = false
                 }.background(color = triple.third),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -261,7 +261,7 @@ fun PointRow(
                         modifier = Modifier.height(pointRowHeight.dp)
                             .clickable {
                                 onDismissRequest(point)
-                                showDialog.value = false
+//                                showDialog.value = false
                             }.background(color = triple.third),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {

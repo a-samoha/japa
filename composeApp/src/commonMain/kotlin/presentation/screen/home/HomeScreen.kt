@@ -17,8 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import domain.entity.ChantedRound
-import domain.entity.Shloka
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import presentation.screen.home.components.ButtonsBlock
 import presentation.screen.home.components.ChantedRounds
 import presentation.screen.home.components.Chart
@@ -29,7 +27,6 @@ import presentation.screen.home.components.StopWatchState.CHANT
 import presentation.screen.home.components.StopWatchState.DEFAULT
 import presentation.screen.home.components.StopWatchState.PAUSE
 import presentation.screen.home.components.StopWatchState.STOP
-import presentation.theme.JapaAppTheme
 
 @Composable
 internal fun HomeScreen() {
@@ -37,8 +34,7 @@ internal fun HomeScreen() {
     var chantedRoundsState by remember { mutableStateOf(emptyList<ChantedRound>()) }
     val showJapaPointsDialogState = remember { mutableStateOf(false) }
     val stopwatchState = remember { mutableStateOf(DEFAULT) }
-
-    var lastChantedRound: ChantedRound? = null
+    var lastChantedRound: ChantedRound? by remember { mutableStateOf(null) }
 
     Column {
         Row(
@@ -76,7 +72,7 @@ internal fun HomeScreen() {
          */
         ButtonsBlock(
             Modifier.fillMaxWidth().height(140.dp),
-            stopwatchState,
+            stopwatchState.value,
             onSettingsClick = { println("test onSettingsClick") },
             onPlayStopClick = {
                 stopwatchState.value = if (stopwatchState.value != CHANT) CHANT else STOP
@@ -88,11 +84,12 @@ internal fun HomeScreen() {
     }
 
     JapaPointsDialog(
-        showDialog = showJapaPointsDialogState,
+        showDialog = showJapaPointsDialogState.value,
     ) { chosenPoints ->
         lastChantedRound = lastChantedRound?.copy(points = chosenPoints)
         lastChantedRound?.let { chantedRoundsState = chantedRoundsState + it }
         if (stopwatchState.value != CHANT) stopwatchState.value = CHANT
+        showJapaPointsDialogState.value = false
     }
 }
 
@@ -102,17 +99,4 @@ private fun HomeContent(
     modifier: Modifier = Modifier,
 ) {
 
-}
-
-@Preview
-@Composable
-private fun HomePreview() {
-    JapaAppTheme {
-        HomeContent(
-            state = HomeState(
-                false,
-                Shloka()
-            )
-        )
-    }
 }

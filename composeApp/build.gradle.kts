@@ -43,7 +43,6 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.foundation)
             implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
 
             implementation(libs.lifecycle.viewmodel)
             implementation(libs.navigation.compose)

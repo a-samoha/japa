@@ -14,7 +14,10 @@ import androidx.compose.ui.unit.dp
 import domain.entity.ChantedRound
 
 @Composable
-fun Chart(items: List<ChantedRound>, modifier: Modifier = Modifier) {
+fun Chart(
+    items: List<ChantedRound>,
+    modifier: Modifier = Modifier,
+) {
     val textMeasurer = rememberTextMeasurer()
     Canvas(modifier = modifier) {
         val padding = 20.dp.toPx()

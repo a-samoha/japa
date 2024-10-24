@@ -37,7 +37,7 @@ import utils.currentTimestamp
 @Composable
 internal fun ButtonsBlock(
     modifier: Modifier = Modifier,
-    stopwatchState: MutableState<StopWatchState>,
+    stopwatchState: StopWatchState,
     onSettingsClick: () -> Unit,
     onPlayStopClick: () -> Unit,
     onPauseClick: () -> Unit,
@@ -45,7 +45,7 @@ internal fun ButtonsBlock(
 
     var isPlaying by remember { mutableStateOf(false) }
 
-    isPlaying = when (stopwatchState.value) {
+    isPlaying = when (stopwatchState) {
         StopWatchState.DEFAULT -> false
         StopWatchState.CHANT -> true
         StopWatchState.PAUSE -> false

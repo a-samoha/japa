@@ -44,7 +44,7 @@ kotlin {
             implementation(compose.foundation)
             implementation(compose.components.resources)
 
-            implementation(libs.lifecycle.viewmodel)
+            implementation(libs.lifecycle.runtimeCompose)
             implementation(libs.navigation.compose)
 
             implementation(libs.kotlinx.datetime)

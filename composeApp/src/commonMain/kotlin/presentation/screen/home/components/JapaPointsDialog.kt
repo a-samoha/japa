@@ -23,7 +23,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -48,7 +47,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun JapaPointsDialog(
     showDialog: Boolean,
-    onDismissRequest: (chosenPoints: Int) -> Unit,
+    onDismissRequest: (chosenPoint: Int) -> Unit,
 ) {
     val scrollingState = rememberScrollState()
     LaunchedEffect("scrollHorizontal") {

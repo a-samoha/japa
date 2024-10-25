@@ -16,7 +16,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import domain.entity.ChantedRound
+import org.koin.compose.viewmodel.koinViewModel
 import presentation.screen.home.components.ButtonsBlock
 import presentation.screen.home.components.ChantedRounds
 import presentation.screen.home.components.Chart
@@ -24,17 +26,41 @@ import presentation.screen.home.components.JapaPointsDialog
 import presentation.screen.home.components.JapaStopWatch
 import presentation.screen.home.components.ShlokaBlock
 import presentation.screen.home.components.StopWatchState.CHANT
-import presentation.screen.home.components.StopWatchState.DEFAULT
 import presentation.screen.home.components.StopWatchState.PAUSE
 import presentation.screen.home.components.StopWatchState.STOP
 
 @Composable
-internal fun HomeScreen() {
-
-    var chantedRoundsState by remember { mutableStateOf(emptyList<ChantedRound>()) }
-    val showJapaPointsDialogState = remember { mutableStateOf(false) }
-    val stopwatchState = remember { mutableStateOf(DEFAULT) }
+internal fun HomeScreen(
+    viewModel: HomeViewModel = koinViewModel()
+) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
     var lastChantedRound: ChantedRound? by remember { mutableStateOf(null) }
+
+    HomeContent(
+        state = state,
+        onJapaStopwatchStop = { cr ->
+            lastChantedRound = cr.copy(index = state.chantedRounds.size + 1)
+            viewModel.showJapaPointsDialog(true)
+        },
+        onPauseClick = { viewModel.setStopwatchState(PAUSE) },
+        onPlayStopClick = { viewModel.setStopwatchState(if (state.stopWatchState != CHANT) CHANT else STOP) },
+        onJapaPointsDialogDismiss = { chosenPoint ->
+            lastChantedRound = lastChantedRound?.copy(points = chosenPoint)
+            lastChantedRound?.let { viewModel.addChantedRound(it) } /*state.chantedRounds = state.chantedRounds + it*/
+            if (state.stopWatchState != CHANT) viewModel.setStopwatchState(CHANT)
+            viewModel.showJapaPointsDialog(false)
+        },
+    )
+}
+
+@Composable
+private fun HomeContent(
+    state: HomeState,
+    onJapaStopwatchStop: (chantedRound: ChantedRound) -> Unit,
+    onPauseClick: () -> Unit,
+    onPlayStopClick: () -> Unit,
+    onJapaPointsDialogDismiss: (chosenPoint: Int) -> Unit,
+) {
 
     Column {
         Row(
@@ -42,18 +68,16 @@ internal fun HomeScreen() {
         ) {
             JapaStopWatch(
                 modifier = Modifier.weight(1f).fillMaxSize(),
-                state = stopwatchState.value,
-                onStop = { cr ->
-                    lastChantedRound = cr.copy(index = chantedRoundsState.size + 1)
-                    showJapaPointsDialogState.value = true
-                })
+                state = state.stopWatchState,
+                onStop = { onJapaStopwatchStop(it) }
+            )
 
             VerticalDivider(
                 color = Color.Gray,
                 modifier = Modifier.padding(top = 16.dp)
             )
 
-            ChantedRounds(items = chantedRoundsState)
+            ChantedRounds(items = state.chantedRounds)
         }
 
         HorizontalDivider(
@@ -62,7 +86,7 @@ internal fun HomeScreen() {
         )
 
         Chart(
-            items = chantedRoundsState,
+            items = state.chantedRounds,
             modifier = Modifier.padding(start = 16.dp).fillMaxWidth().height(180.dp),
         )
 
@@ -72,31 +96,18 @@ internal fun HomeScreen() {
          */
         ButtonsBlock(
             Modifier.fillMaxWidth().height(140.dp),
-            stopwatchState.value,
+            state.stopWatchState,
             onSettingsClick = { println("test onSettingsClick") },
-            onPlayStopClick = {
-                stopwatchState.value = if (stopwatchState.value != CHANT) CHANT else STOP
-            },
-            onPauseClick = { stopwatchState.value = PAUSE },
+            onPauseClick = onPauseClick,
+            onPlayStopClick = onPlayStopClick,
         )
 
         ShlokaBlock(Modifier.weight(1f).fillMaxSize())
     }
 
     JapaPointsDialog(
-        showDialog = showJapaPointsDialogState.value,
-    ) { chosenPoints ->
-        lastChantedRound = lastChantedRound?.copy(points = chosenPoints)
-        lastChantedRound?.let { chantedRoundsState = chantedRoundsState + it }
-        if (stopwatchState.value != CHANT) stopwatchState.value = CHANT
-        showJapaPointsDialogState.value = false
+        showDialog = state.isPointsDialogVisible,
+    ) { chosenPoint ->
+        onJapaPointsDialogDismiss(chosenPoint)
     }
-}
-
-@Composable
-private fun HomeContent(
-    state: HomeState,
-    modifier: Modifier = Modifier,
-) {
-
 }

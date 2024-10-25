@@ -15,7 +15,7 @@ uiToolingPreviewAndroid = "1.7.4"
 koin = "4.0.0"
 koinComposeMultiplatform = "4.0.0"
 navigationCompose = "2.8.0-alpha02"
-lifecycleViewModel = "2.8.6"
+lifecycle = "2.8.3"
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -32,7 +32,10 @@ androidx-activity-compose = { module = "androidx.activity:activity-compose", ver
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 constraintlayout-compose-multiplatform = { module = "tech.annexflow.compose:constraintlayout-compose-multiplatform", version.ref = "constraintlayoutComposeMultiplatform" }
 
-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleViewModel"}
+#lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycle"} # треба прояснити для чого ця ліба
+#lifecycle-viewmodelCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" } # треба прояснити для чого ця ліба
+lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" } # .collectAsStateWithLifecycle()
+
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }

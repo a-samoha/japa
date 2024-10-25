@@ -1,5 +1,8 @@
 package domain.entity
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class Shloka(
     val title: String = "Бг. 4.34",
     val shloka: String = "тад віддгі пран̣іпа̄тена\nпаріпраш́нена севайа̄\nупадекшйанті те джн̃а̄нам̇\nджн̃а̄нінас таттва-дарш́інах̣",

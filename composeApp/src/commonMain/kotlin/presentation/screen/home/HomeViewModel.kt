@@ -2,11 +2,13 @@ package presentation.screen.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dependencies.ChantedRoundsRepository
 import domain.entity.ChantedRound
+import domain.repository.ChantedRoundsRepository
+import domain.repository.ShlokasRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
@@ -14,7 +16,8 @@ import kotlinx.coroutines.flow.update
 import presentation.screen.home.components.StopWatchState
 
 class HomeViewModel(
-    private val repo: ChantedRoundsRepository
+    private val chantedRoundsRepo: ChantedRoundsRepository,
+    private val shlokasRepo: ShlokasRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(HomeState())
@@ -27,13 +30,24 @@ class HomeViewModel(
         )
 
     private fun loadData() {
-        repo.observe()
-            .onEach { chantedRounds -> _state.update { it.copy(chantedRounds = chantedRounds) } }
+        chantedRoundsRepo.observe()
+            .map { chantedRounds ->
+                val shloka = shlokasRepo.getShloka(chantedRounds.size)
+                chantedRounds to shloka
+            }
+            .onEach { pair ->
+                _state.update {
+                    it.copy(
+                        chantedRounds = pair.first,
+                        shloka = pair.second
+                    )
+                }
+            }
             .launchIn(viewModelScope)
     }
 
     fun addChantedRound(chantedRound: ChantedRound) {
-        repo.save(chantedRound)
+        chantedRoundsRepo.save(chantedRound)
     }
 
     fun showJapaPointsDialog(isVisible: Boolean) {

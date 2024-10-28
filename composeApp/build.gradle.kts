@@ -6,8 +6,9 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
-    //alias(libs.plugins.kotlin.serialization)
-    //alias(libs.plugins.kotlin.parcelize)
+
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 kotlin {
@@ -36,6 +37,8 @@ kotlin {
 
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
+
+            implementation(libs.kotlinx.serialization.json)
         }
         commonMain.dependencies {
             implementation(compose.ui)

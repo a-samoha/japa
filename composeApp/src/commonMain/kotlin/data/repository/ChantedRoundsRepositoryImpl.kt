@@ -1,19 +1,16 @@
-package dependencies
+package data.repository
 
+import data.local.ChantedRoundsLocalDataSource
 import domain.entity.ChantedRound
+import domain.repository.ChantedRoundsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-interface ChantedRoundsRepository {
-    fun observe(): Flow<List<ChantedRound>>
-    fun save(chantedRound: ChantedRound)
-    fun helloWorld(): String
-}
 
 class ChantedRoundsRepositoryImpl(
-    private val dbClient: DbClient
+    private val chantedRoundsLocalDataSource: ChantedRoundsLocalDataSource
 ) : ChantedRoundsRepository {
 
     private val _chantedRoundsFlow = MutableStateFlow<List<ChantedRound>>(emptyList())

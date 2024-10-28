@@ -1,7 +1,7 @@
-package dependencies
+package data.local
 
 import android.content.Context
 
-actual class DbClient(
+actual class ChantedRoundsLocalDataSource(
     private val context: Context
 ) {}

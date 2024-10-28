@@ -18,6 +18,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import domain.entity.ChantedRound
+import japa.composeapp.generated.resources.Res
+import japa.composeapp.generated.resources.shloka_title
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import presentation.screen.home.components.ButtonsBlock
 import presentation.screen.home.components.ChantedRounds
@@ -46,7 +49,7 @@ internal fun HomeScreen(
         onPlayStopClick = { viewModel.setStopwatchState(if (state.stopWatchState != CHANT) CHANT else STOP) },
         onJapaPointsDialogDismiss = { chosenPoint ->
             lastChantedRound = lastChantedRound?.copy(points = chosenPoint)
-            lastChantedRound?.let { viewModel.addChantedRound(it) } /*state.chantedRounds = state.chantedRounds + it*/
+            lastChantedRound?.let { viewModel.addChantedRound(it) }
             if (state.stopWatchState != CHANT) viewModel.setStopwatchState(CHANT)
             viewModel.showJapaPointsDialog(false)
         },
@@ -102,7 +105,17 @@ private fun HomeContent(
             onPlayStopClick = onPlayStopClick,
         )
 
-        ShlokaBlock(Modifier.weight(1f).fillMaxSize())
+        ShlokaBlock(
+            shloka = state.shloka.let {
+                it.copy(
+                    title = stringResource(
+                        Res.string.shloka_title,
+                        it.id
+                    )
+                )
+            },
+            modifier = Modifier.weight(1f).fillMaxSize()
+        )
     }
 
     JapaPointsDialog(

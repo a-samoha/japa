@@ -30,21 +30,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import domain.entity.Shloka
 import japa.composeapp.generated.resources.Res
 import japa.composeapp.generated.resources.shloka
 import japa.composeapp.generated.resources.synonyms
 import japa.composeapp.generated.resources.translation
 import org.jetbrains.compose.resources.stringResource
-import domain.entity.Shloka
 
 @Composable
-internal fun ShlokaBlock(modifier: Modifier = Modifier) {
-    // Создаём состояние для управления видимостью блоков
+internal fun ShlokaBlock(
+    shloka: Shloka,
+    modifier: Modifier = Modifier
+) {
     var isShlokaVisible by remember { mutableStateOf(true) }
     var isSynonymsVisible by remember { mutableStateOf(true) }
     var isTranslationVisible by remember { mutableStateOf(true) }
-
-    val shloka = Shloka()
 
     Column(modifier = modifier.padding(16.dp)) {
         Text(

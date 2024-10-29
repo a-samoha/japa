@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.temetnosce.japa.domain.entity.ChantedRound
-import kotlinx.coroutines.delay
 import com.temetnosce.japa.utils.currentTimestamp
+import kotlinx.coroutines.delay
 
 enum class StopWatchState {
     DEFAULT, CHANT, PAUSE, STOP
@@ -31,34 +31,34 @@ internal fun JapaStopWatch(
     var elapsedTime by remember { mutableStateOf(0L) }
     var running by remember { mutableStateOf(false) }
 
-    LaunchedEffect(state) {
-        when (state) {
-            StopWatchState.DEFAULT -> Unit
-            StopWatchState.CHANT -> {
-                if (!running) {
-                    if (startTime == null) startTime = currentTimestamp()
-                    running = true
+    when (state) {
+        StopWatchState.DEFAULT,
+        StopWatchState.PAUSE -> {
+            running = false
+        }
+        StopWatchState.CHANT -> {
+            LaunchedEffect(Unit) {
+                if (!running && startTime == null) {
+                    startTime = currentTimestamp()
                 }
+                running = true
                 while (running) {
                     delay(1000L)
-                    elapsedTime += 1
+                    startTime?.let { elapsedTime = (currentTimestamp() - it)/1000 }
                 }
             }
-            StopWatchState.PAUSE -> {
-                running = false
-            }
-            StopWatchState.STOP -> {
-                running = false
-                onStop(
-                    ChantedRound(
-                        duration = elapsedTime.toFormatedString(),
-                        startTimestamp = startTime ?: 0L,
-                        endTimestamp = currentTimestamp()
-                    )
+        }
+        StopWatchState.STOP -> {
+            running = false
+            onStop(
+                ChantedRound(
+                    duration = elapsedTime.toFormatedString(),
+                    startTimestamp = startTime ?: 0L,
+                    endTimestamp = currentTimestamp()
                 )
-                startTime = null
-                elapsedTime = 0L
-            }
+            )
+            startTime = null
+            elapsedTime = 0L
         }
     }
 

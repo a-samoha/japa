@@ -1,3 +1,5 @@
 package com.temetnosce.japa.data.local
 
-actual class ChantedRoundsLocalDataSource {}
+import com.temetnosce.japa.domain.datasource.ChantedRoundsDataSource
+
+actual class ChantedRoundsLocalDataSource : ChantedRoundsDataSource.Local

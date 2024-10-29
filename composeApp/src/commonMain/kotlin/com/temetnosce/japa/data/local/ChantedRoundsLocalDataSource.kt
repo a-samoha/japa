@@ -1,3 +1,5 @@
 package com.temetnosce.japa.data.local
 
-expect class ChantedRoundsLocalDataSource {}
+import com.temetnosce.japa.domain.datasource.ChantedRoundsDataSource
+
+expect class ChantedRoundsLocalDataSource : ChantedRoundsDataSource.Local

@@ -1,7 +1,7 @@
 package com.temetnosce.japa
 
 import android.app.Application
-import di.initKoin
+import com.temetnosce.japa.di.initKoin
 import org.koin.android.ext.koin.androidContext
 
 class JapaApp : Application() {

@@ -2,7 +2,6 @@ package com.temetnosce.japa.utils
 
 import android.app.Activity
 import android.view.WindowManager
-import utils.ScreenLockManager
 
 class AndroidScreenLockManager(private val activity: Activity) : ScreenLockManager {
 

@@ -9,9 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import domain.entity.ChantedRound
-import presentation.screen.home.components.Chart
-import presentation.theme.JapaAppTheme
+import com.temetnosce.japa.domain.entity.ChantedRound
+import com.temetnosce.japa.presentation.screen.home.components.Chart
+import com.temetnosce.japa.presentation.theme.JapaAppTheme
 
 @Composable
 @Preview(showBackground = true)

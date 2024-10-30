@@ -25,40 +25,33 @@ enum class StopWatchState {
 internal fun JapaStopWatch(
     modifier: Modifier = Modifier,
     state: StopWatchState,
-    onStop: (ChantedRound) -> Unit
+    onStop: (ChantedRound) -> Unit,
 ) {
-    var startTime by remember { mutableStateOf<Long?>(null) }
-    var elapsedTime by remember { mutableStateOf(0L) }
-    var running by remember { mutableStateOf(false) }
+    var startTime by remember { mutableStateOf(0L) } // 8 byte of RAM (random access memory)
+    var elapsedTimeSec by remember { mutableStateOf(0) } // 4 byte
 
-    when (state) {
-        StopWatchState.DEFAULT,
-        StopWatchState.PAUSE -> {
-            running = false
-        }
-        StopWatchState.CHANT -> {
-            LaunchedEffect(Unit) {
-                if (!running && startTime == null) {
-                    startTime = currentTimestamp()
-                }
-                running = true
-                while (running) {
+    LaunchedEffect(state) {
+        when (state) {
+            StopWatchState.DEFAULT,
+            StopWatchState.PAUSE -> Unit
+            StopWatchState.CHANT -> {
+                if (startTime == 0L) startTime = currentTimestamp()
+                while (true) {
                     delay(1000L)
-                    startTime?.let { elapsedTime = (currentTimestamp() - it)/1000 }
+                    elapsedTimeSec = ((currentTimestamp() - startTime) / 1000).toInt()
                 }
             }
-        }
-        StopWatchState.STOP -> {
-            running = false
-            onStop(
-                ChantedRound(
-                    duration = elapsedTime.toFormatedString(),
-                    startTimestamp = startTime ?: 0L,
-                    endTimestamp = currentTimestamp()
+            StopWatchState.STOP -> {
+                onStop(
+                    ChantedRound(
+                        duration = elapsedTimeSec.toFormattedString(),
+                        startTimestamp = startTime,
+                        endTimestamp = currentTimestamp()
+                    )
                 )
-            )
-            startTime = null
-            elapsedTime = 0L
+                startTime = 0L
+                elapsedTimeSec = 0
+            }
         }
     }
 
@@ -66,15 +59,20 @@ internal fun JapaStopWatch(
         modifier,
         contentAlignment = Alignment.Center,
     ) {
-        Text(
-            modifier = Modifier.padding(horizontal = 6.dp),
-            text = elapsedTime.toFormatedString(),
-            fontSize = 40.sp
-        )
+        ElapsedTimeText(elapsedTimeSec)
     }
 }
 
-internal fun Long.toFormatedString(): String {
+@Composable
+fun ElapsedTimeText(elapsedTimeSec: Int) {
+    Text(
+        modifier = Modifier.padding(horizontal = 6.dp),
+        text = elapsedTimeSec.toFormattedString(),
+        fontSize = 40.sp
+    )
+}
+
+internal fun Int.toFormattedString(): String {
     return when {
         this / 60 < 10 && this % 60 < 10 -> "0${this / 60}:0${this % 60}"
         this / 60 < 10 && this % 60 > 9 -> "0${this / 60}:${this % 60}"

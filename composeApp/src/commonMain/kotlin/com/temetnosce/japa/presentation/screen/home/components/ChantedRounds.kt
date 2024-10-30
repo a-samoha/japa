@@ -25,6 +25,11 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.temetnosce.japa.domain.entity.ChantedRound
+import com.temetnosce.japa.presentation.theme.JapaAppTheme
+import japa.composeapp.generated.resources.Res
+import japa.composeapp.generated.resources.chanted_rounds_hint
+import japa.composeapp.generated.resources.shloka_title
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun ChantedRounds(
@@ -32,10 +37,10 @@ internal fun ChantedRounds(
     items: List<ChantedRound>,
 ) {
     // scroll to the last item after rendering
-    val scrollingState = rememberLazyListState()
-    LaunchedEffect(items) {
-        scrollingState.animateScrollToItem(if (items.isEmpty()) 0 else items.lastIndex)
-    }
+     val scrollingState = rememberLazyListState()
+     LaunchedEffect(items) {
+         scrollingState.animateScrollToItem(0)
+     }
 
     val contentPadding = PaddingValues(horizontal = 16.dp, vertical = 6.dp)
 
@@ -54,7 +59,7 @@ internal fun ChantedRounds(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Здесь будет список прочитанных кругов",
+                        text = stringResource(Res.string.chanted_rounds_hint),
                         style = MaterialTheme.typography.bodyMedium,
                         color = Color.Gray
                     )
@@ -62,7 +67,7 @@ internal fun ChantedRounds(
             }
         } else {
             items(
-                items = items,
+                items = items.reversed(),
                 key = ChantedRound::index
             ) {
                 Row(
@@ -78,7 +83,7 @@ internal fun ChantedRounds(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        text = if (it.index < 10) "  ${it.index}." else "${it.index}.",
+                        text = if (it.index < 10) " ${it.index}." else "${it.index}.",
                         fontSize = 20.sp
                     )
                     Text(text = it.duration, Modifier.padding(horizontal = 16.dp), fontSize = 20.sp)

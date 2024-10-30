@@ -18,10 +18,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.temetnosce.japa.domain.entity.ChantedRound
-import japa.composeapp.generated.resources.Res
-import japa.composeapp.generated.resources.shloka_title
-import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.viewmodel.koinViewModel
 import com.temetnosce.japa.presentation.screen.home.components.ButtonsBlock
 import com.temetnosce.japa.presentation.screen.home.components.ChantedRounds
 import com.temetnosce.japa.presentation.screen.home.components.Chart
@@ -31,6 +27,10 @@ import com.temetnosce.japa.presentation.screen.home.components.ShlokaBlock
 import com.temetnosce.japa.presentation.screen.home.components.StopWatchState.CHANT
 import com.temetnosce.japa.presentation.screen.home.components.StopWatchState.PAUSE
 import com.temetnosce.japa.presentation.screen.home.components.StopWatchState.STOP
+import japa.composeapp.generated.resources.Res
+import japa.composeapp.generated.resources.shloka_title
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 internal fun HomeScreen(
@@ -74,12 +74,10 @@ private fun HomeContent(
                 state = state.stopWatchState,
                 onStop = { onJapaStopwatchStop(it) }
             )
-
             VerticalDivider(
                 color = Color.Gray,
                 modifier = Modifier.padding(top = 16.dp)
             )
-
             ChantedRounds(items = state.chantedRounds)
         }
 

@@ -59,17 +59,12 @@ internal fun JapaStopWatch(
         modifier,
         contentAlignment = Alignment.Center,
     ) {
-        ElapsedTimeText(elapsedTimeSec)
+        Text(
+            modifier = Modifier.padding(horizontal = 6.dp),
+            text = elapsedTimeSec.toFormattedString(),
+            fontSize = 40.sp
+        )
     }
-}
-
-@Composable
-fun ElapsedTimeText(elapsedTimeSec: Int) {
-    Text(
-        modifier = Modifier.padding(horizontal = 6.dp),
-        text = elapsedTimeSec.toFormattedString(),
-        fontSize = 40.sp
-    )
 }
 
 internal fun Int.toFormattedString(): String {

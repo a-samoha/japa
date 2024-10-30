@@ -30,6 +30,12 @@ internal fun JapaStopWatch(
     var startTime by remember { mutableStateOf(0L) } // 8 byte of RAM (random access memory)
     var elapsedTimeSec by remember { mutableStateOf(0) } // 4 byte
 
+    /**
+     * todo
+     * QUESTIONS:
+     * 1 - Why recomposition running 1500 times when LaunchedEffect(Unit){} moved to the CHANT brunch?
+     * 2 - Why JapaStopWatch recomposition also take place on `elapsedTimeSec` change (I think only Text has to recomposition)
+     */
     LaunchedEffect(state) {
         when (state) {
             StopWatchState.DEFAULT,

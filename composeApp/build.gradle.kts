@@ -38,7 +38,6 @@ kotlin {
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
 
-            implementation(libs.kotlinx.serialization.json)
         }
         commonMain.dependencies {
             implementation(compose.ui)
@@ -52,6 +51,8 @@ kotlin {
 
             implementation(libs.kotlinx.datetime)
             implementation(libs.constraintlayout.compose.multiplatform)
+
+            implementation(libs.kotlinx.serialization.json)
 
             api(libs.koin.core)
             implementation(libs.koin.compose)

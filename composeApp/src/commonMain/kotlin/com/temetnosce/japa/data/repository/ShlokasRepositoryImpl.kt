@@ -1,11 +1,11 @@
 package com.temetnosce.japa.data.repository
 
-import com.temetnosce.japa.data.local.ShlokasLocalDataSource
+import com.temetnosce.japa.domain.datasource.ShlokasDataSource
 import com.temetnosce.japa.domain.entity.Shloka
 import com.temetnosce.japa.domain.repository.ShlokasRepository
 
 class ShlokasRepositoryImpl(
-    private val shlokasLocalDataSource: ShlokasLocalDataSource,
+    private val shlokasLocalDataSource: ShlokasDataSource.Local,
 ) : ShlokasRepository {
 
     private val shlokas by lazy {

@@ -5,13 +5,23 @@ import com.temetnosce.japa.data.dto.ShlokaList
 import com.temetnosce.japa.domain.datasource.ShlokasDataSource
 import com.temetnosce.japa.domain.entity.Shloka
 import kotlinx.serialization.json.Json
+import java.util.Locale
 
-actual class ShlokasLocalDataSource(
+class ShlokasLocalDataSource(
     private val context: Context
 ) : ShlokasDataSource.Local {
 
-    actual override fun loadShlokas(): List<Shloka> {
-        val json = context.assets.open("shlokas_en.json").bufferedReader().use { it.readText() }
+    override fun loadShlokas(): List<Shloka> {
+        val languageCode = Locale.getDefault().language
+
+        val fileName = when (languageCode) {
+            "en" -> "shlokas_en.json"
+            "uk" -> "shlokas_ua.json"
+            "ru" -> "shlokas_ru.json"
+            else -> "shlokas_en.json"
+        }
+
+        val json = context.assets.open(fileName).bufferedReader().use { it.readText() }
         val shlokaList = Json.decodeFromString<ShlokaList>(json)
         return shlokaList.shlokas.map {
             Shloka(

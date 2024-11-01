@@ -4,5 +4,5 @@ import com.temetnosce.japa.domain.entity.ChantedRound
 import kotlinx.coroutines.flow.Flow
 
 interface ObserveChantedRoundsUseCase {
-    operator fun invoke(): Flow<List<ChantedRound>>
+    operator fun invoke(dayStartTimestamp: Long): Flow<List<ChantedRound>>
 }

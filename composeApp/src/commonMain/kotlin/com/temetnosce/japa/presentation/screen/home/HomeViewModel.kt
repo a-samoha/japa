@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.temetnosce.japa.domain.entity.ChantedRound
 import com.temetnosce.japa.domain.repository.ChantedRoundsRepository
 import com.temetnosce.japa.domain.repository.ShlokasRepository
+import com.temetnosce.japa.presentation.screen.home.components.StopWatchState
+import com.temetnosce.japa.utils.startOfDayTimestamp
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.launchIn
@@ -13,7 +15,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import com.temetnosce.japa.presentation.screen.home.components.StopWatchState
+import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val chantedRoundsRepo: ChantedRoundsRepository,
@@ -30,7 +32,7 @@ class HomeViewModel(
         )
 
     private fun loadData() {
-        chantedRoundsRepo.observe()
+        chantedRoundsRepo.observe(startOfDayTimestamp())
             .map { chantedRounds ->
                 val shloka = shlokasRepo.getShloka(chantedRounds.size)
                 chantedRounds to shloka
@@ -47,7 +49,11 @@ class HomeViewModel(
     }
 
     fun addChantedRound(chantedRound: ChantedRound) {
-        chantedRoundsRepo.save(chantedRound)
+        viewModelScope.launch {
+            chantedRoundsRepo.save(chantedRound)
+                .onFailure { println("Saving failure") }
+                .onSuccess { println("Saving success") }
+        }
     }
 
     fun showJapaPointsDialog(isVisible: Boolean) {

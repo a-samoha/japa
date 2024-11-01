@@ -1,0 +1,20 @@
+import kotlin.Byte;
+import kotlin.Long;
+
+-- TEXT, INTEGER, BLOB, REAL
+CREATE TABLE ChantedRound (
+    startTimestamp INTEGER NOT NULL PRIMARY KEY,
+    endTimestamp INTEGER NOT NULL,
+    points INTEGER NOT NULL
+);
+
+selectByTimestamp:
+SELECT * FROM ChantedRound WHERE startTimestamp = ?;
+
+selectByDay:
+SELECT * FROM ChantedRound
+WHERE startTimestamp BETWEEN ? AND ?;
+
+insertOrReplace:
+INSERT OR REPLACE INTO ChantedRound(startTimestamp, endTimestamp, points)
+VALUES (?, ?, ?);

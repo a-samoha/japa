@@ -73,7 +73,7 @@ internal fun JapaStopWatch(
     }
 }
 
-internal fun Int.toFormattedString(): String {
+fun Int.toFormattedString(): String {
     return when {
         this / 60 < 10 && this % 60 < 10 -> "0${this / 60}:0${this % 60}"
         this / 60 < 10 && this % 60 > 9 -> "0${this / 60}:${this % 60}"

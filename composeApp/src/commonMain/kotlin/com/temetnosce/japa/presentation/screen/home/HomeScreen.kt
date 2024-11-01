@@ -62,7 +62,7 @@ private fun HomeContent(
     onJapaStopwatchStop: (chantedRound: ChantedRound) -> Unit,
     onPauseClick: () -> Unit,
     onPlayStopClick: () -> Unit,
-    onJapaPointsDialogDismiss: (chosenPoint: Int) -> Unit,
+    onJapaPointsDialogDismiss: (chosenPoint: Byte) -> Unit,
 ) {
 
     Column {

@@ -1,7 +1,7 @@
 package com.temetnosce.japa.data.local
 
 import android.content.Context
-import com.temetnosce.japa.data.dto.ShlokaList
+import com.temetnosce.japa.data.dto.ShlokaDtoList
 import com.temetnosce.japa.domain.datasource.ShlokasDataSource
 import com.temetnosce.japa.domain.entity.Shloka
 import kotlinx.serialization.json.Json
@@ -22,7 +22,7 @@ class ShlokasLocalDataSource(
         }
 
         val json = context.assets.open(fileName).bufferedReader().use { it.readText() }
-        val shlokaList = Json.decodeFromString<ShlokaList>(json)
+        val shlokaList = Json.decodeFromString<ShlokaDtoList>(json)
         return shlokaList.shlokas.map {
             Shloka(
                 id = it.id,

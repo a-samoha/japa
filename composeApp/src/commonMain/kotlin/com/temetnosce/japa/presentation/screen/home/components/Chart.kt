@@ -67,7 +67,7 @@ fun Chart(
         // Draw data points and lines
         items.forEachIndexed { index, item ->
             val x = scaleX(item.index)
-            val y = scaleY(item.points)
+            val y = scaleY(item.points.toInt())
             drawCircle(
                 color = Color.Blue,
                 radius = 5f,
@@ -76,7 +76,7 @@ fun Chart(
             if (index > 0) {
                 val prevItem = items[index - 1]
                 val prevX = scaleX(prevItem.index)
-                val prevY = scaleY(prevItem.points)
+                val prevY = scaleY(prevItem.points.toInt())
                 drawLine(
                     color = Color.Blue,
                     start = Offset(prevX, prevY),

@@ -1,6 +1,6 @@
 package com.temetnosce.japa.data.local
 
-import com.temetnosce.japa.data.dto.ShlokaList
+import com.temetnosce.japa.data.dto.ShlokaDtoList
 import com.temetnosce.japa.domain.datasource.ShlokasDataSource
 import com.temetnosce.japa.domain.entity.Shloka
 import kotlinx.cinterop.ExperimentalForeignApi
@@ -34,7 +34,7 @@ class ShlokasLocalDataSource : ShlokasDataSource.Local {
         val json =
             NSString.stringWithContentsOfFile(path, encoding = NSUTF8StringEncoding, error = null)
                 ?: return emptyList()
-        val shlokaList = Json.decodeFromString<ShlokaList>(json)
+        val shlokaList = Json.decodeFromString<ShlokaDtoList>(json)
         return shlokaList.shlokas.map {
             Shloka(
                 id = it.id,

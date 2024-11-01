@@ -47,7 +47,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun JapaPointsDialog(
     showDialog: Boolean,
-    onDismissRequest: (chosenPoint: Int) -> Unit,
+    onDismissRequest: (chosenPoint: Byte) -> Unit,
 ) {
     val scrollingState = rememberScrollState()
     LaunchedEffect("scrollHorizontal") {
@@ -160,7 +160,7 @@ private fun constraints(): ConstraintSet = ConstraintSet {
 fun PointsColumn(
     modifier: Modifier,
 //    showDialog: MutableState<Boolean>,
-    onDismissRequest: (chosenPoints: Int) -> Unit,
+    onDismissRequest: (chosenPoints: Byte) -> Unit,
 ) {
     val pointsList = listOf(
         Triple(
@@ -210,16 +210,14 @@ fun PointsColumn(
 @Composable
 fun PointRow(
     triple: Triple<String, Int, Color>,
-//    showDialog: MutableState<Boolean>,
-    onDismissRequest: (chosenPoints: Int) -> Unit,
+    onDismissRequest: (chosenPoints: Byte) -> Unit,
 ) {
     if (triple.second <= 10) {
         val point = triple.second
         Row(
             modifier = Modifier.height(pointRowHeight.dp)
                 .clickable {
-                    onDismissRequest(point)
-//                    showDialog.value = false
+                    onDismissRequest(point.toByte())
                 }.background(color = triple.third),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -259,8 +257,7 @@ fun PointRow(
                     Row(
                         modifier = Modifier.height(pointRowHeight.dp)
                             .clickable {
-                                onDismissRequest(point)
-//                                showDialog.value = false
+                                onDismissRequest(point.toByte())
                             }.background(color = triple.third),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {

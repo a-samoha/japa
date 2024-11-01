@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Immutable
 @Serializable
-data class Shloka(
+data class ShlokaDto(
     val id: String = "",
     val shloka: String = "",
     val synonyms: String = "",
@@ -13,6 +13,6 @@ data class Shloka(
 )
 
 @Serializable
-data class ShlokaList(
-    val shlokas: List<Shloka>
+data class ShlokaDtoList(
+    val shlokas: List<ShlokaDto>
 )

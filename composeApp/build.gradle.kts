@@ -9,6 +9,7 @@ plugins {
 
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.sqlDelight)
 }
 
 kotlin {
@@ -38,6 +39,12 @@ kotlin {
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
 
+            implementation(libs.sqlDelight.android)
+        }
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(libs.sqlDelight.jvm)
+            }
         }
         commonMain.dependencies {
             implementation(compose.ui)
@@ -54,9 +61,15 @@ kotlin {
 
             implementation(libs.kotlinx.serialization.json)
 
+            implementation(libs.sqlDelight.common)
+            implementation(libs.sqldelight.coroutines.extensions)
+
             api(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
+        }
+        nativeMain.dependencies {
+            implementation(libs.sqlDelight.ios)
         }
     }
 }
@@ -95,6 +108,11 @@ android {
     }
 }
 
-dependencies {
-    debugImplementation(compose.uiTooling)
+sqldelight {
+    databases {
+        create("LocalDb") {
+            packageName.set("com.temetnosce.japa.db")
+            srcDirs("src/commonMain/kotlin")
+        }
+    }
 }

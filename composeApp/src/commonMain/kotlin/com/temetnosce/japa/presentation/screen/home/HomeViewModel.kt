@@ -34,7 +34,16 @@ class HomeViewModel(
     private fun loadData() {
         chantedRoundsRepo.observe(startOfDayTimestamp())
             .map { chantedRounds ->
-                val shloka = shlokasRepo.getShloka(chantedRounds.size)
+                val shloka = shlokasRepo.getShloka(
+                    when {
+                        chantedRounds.size < 16 -> chantedRounds.size
+                        chantedRounds.size in 16..31 -> chantedRounds.size - 16
+                        chantedRounds.size in 32..47 -> chantedRounds.size - 32
+                        chantedRounds.size in 48..63 -> chantedRounds.size - 48
+                        chantedRounds.size in 64..79 -> chantedRounds.size - 64
+                        else -> 0
+                    }
+                )
                 chantedRounds to shloka
             }
             .onEach { pair ->

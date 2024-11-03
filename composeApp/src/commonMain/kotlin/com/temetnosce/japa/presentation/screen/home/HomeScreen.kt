@@ -88,7 +88,10 @@ private fun HomeContent(
 
         Chart(
             items = state.chantedRounds,
-            modifier = Modifier.padding(start = 16.dp).fillMaxWidth().height(180.dp),
+            modifier = Modifier
+                .padding(start = if (state.chantedRounds.size <= 64) 16.dp else 12.dp)
+                .fillMaxWidth()
+                .height(180.dp),
         )
 
         /**

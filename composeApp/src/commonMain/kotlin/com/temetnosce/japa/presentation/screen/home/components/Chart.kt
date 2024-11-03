@@ -24,12 +24,25 @@ fun Chart(
         val width = size.width - 2 * padding
         val height = size.height - 2 * padding
         val minX = 0f
-        val maxX = 16f
+        val maxX = when {
+            items.size <= 16 -> 16f
+            items.size <= 20 -> 20f
+            items.size <= 32 -> 32f
+            items.size <= 64 -> 64f
+            else -> 128f
+        }
         val minY = 0f
         val maxY = 10f
 
         fun scaleX(x: Int): Float {
-            return (padding + (x - minX) / (maxX - minX) * width) - 28
+            return (
+                    when {
+                        items.size <= 16 -> 10.dp.toPx()
+                        items.size <= 20 -> 12.dp.toPx()
+                        items.size <= 32 -> 14.dp.toPx()
+                        items.size <= 64 -> 16.dp.toPx()
+                        else -> 18.dp.toPx()
+                    } + (x - minX) * width / (maxX - minX))
         }
 
         fun scaleY(y: Int): Float {
@@ -57,9 +70,54 @@ fun Chart(
             topLeft = Offset(x, y)
         )
 
-        drawLabels(1, scaleX(1) - 2, size.height - padding)
-        drawLabels(8, scaleX(8) - 16, size.height - padding)
-        drawLabels(16, scaleX(16) - 16, size.height - padding)
+        when {
+            items.size <= 16 -> {
+                drawLabels(1, scaleX(1) - 3.dp.toPx(), size.height - padding)
+                drawLabels(
+                    (maxX / 2).toInt(),
+                    scaleX((maxX / 2).toInt()) - 4.dp.toPx(),
+                    size.height - padding
+                )
+                drawLabels(maxX.toInt(), scaleX(maxX.toInt()) - 6.dp.toPx(), size.height - padding)
+            }
+            items.size <= 20 -> {
+                drawLabels(1, scaleX(1) - 3.dp.toPx(), size.height - padding)
+                drawLabels(
+                    (maxX / 2).toInt(),
+                    scaleX((maxX / 2).toInt()) - 6.dp.toPx(),
+                    size.height - padding
+                )
+                drawLabels(maxX.toInt(), scaleX(maxX.toInt()) - 7.dp.toPx(), size.height - padding)
+            }
+            items.size <= 32 -> {
+                drawLabels(1, scaleX(1) - 3.dp.toPx(), size.height - padding)
+                drawLabels(
+                    (maxX / 2).toInt(),
+                    scaleX((maxX / 2).toInt()) - 7.dp.toPx(),
+                    size.height - padding
+                )
+                drawLabels(maxX.toInt(), scaleX(maxX.toInt()) - 7.dp.toPx(), size.height - padding)
+            }
+            items.size <= 64 -> {
+                drawLabels(1, scaleX(1) - 2.dp.toPx(), size.height - padding)
+                drawLabels(
+                    (maxX / 2).toInt(),
+                    scaleX((maxX / 2).toInt()) - 6.dp.toPx(),
+                    size.height - padding
+                )
+                drawLabels(maxX.toInt(), scaleX(maxX.toInt()) - 7.dp.toPx(), size.height - padding)
+            }
+            else -> {
+                drawLabels(1, scaleX(1) - 2.dp.toPx(), size.height - padding)
+                drawLabels(
+                    (maxX / 2).toInt(),
+                    scaleX((maxX / 2).toInt()) - 6.dp.toPx(),
+                    size.height - padding
+                )
+                drawLabels(maxX.toInt(), scaleX(maxX.toInt()) - 10.dp.toPx(), size.height - padding)
+            }
+        }
+
         drawLabels(1, 16f, scaleY(1) - 24)
         drawLabels(5, 13f, scaleY(5) - 24)
         drawLabels(10, 4f, scaleY(10) - 24)

@@ -75,7 +75,7 @@ private fun HomeContent(
             Column(
                 modifier = Modifier.weight(1f).fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.SpaceAround
+                verticalArrangement = Arrangement.SpaceEvenly,
             ) {
                 Row {
                     Text("total: ")

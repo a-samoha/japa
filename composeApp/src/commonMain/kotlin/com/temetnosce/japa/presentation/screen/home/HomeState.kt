@@ -9,6 +9,8 @@ import com.temetnosce.japa.presentation.screen.home.components.StopWatchState
 data class HomeState(
     val isLoading: Boolean = false,
     val chantedRounds: List<ChantedRound> = emptyList(),
+    val totalTime: String = "",
+    val bestRound: String = "",
     val stopWatchState: StopWatchState = StopWatchState.DEFAULT,
     val isPointsDialogVisible: Boolean = false,
     val shloka: Shloka = Shloka(),

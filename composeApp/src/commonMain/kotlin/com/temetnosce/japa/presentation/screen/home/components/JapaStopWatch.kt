@@ -28,7 +28,7 @@ internal fun JapaStopWatch(
     onStop: (ChantedRound) -> Unit,
 ) {
     var startTime by remember { mutableStateOf(0L) } // 8 byte of RAM (random access memory)
-    var elapsedTimeSec by remember { mutableStateOf(0) } // 4 byte
+    var elapsedTime by remember { mutableStateOf(0L) } // 4 byte
 
     /**
      * todo
@@ -44,19 +44,19 @@ internal fun JapaStopWatch(
                 if (startTime == 0L) startTime = currentTimestamp()
                 while (true) {
                     delay(1000L)
-                    elapsedTimeSec = ((currentTimestamp() - startTime) / 1000).toInt()
+                    elapsedTime = (currentTimestamp() - startTime)
                 }
             }
             StopWatchState.STOP -> {
                 onStop(
                     ChantedRound(
-                        duration = elapsedTimeSec.toFormattedString(),
+                        duration = elapsedTime.formatNoHours(),
                         startTimestamp = startTime,
                         endTimestamp = currentTimestamp()
                     )
                 )
                 startTime = 0L
-                elapsedTimeSec = 0
+                elapsedTime = 0L
             }
         }
     }
@@ -67,17 +67,34 @@ internal fun JapaStopWatch(
     ) {
         Text(
             modifier = Modifier.padding(horizontal = 6.dp),
-            text = elapsedTimeSec.toFormattedString(),
+            text = elapsedTime.formatNoHours(),
             fontSize = 40.sp
         )
     }
 }
 
-fun Int.toFormattedString(): String {
+fun Long.formatNoHours(): String {
+    val timeSec = this / 1000
     return when {
-        this / 60 < 10 && this % 60 < 10 -> "0${this / 60}:0${this % 60}"
-        this / 60 < 10 && this % 60 > 9 -> "0${this / 60}:${this % 60}"
-        this / 60 > 9 && this % 60 < 10 -> "${this / 60}:0${this % 60}"
-        else -> "${this / 60}:${this % 60}"
+        timeSec / 60 < 10 && timeSec % 60 < 10 -> "0${timeSec / 60}:0${timeSec % 60}"
+        timeSec / 60 < 10 && timeSec % 60 > 9 -> "0${timeSec / 60}:${timeSec % 60}"
+        timeSec / 60 > 9 && timeSec % 60 < 10 -> "${timeSec / 60}:0${timeSec % 60}"
+        else -> "${timeSec / 60}:${timeSec % 60}"
     }
+}
+
+fun Long.formatWithHours(): String {
+    val timeSec = this / 1000
+    val hours = timeSec / 3600
+    val minutes = (timeSec % 3600) / 60
+    val seconds = timeSec % 60
+
+    // return String.format("%02d:%02d:%02d", hours, minutes, seconds)
+    return "${
+        hours.toString().padStart(2, '0')
+    }:${
+        minutes.toString().padStart(2, '0')
+    }:${
+        seconds.toString().padStart(2, '0')
+    }"
 }

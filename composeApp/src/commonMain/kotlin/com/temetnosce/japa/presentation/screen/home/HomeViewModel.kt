@@ -1,11 +1,14 @@
 package com.temetnosce.japa.presentation.screen.home
 
+import androidx.compose.ui.util.fastForEach
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.temetnosce.japa.domain.entity.ChantedRound
 import com.temetnosce.japa.domain.repository.ChantedRoundsRepository
 import com.temetnosce.japa.domain.repository.ShlokasRepository
 import com.temetnosce.japa.presentation.screen.home.components.StopWatchState
+import com.temetnosce.japa.presentation.screen.home.components.formatWithHours
+import com.temetnosce.japa.presentation.screen.home.components.formatNoHours
 import com.temetnosce.japa.utils.startOfDayTimestamp
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -48,9 +51,31 @@ class HomeViewModel(
             }
             .onEach { pair ->
                 _state.update {
+
+                    var totalJapaTIme = 0L
+                    pair.first.fastForEach { cr ->
+                        totalJapaTIme += (cr.endTimestamp - cr.startTimestamp)
+                    }
+
+                    var bestRound = 0L
+                    pair.first.fastForEach { cr ->
+                        val roundTimeSec = (cr.endTimestamp - cr.startTimestamp)
+                        when {
+                            bestRound == 0L -> {
+                                bestRound = roundTimeSec
+                            }
+                            bestRound != 0L && roundTimeSec < bestRound -> {
+                                bestRound = roundTimeSec
+                            }
+                            else -> Unit
+                        }
+                    }
+
                     it.copy(
                         chantedRounds = pair.first,
-                        shloka = pair.second
+                        totalTime = totalJapaTIme.formatWithHours(),
+                        bestRound = bestRound.formatNoHours(),
+                        shloka = pair.second,
                     )
                 }
             }
@@ -60,7 +85,7 @@ class HomeViewModel(
     fun addChantedRound(chantedRound: ChantedRound) {
         viewModelScope.launch {
             chantedRoundsRepo.save(chantedRound)
-                .onFailure { println("Saving failure") }
+                .onFailure { println("Saving error: $it") }
                 .onSuccess { println("Saving success") }
         }
     }

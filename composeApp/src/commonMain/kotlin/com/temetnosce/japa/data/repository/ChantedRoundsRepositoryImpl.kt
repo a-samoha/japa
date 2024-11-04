@@ -4,7 +4,7 @@ import com.temetnosce.japa.data.dto.ChantedRoundDto
 import com.temetnosce.japa.domain.datasource.ChantedRoundsDataSource
 import com.temetnosce.japa.domain.entity.ChantedRound
 import com.temetnosce.japa.domain.repository.ChantedRoundsRepository
-import com.temetnosce.japa.presentation.screen.home.components.toFormattedString
+import com.temetnosce.japa.presentation.screen.home.components.formatNoHours
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -17,8 +17,7 @@ class ChantedRoundsRepositoryImpl(
             it.mapIndexed { index, round ->
                 ChantedRound(
                     index = index + 1,
-                    duration = ((round.endTimestamp - round.startTimestamp) / 1000).toInt()
-                        .toFormattedString(),
+                    duration = (round.endTimestamp - round.startTimestamp).formatNoHours(),
                     points = round.points,
                     startTimestamp = round.startTimestamp,
                     endTimestamp = round.endTimestamp,

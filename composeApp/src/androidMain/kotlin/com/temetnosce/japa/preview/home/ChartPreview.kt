@@ -20,8 +20,8 @@ private fun ChartPreview() {
     JapaAppTheme {
         Chart(
             items = listOf(
-                ChantedRound(1, "07:08", 5),
-                ChantedRound(2, "05:08", 3)
+                ChantedRound(index = 1, duration = "07:08", points = 5),
+                ChantedRound(index = 2, duration = "05:08", points = 3)
             ),
             modifier = Modifier
                 .padding(start = 16.dp)

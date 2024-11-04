@@ -12,12 +12,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
@@ -117,9 +122,23 @@ fun JapaPointsDialog(
                         }
                         PointsColumn(
                             Modifier.layoutId("pointsColumn"),
-//                            showDialog,
                             onDismissRequest
                         )
+                        // region "Back" button
+                        IconButton(
+                            onClick = { onDismissRequest(0) },
+                            Modifier
+                                .size(48.dp)
+                                .background(Color.Transparent, CircleShape)
+                                .layoutId("btnBack"),
+                        ) {
+                            Icon(
+                                Icons.Rounded.Close,
+                                contentDescription = "Close",
+                                modifier = Modifier.size(24.dp),
+                            )
+                        }
+                        // endregion
                     }
                 }
             },
@@ -132,6 +151,7 @@ private fun constraints(): ConstraintSet = ConstraintSet {
     val dividerHor = createRefFor("dividerHor")
     val pramada = createRefFor("pramada")
     val pointsColumn = createRefFor("pointsColumn")
+    val btnBack = createRefFor("btnBack")
     val h40 = createGuidelineFromTop(fraction = 0.402f)
 
     constrain(cheshta) {
@@ -154,12 +174,18 @@ private fun constraints(): ConstraintSet = ConstraintSet {
     constrain(pointsColumn) {
         end.linkTo(parent.end)
     }
+
+    constrain(btnBack) {
+        bottom.linkTo(parent.top)
+        translationY = 32.dp
+        end.linkTo(parent.end)
+        translationX = 12.dp
+    }
 }
 
 @Composable
 fun PointsColumn(
     modifier: Modifier,
-//    showDialog: MutableState<Boolean>,
     onDismissRequest: (chosenPoints: Byte) -> Unit,
 ) {
     val pointsList = listOf(

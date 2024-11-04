@@ -30,6 +30,7 @@ import com.temetnosce.japa.presentation.screen.home.components.ShlokaBlock
 import com.temetnosce.japa.presentation.screen.home.components.StopWatchState.CHANT
 import com.temetnosce.japa.presentation.screen.home.components.StopWatchState.PAUSE
 import com.temetnosce.japa.presentation.screen.home.components.StopWatchState.STOP
+import com.temetnosce.japa.presentation.screen.home.components.formatNoHours
 import japa.composeapp.generated.resources.Res
 import japa.composeapp.generated.resources.shloka_title
 import org.jetbrains.compose.resources.stringResource
@@ -44,16 +45,31 @@ internal fun HomeScreen(
 
     HomeContent(
         state = state,
-        onJapaStopwatchStop = { cr ->
-            lastChantedRound = cr.copy(index = state.chantedRounds.size + 1)
-            viewModel.showJapaPointsDialog(true)
+        onJapaStopwatchStop = { pair ->
+            lastChantedRound = lastChantedRound?.copy(
+                index = state.chantedRounds.size + 1,
+                startTimestamp = pair.first,
+                endTimestamp = pair.first + pair.second,
+                duration = pair.second.formatNoHours(),
+            )
+            lastChantedRound?.let { viewModel.addChantedRound(it) }
+            viewModel.setStopwatchState(CHANT)
         },
         onPauseClick = { viewModel.setStopwatchState(PAUSE) },
-        onPlayStopClick = { viewModel.setStopwatchState(if (state.stopWatchState != CHANT) CHANT else STOP) },
+        onPlayStopClick = {
+            if (state.stopWatchState != CHANT) {
+                viewModel.setStopwatchState(CHANT)
+            } else {
+                viewModel.showJapaPointsDialog(true)
+            }
+        },
         onJapaPointsDialogDismiss = { chosenPoint ->
-            lastChantedRound = lastChantedRound?.copy(points = chosenPoint)
-            lastChantedRound?.let { viewModel.addChantedRound(it) }
-            if (state.stopWatchState != CHANT) viewModel.setStopwatchState(CHANT)
+            if (chosenPoint == 0.toByte()) {
+                viewModel.setStopwatchState(CHANT)
+            } else {
+                lastChantedRound = ChantedRound(points = chosenPoint)
+                viewModel.setStopwatchState(STOP)
+            }
             viewModel.showJapaPointsDialog(false)
         },
     )
@@ -62,7 +78,7 @@ internal fun HomeScreen(
 @Composable
 private fun HomeContent(
     state: HomeState,
-    onJapaStopwatchStop: (chantedRound: ChantedRound) -> Unit,
+    onJapaStopwatchStop: (Pair<Long, Long>) -> Unit,
     onPauseClick: () -> Unit,
     onPlayStopClick: () -> Unit,
     onJapaPointsDialogDismiss: (chosenPoint: Byte) -> Unit,

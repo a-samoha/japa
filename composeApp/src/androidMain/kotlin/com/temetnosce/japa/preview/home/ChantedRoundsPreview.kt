@@ -12,22 +12,22 @@ private fun ChantedRoundsPreview() {
     JapaAppTheme {
         ChantedRounds(
             items = listOf(
-                ChantedRound(1, "07:08", 5),
-                ChantedRound(2, "05:08", 3),
-                ChantedRound(3, "05:08", 3),
-                ChantedRound(4, "05:08", 3),
-                ChantedRound(5, "05:08", 3),
-                ChantedRound(6, "05:08", 3),
-                ChantedRound(7, "05:08", 3),
-                ChantedRound(8, "05:08", 3),
-                ChantedRound(9, "05:08", 3),
-                ChantedRound(10, "05:08", 3),
-                ChantedRound(11, "05:08", 3),
-                ChantedRound(12, "05:08", 3),
-                ChantedRound(13, "05:08", 3),
-                ChantedRound(14, "05:08", 3),
-                ChantedRound(15, "05:08", 3),
-                ChantedRound(16, "05:08", 3),
+                ChantedRound(index = 1, duration = "07:08", points = 5),
+                ChantedRound(index = 2, duration = "05:08", points = 3),
+                ChantedRound(index = 3, duration = "05:08", points = 3),
+                ChantedRound(index = 4, duration = "05:08", points = 3),
+                ChantedRound(index = 5, duration = "05:08", points = 3),
+                ChantedRound(index = 6, duration = "05:08", points = 3),
+                ChantedRound(index = 7, duration = "05:08", points = 3),
+                ChantedRound(index = 8, duration = "05:08", points = 3),
+                ChantedRound(index = 9, duration = "05:08", points = 3),
+                ChantedRound(index = 10, duration = "05:08", points = 3),
+                ChantedRound(index = 11, duration = "05:08", points = 3),
+                ChantedRound(index = 12, duration = "05:08", points = 3),
+                ChantedRound(index = 13, duration = "05:08", points = 3),
+                ChantedRound(index = 14, duration = "05:08", points = 3),
+                ChantedRound(index = 15, duration = "05:08", points = 3),
+                ChantedRound(index = 16, duration = "05:08", points = 3),
             )
         )
     }

@@ -27,12 +27,14 @@ internal fun JapaStopWatch(
     state: StopWatchState,
     onStop: (Pair<Long, Long>) -> Unit,
 ) {
-    var startTimestamp by rememberSaveable { mutableStateOf(0L) } // 8 byte of RAM (random access memory)
+    var startTimestamp by rememberSaveable { mutableStateOf(0L) }
+    var pauseTimestamp by remember { mutableStateOf(0L) }
     var elapsedTime by remember { mutableStateOf(0L) }
     var pauseTime by remember { mutableStateOf(0L) }
 
     fun resetAll() {
         startTimestamp = 0L
+        pauseTimestamp = 0L
         elapsedTime = 0L
         pauseTime = 0L
     }
@@ -46,13 +48,12 @@ internal fun JapaStopWatch(
     LaunchedEffect(state) {
         when (state) {
             StopWatchState.DEFAULT -> resetAll()
-            StopWatchState.PAUSE -> {
-                while (true) {
-                    delay(1000L)
-                    pauseTime += 1000
-                }
-            }
+            StopWatchState.PAUSE -> pauseTimestamp = currentTimestamp()
             StopWatchState.CHANT -> {
+                if (pauseTimestamp != 0L) {
+                    pauseTime += (currentTimestamp() - pauseTimestamp)
+                    pauseTimestamp = 0L
+                }
                 if (startTimestamp == 0L) startTimestamp = currentTimestamp()
                 while (true) {
                     delay(1000L)
@@ -60,6 +61,7 @@ internal fun JapaStopWatch(
                 }
             }
             StopWatchState.STOP -> {
+                pauseTimestamp = 0L
                 onStop(startTimestamp to elapsedTime)
                 resetAll()
             }
@@ -94,7 +96,6 @@ fun Long.formatWithHours(): String {
     val minutes = (timeSec % 3600) / 60
     val seconds = timeSec % 60
 
-    // return String.format("%02d:%02d:%02d", hours, minutes, seconds)
     return "${
         hours.toString().padStart(2, '0')
     }:${

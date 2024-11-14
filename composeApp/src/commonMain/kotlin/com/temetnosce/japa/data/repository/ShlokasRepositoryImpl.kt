@@ -16,6 +16,10 @@ class ShlokasRepositoryImpl(
         shlokas.find { it.id == id } ?: Shloka()
 
     override fun getShloka(index: Int): Shloka {
-        return shlokas[index]
+        return try {
+            shlokas[index]
+        } catch (e: Exception){
+            Shloka()
+        }
     }
 }

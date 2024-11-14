@@ -86,7 +86,6 @@ class HomeViewModel(
         viewModelScope.launch {
             chantedRoundsRepo.save(chantedRound)
                 .onFailure { println("Saving error: $it") }
-                .onSuccess { println("Saving success") }
         }
     }
 

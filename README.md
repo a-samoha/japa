@@ -17,6 +17,9 @@ Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-mu
 We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
 If you face any issues, please report them on [GitHub](https://github.com/JetBrains/compose-multiplatform/issues).
 
+- Clean Xcode cache:
+    rm -rf ~/Library/Developer/Xcode/DerivedData
+
 To reinstall macOS (wipe macBook)
 - Click btn 'turnOn' and long click 'Command + R'
 - Erase disk
@@ -24,20 +27,22 @@ To reinstall macOS (wipe macBook)
 
 To run iosApp:
 - install 'XCode' (Apple developer tool) in 'App Store'
+- install 'iOS 18.1' (9GB)  XCode -> Settings -> Components -> Get
 - install 'Android studio' (AS) [download](https://developer.android.com/studio) [install](https://developer.android.com/studio/install)
 - install 'Kotlin Multiplatform' plugin in AS
 - install 'JDK' [download](https://www.oracle.com/pe/java/technologies/downloads/#jdk22-mac)
-- In the list of run configurations, click Edit Configurations.
-- Click the '+' button
-- select iOS Application.
-- Name your configuration e.g.: 'iosApp'.
-- Select the Xcode project file. To do so, navigate to your project 'japa', open the iosApp folder, and then select the .xcodeproj file.
-- In the Execution target list, select a simulated device and click OK.
-- Click Run to run your application on the new simulated device.
+- Configure Gradle task:
+  - In the list of run configurations, click Edit Configurations.
+  - Click btn '+'
+  - select iOS Application.
+  - Name your configuration e.g.: 'iosApp'.
+  - Select the Xcode project file. (To do so, navigate to your project 'japa', open the iosApp folder, select .xcodeproj file.)
+  - In the Execution target list, select a simulated device and click OK.
+  - Click 'Run'.
 
 ADD shlokas.json as resources file to iOS bundle:
 - open iosApp project in XCode
-- click on 'target' (Products/JapaPRO)
+- click on 'target' (Products/Japa)
 - You must see tabs 'General' ... 'Info' ... 'Build Phases' ...
 - If don't see: Click 'Editor' > 'Add Target' and just 'Cansel'
 - Go to 'Build Phases' > 'Copy Bundle Resources' > '+' > choose 'shlokas_en.json' (and other)

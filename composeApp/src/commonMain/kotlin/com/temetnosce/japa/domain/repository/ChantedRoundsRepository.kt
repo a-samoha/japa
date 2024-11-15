@@ -5,5 +5,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface ChantedRoundsRepository {
     fun observe(dayStartTimestamp: Long): Flow<List<ChantedRound>>
+    suspend fun getByTimestamp(): Result<ChantedRound>
     suspend fun save(round: ChantedRound): Result<Unit>
 }

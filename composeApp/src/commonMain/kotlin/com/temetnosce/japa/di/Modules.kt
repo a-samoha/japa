@@ -10,6 +10,7 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 import com.temetnosce.japa.presentation.screen.home.HomeViewModel
+import com.temetnosce.japa.presentation.screen.emend.EmendViewModel
 
 expect val platformModule: Module
 
@@ -19,4 +20,5 @@ val sharedModule = module {
     singleOf(::ShlokasRepositoryImpl).bind<ShlokasRepository>()
 
     viewModelOf(::HomeViewModel)
+    viewModelOf(::EmendViewModel)
 }

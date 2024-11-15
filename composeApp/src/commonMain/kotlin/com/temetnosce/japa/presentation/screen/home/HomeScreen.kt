@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.temetnosce.japa.LocalNavController
 import com.temetnosce.japa.domain.entity.ChantedRound
 import com.temetnosce.japa.presentation.screen.home.components.ButtonsBlock
 import com.temetnosce.japa.presentation.screen.home.components.ChantedRounds
@@ -38,10 +39,12 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 internal fun HomeScreen(
-    viewModel: HomeViewModel = koinViewModel()
+    viewModel: HomeViewModel = koinViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     var lastChantedRound: ChantedRound? by remember { mutableStateOf(null) }
+
+    val navController = LocalNavController.current
 
     HomeContent(
         state = state,
@@ -72,6 +75,9 @@ internal fun HomeScreen(
             }
             viewModel.showJapaPointsDialog(false)
         },
+        onChantedRoundClick = { startTimestamp ->
+            navController.navigate("emend")
+        }
     )
 }
 
@@ -82,6 +88,7 @@ private fun HomeContent(
     onPauseClick: () -> Unit,
     onPlayStopClick: () -> Unit,
     onJapaPointsDialogDismiss: (chosenPoint: Byte) -> Unit,
+    onChantedRoundClick: (startTimestamp: Long) -> Unit,
 ) {
 
     Column {

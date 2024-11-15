@@ -25,6 +25,10 @@ class ChantedRoundsRepositoryImpl(
             }
         }
 
+    override suspend fun getByTimestamp(): Result<ChantedRound> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun save(round: ChantedRound): Result<Unit> =
         localDataSource.save(
             ChantedRoundDto(

@@ -44,7 +44,7 @@ ADD shlokas.json as resources file to iOS bundle:
 - open iosApp project in XCode
 - click on 'target' (Products/Japa)
 - You must see tabs 'General' ... 'Info' ... 'Build Phases' ...
-- If don't see: Click 'Editor' > 'Add Target' and just 'Cansel'
+- If don't see: Click 'Editor' > 'Add Target' and just 'Cancel'
 - Go to 'Build Phases' > 'Copy Bundle Resources' > '+' > choose 'shlokas_en.json' (and other)
 
 ERRORS handling:

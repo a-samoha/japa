@@ -21,7 +21,7 @@ suspend fun LocalDb.getRoundByStartTimestamp(startTimestamp: Long): Result<Chant
         }
     }
 
-fun LocalDb.getRoundsByDay(dayStartTimestamp: Long): Flow<List<ChantedRoundDto>> {
+fun LocalDb.observeRoundsByDay(dayStartTimestamp: Long): Flow<List<ChantedRoundDto>> {
     val dayEndTimestamp = dayStartTimestamp + (24 * 60 * 60 * 1000)
 
     return chantedRoundQueries.selectByDay(dayStartTimestamp, dayEndTimestamp)
@@ -36,6 +36,22 @@ fun LocalDb.getRoundsByDay(dayStartTimestamp: Long): Flow<List<ChantedRoundDto>>
             }
         }
 }
+
+suspend fun LocalDb.getRoundsByDay(dayStartTimestamp: Long): Result<List<ChantedRoundDto>> =
+    withContext(Dispatchers.IO) {
+        runCatching {
+            val dayEndTimestamp = dayStartTimestamp + (24 * 60 * 60 * 1000)
+
+            chantedRoundQueries.selectByDay(dayStartTimestamp, dayEndTimestamp)
+                .executeAsList().map {
+                    ChantedRoundDto(
+                        startTimestamp = it.startTimestamp,
+                        endTimestamp = it.endTimestamp,
+                        points = it.points.toByte(),
+                    )
+                }
+        }
+    }
 
 suspend fun LocalDb.insertOrReplaceRound(
     startTimestamp: Long,

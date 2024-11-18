@@ -10,6 +10,7 @@ import com.temetnosce.japa.presentation.screen.home.components.StopWatchState
 import com.temetnosce.japa.utils.formatNoHours
 import com.temetnosce.japa.utils.formatWithHours
 import com.temetnosce.japa.utils.startOfDayTimestamp
+import com.temetnosce.japa.utils.toLocalDate
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.launchIn
@@ -19,6 +20,9 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.minus
+import kotlinx.datetime.plus
 
 class HomeViewModel(
     private val chantedRoundsRepo: ChantedRoundsRepository,
@@ -27,15 +31,15 @@ class HomeViewModel(
 
     private val _state = MutableStateFlow(HomeState())
     val state = _state
-        .onStart { loadData() }
+        .onStart { loadData(startOfDayTimestamp()) }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
             initialValue = HomeState()
         )
 
-    private fun loadData() {
-        chantedRoundsRepo.observe(startOfDayTimestamp())
+    private fun loadData(startOfDayTimestamp: Long) {
+        chantedRoundsRepo.observe(startOfDayTimestamp)
             .map { chantedRounds ->
                 val shloka = shlokasRepo.getShloka(
                     when {
@@ -72,6 +76,7 @@ class HomeViewModel(
                     }
 
                     it.copy(
+                        renderedDate = startOfDayTimestamp.toLocalDate(),
                         chantedRounds = pair.first,
                         totalTime = totalJapaTIme.formatWithHours(),
                         bestRound = bestRound.formatNoHours(),
@@ -95,5 +100,13 @@ class HomeViewModel(
 
     fun setStopwatchState(stopwatchState: StopWatchState) {
         _state.update { it.copy(stopWatchState = stopwatchState) }
+    }
+
+    fun onChartSwipeRight() {
+        loadData(startOfDayTimestamp(date = state.value.renderedDate.minus(1, DateTimeUnit.DAY)))
+    }
+
+    fun onChartSwipeLeft() {
+        loadData(startOfDayTimestamp(date = state.value.renderedDate.plus(1, DateTimeUnit.DAY)))
     }
 }

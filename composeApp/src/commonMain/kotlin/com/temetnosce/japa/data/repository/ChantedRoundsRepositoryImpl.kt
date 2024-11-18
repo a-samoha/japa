@@ -13,7 +13,7 @@ class ChantedRoundsRepositoryImpl(
 ) : ChantedRoundsRepository {
 
     override fun observe(dayStartTimestamp: Long): Flow<List<ChantedRound>> =
-        localDataSource.observe(dayStartTimestamp).map {
+        localDataSource.observeRoundsByDay(dayStartTimestamp).map {
             it.mapIndexed { index, round ->
                 ChantedRound(
                     index = index + 1,

@@ -6,7 +6,8 @@ import kotlinx.coroutines.flow.Flow
 sealed interface ChantedRoundsDataSource {
 
     interface Local : ChantedRoundsDataSource {
-        fun observe(dayStartTimestamp: Long): Flow<List<ChantedRoundDto>>
+        fun observeRoundsByDay(dayStartTimestamp: Long): Flow<List<ChantedRoundDto>>
+        suspend fun getRoundsByDay(dayStartTimestamp: Long): Result<List<ChantedRoundDto>>
         suspend fun get(startTimestamp: Long): Result<ChantedRoundDto>
         suspend fun save(round: ChantedRoundDto): Result<Unit>
         suspend fun update(round: ChantedRoundDto): Result<Unit>

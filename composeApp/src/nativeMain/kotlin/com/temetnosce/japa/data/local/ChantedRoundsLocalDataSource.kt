@@ -5,6 +5,7 @@ import com.temetnosce.japa.data.dto.ChantedRoundDto
 import com.temetnosce.japa.data.sources.localdb.rounds.getRoundByStartTimestamp
 import com.temetnosce.japa.data.sources.localdb.rounds.getRoundsByDay
 import com.temetnosce.japa.data.sources.localdb.rounds.insertOrReplaceRound
+import com.temetnosce.japa.data.sources.localdb.rounds.observeRoundsByDay
 import com.temetnosce.japa.data.sources.localdb.rounds.updateByTimestamp
 import com.temetnosce.japa.db.LocalDb
 import com.temetnosce.japa.domain.datasource.ChantedRoundsDataSource
@@ -18,7 +19,10 @@ class ChantedRoundsLocalDataSource(
         LocalDb(sqlDriver)
     }
 
-    override fun observe(dayStartTimestamp: Long): Flow<List<ChantedRoundDto>> =
+    override fun observeRoundsByDay(dayStartTimestamp: Long): Flow<List<ChantedRoundDto>> =
+        localDb.observeRoundsByDay(dayStartTimestamp)
+
+    override suspend fun getRoundsByDay(dayStartTimestamp: Long): Result<List<ChantedRoundDto>> =
         localDb.getRoundsByDay(dayStartTimestamp)
 
     override suspend fun get(startTimestamp: Long): Result<ChantedRoundDto> =

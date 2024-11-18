@@ -1,6 +1,7 @@
 package com.temetnosce.japa.presentation.screen.home
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,6 +34,8 @@ import com.temetnosce.japa.presentation.screen.home.components.StopWatchState.CH
 import com.temetnosce.japa.presentation.screen.home.components.StopWatchState.PAUSE
 import com.temetnosce.japa.presentation.screen.home.components.StopWatchState.STOP
 import com.temetnosce.japa.utils.formatNoHours
+import com.temetnosce.japa.utils.toFormattedString
+import com.temetnosce.japa.utils.today
 import japa.composeapp.generated.resources.Res
 import japa.composeapp.generated.resources.shloka_title
 import org.jetbrains.compose.resources.stringResource
@@ -78,7 +81,9 @@ internal fun HomeScreen(
         },
         onChantedRoundClick = { startTimestamp ->
             navController.navigateToEmendScreen(startTimestamp)
-        }
+        },
+        onChartSwipeRight = { viewModel.onChartSwipeRight() },
+        onChartSwipeLeft = { viewModel.onChartSwipeLeft() },
     )
 }
 
@@ -90,6 +95,8 @@ private fun HomeContent(
     onPlayStopClick: () -> Unit,
     onJapaPointsDialogDismiss: (chosenPoint: Byte) -> Unit,
     onChantedRoundClick: (startTimestamp: Long) -> Unit,
+    onChartSwipeRight: () -> Unit,
+    onChartSwipeLeft: () -> Unit,
 ) {
 
     Column {
@@ -129,13 +136,24 @@ private fun HomeContent(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
         )
 
-        Chart(
-            items = state.chantedRounds,
+        Box(
             modifier = Modifier
                 .padding(start = if (state.chantedRounds.size <= 64) 16.dp else 12.dp)
                 .fillMaxWidth()
                 .height(180.dp),
-        )
+        ) {
+            Text(
+                if (state.renderedDate == today()) "Today" else state.renderedDate.toFormattedString(),
+                color = Color.Gray,
+                modifier = Modifier.align(Alignment.TopEnd).padding(top = 8.dp, end = 16.dp)
+            )
+            Chart(
+                items = state.chantedRounds,
+                modifier = Modifier.fillMaxSize(),
+                onSwipeRight = onChartSwipeRight,
+                onSwipeLeft = onChartSwipeLeft,
+            )
+        }
 
         /**
          * Buttons do not know about [JapaStopWatch]

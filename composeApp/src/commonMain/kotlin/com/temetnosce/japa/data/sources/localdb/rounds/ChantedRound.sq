@@ -1,6 +1,3 @@
-import kotlin.Byte;
-import kotlin.Long;
-
 -- TEXT, INTEGER, BLOB, REAL
 CREATE TABLE ChantedRound (
     startTimestamp INTEGER NOT NULL PRIMARY KEY,
@@ -15,6 +12,16 @@ selectByDay:
 SELECT * FROM ChantedRound
 WHERE startTimestamp BETWEEN ? AND ?;
 
+-- INSERT if there is no record with specified startTimestamp (ON INSERT will trigger)
+-- REPLACE is:
+    -- DELETE the record with specified startTimestamp,
+    -- and INSERT a new record with the same startTimestamp but with new data,
+    -- (autoincrement, autoUUID, ON DELETE, ON INSERT will trigger)
 insertOrReplace:
 INSERT OR REPLACE INTO ChantedRound(startTimestamp, endTimestamp, points)
 VALUES (?, ?, ?);
+
+updateByTimestamp:
+UPDATE ChantedRound
+SET endTimestamp = ?, points = ?
+WHERE startTimestamp = ?;

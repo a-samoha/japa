@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.temetnosce.japa.LocalNavController
 import com.temetnosce.japa.domain.entity.ChantedRound
+import com.temetnosce.japa.navigateToEmendScreen
 import com.temetnosce.japa.presentation.screen.home.components.ButtonsBlock
 import com.temetnosce.japa.presentation.screen.home.components.ChantedRounds
 import com.temetnosce.japa.presentation.screen.home.components.Chart
@@ -31,7 +32,7 @@ import com.temetnosce.japa.presentation.screen.home.components.ShlokaBlock
 import com.temetnosce.japa.presentation.screen.home.components.StopWatchState.CHANT
 import com.temetnosce.japa.presentation.screen.home.components.StopWatchState.PAUSE
 import com.temetnosce.japa.presentation.screen.home.components.StopWatchState.STOP
-import com.temetnosce.japa.presentation.screen.home.components.formatNoHours
+import com.temetnosce.japa.utils.formatNoHours
 import japa.composeapp.generated.resources.Res
 import japa.composeapp.generated.resources.shloka_title
 import org.jetbrains.compose.resources.stringResource
@@ -76,7 +77,7 @@ internal fun HomeScreen(
             viewModel.showJapaPointsDialog(false)
         },
         onChantedRoundClick = { startTimestamp ->
-            navController.navigate("emend")
+            navController.navigateToEmendScreen(startTimestamp)
         }
     )
 }
@@ -117,7 +118,10 @@ private fun HomeContent(
                 color = Color.Gray,
                 modifier = Modifier.padding(top = 16.dp)
             )
-            ChantedRounds(items = state.chantedRounds)
+            ChantedRounds(
+                items = state.chantedRounds,
+                onItemClick = onChantedRoundClick,
+            )
         }
 
         HorizontalDivider(

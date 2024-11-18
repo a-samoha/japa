@@ -4,7 +4,7 @@ import com.temetnosce.japa.data.dto.ChantedRoundDto
 import com.temetnosce.japa.domain.datasource.ChantedRoundsDataSource
 import com.temetnosce.japa.domain.entity.ChantedRound
 import com.temetnosce.japa.domain.repository.ChantedRoundsRepository
-import com.temetnosce.japa.presentation.screen.home.components.formatNoHours
+import com.temetnosce.japa.utils.formatNoHours
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -25,9 +25,15 @@ class ChantedRoundsRepositoryImpl(
             }
         }
 
-    override suspend fun getByTimestamp(): Result<ChantedRound> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getByTimestamp(startTimestamp: Long): Result<ChantedRound> =
+        localDataSource.get(startTimestamp).map {
+            ChantedRound(
+                startTimestamp = it.startTimestamp,
+                endTimestamp = it.endTimestamp,
+                duration = (it.endTimestamp - it.startTimestamp).formatNoHours(),
+                points = it.points,
+            )
+        }
 
     override suspend fun save(round: ChantedRound): Result<Unit> =
         localDataSource.save(
@@ -37,4 +43,14 @@ class ChantedRoundsRepositoryImpl(
                 points = round.points,
             )
         )
+
+    override suspend fun update(round: ChantedRound): Result<Unit> =
+        localDataSource.update(
+            ChantedRoundDto(
+                startTimestamp = round.startTimestamp,
+                endTimestamp = round.endTimestamp,
+                points = round.points,
+            )
+        )
+
 }

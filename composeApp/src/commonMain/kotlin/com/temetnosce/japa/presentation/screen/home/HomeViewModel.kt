@@ -7,8 +7,8 @@ import com.temetnosce.japa.domain.entity.ChantedRound
 import com.temetnosce.japa.domain.repository.ChantedRoundsRepository
 import com.temetnosce.japa.domain.repository.ShlokasRepository
 import com.temetnosce.japa.presentation.screen.home.components.StopWatchState
-import com.temetnosce.japa.presentation.screen.home.components.formatWithHours
-import com.temetnosce.japa.presentation.screen.home.components.formatNoHours
+import com.temetnosce.japa.utils.formatNoHours
+import com.temetnosce.japa.utils.formatWithHours
 import com.temetnosce.japa.utils.startOfDayTimestamp
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

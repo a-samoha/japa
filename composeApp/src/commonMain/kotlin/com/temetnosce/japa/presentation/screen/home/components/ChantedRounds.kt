@@ -2,6 +2,7 @@ package com.temetnosce.japa.presentation.screen.home.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -25,22 +26,21 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.temetnosce.japa.domain.entity.ChantedRound
-import com.temetnosce.japa.presentation.theme.JapaAppTheme
 import japa.composeapp.generated.resources.Res
 import japa.composeapp.generated.resources.chanted_rounds_hint
-import japa.composeapp.generated.resources.shloka_title
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun ChantedRounds(
     modifier: Modifier = Modifier,
     items: List<ChantedRound>,
+    onItemClick: (startTimestamp: Long) -> Unit = {},
 ) {
-    // scroll to the last item after rendering
-     val scrollingState = rememberLazyListState()
-     LaunchedEffect(items) {
-         scrollingState.animateScrollToItem(0)
-     }
+
+    val scrollingState = rememberLazyListState()
+    LaunchedEffect(items) {
+        scrollingState.animateScrollToItem(0) // scroll to the last item after rendering
+    }
 
     val contentPadding = PaddingValues(horizontal = 16.dp, vertical = 6.dp)
 
@@ -78,7 +78,8 @@ internal fun ChantedRounds(
                             MaterialTheme.colorScheme.primaryContainer,
                             RoundedCornerShape(4.dp)
                         )
-                        .padding(start = 14.dp, end = 12.dp, top = 4.dp, bottom = 4.dp),
+                        .padding(start = 14.dp, end = 12.dp, top = 4.dp, bottom = 4.dp)
+                        .clickable { onItemClick(it.startTimestamp) },
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {

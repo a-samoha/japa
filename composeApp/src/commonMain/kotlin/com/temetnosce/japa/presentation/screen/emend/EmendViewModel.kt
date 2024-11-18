@@ -12,23 +12,40 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class EmendViewModel(
+    private val startTimestamp: Long,
     private val chantedRoundsRepo: ChantedRoundsRepository,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(ChantedRound())
+    private val _state = MutableStateFlow(EmendState())
     val state = _state
         .onStart { loadData() }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
-            initialValue = ChantedRound(),
+            initialValue = EmendState(),
         )
 
     private fun loadData() {
         viewModelScope.launch {
-            chantedRoundsRepo.getByTimestamp()
+            chantedRoundsRepo.getByTimestamp(startTimestamp)
                 .onFailure { println("Error: $it") }
-                .onSuccess { _state.update { it } }
+                .onSuccess { round -> _state.update { it.copy(chantedRound = round) } }
+        }
+    }
+
+    fun onRoundUpdate(updatedRound: ChantedRound) {
+        _state.update { it.copy(chantedRound = updatedRound) }
+    }
+
+    fun onAccept() {
+        viewModelScope.launch {
+            chantedRoundsRepo.update(state.value.chantedRound)
+                .onFailure {
+                    _state.update { it.copy(isUpdatedSuccessfully = false) }
+                }
+                .onSuccess {
+                    _state.update { it.copy(isUpdatedSuccessfully = true) }
+                }
         }
     }
 

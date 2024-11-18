@@ -7,8 +7,9 @@ sealed interface ChantedRoundsDataSource {
 
     interface Local : ChantedRoundsDataSource {
         fun observe(dayStartTimestamp: Long): Flow<List<ChantedRoundDto>>
-        suspend fun get(startedTimeStamp: Long): Result<ChantedRoundDto>
+        suspend fun get(startTimestamp: Long): Result<ChantedRoundDto>
         suspend fun save(round: ChantedRoundDto): Result<Unit>
+        suspend fun update(round: ChantedRoundDto): Result<Unit>
     }
 
     interface Remote : ChantedRoundsDataSource

@@ -50,3 +50,17 @@ suspend fun LocalDb.insertOrReplaceRound(
         )
     }
 }
+
+suspend fun LocalDb.updateByTimestamp(
+    startTimestamp: Long,
+    endTimestamp: Long,
+    points: Byte,
+): Result<Unit> = withContext(Dispatchers.IO) {
+    runCatching {
+        chantedRoundQueries.updateByTimestamp(
+            startTimestamp = startTimestamp,
+            endTimestamp = endTimestamp,
+            points = points.toLong(),
+        )
+    }
+}

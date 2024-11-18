@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.temetnosce.japa.utils.currentTimestamp
+import com.temetnosce.japa.utils.formatNoHours
 import kotlinx.coroutines.delay
 
 enum class StopWatchState {
@@ -78,29 +79,4 @@ internal fun JapaStopWatch(
             fontSize = 40.sp
         )
     }
-}
-
-fun Long.formatNoHours(): String {
-    val timeSec = this / 1000
-    return when {
-        timeSec / 60 < 10 && timeSec % 60 < 10 -> "0${timeSec / 60}:0${timeSec % 60}"
-        timeSec / 60 < 10 && timeSec % 60 > 9 -> "0${timeSec / 60}:${timeSec % 60}"
-        timeSec / 60 > 9 && timeSec % 60 < 10 -> "${timeSec / 60}:0${timeSec % 60}"
-        else -> "${timeSec / 60}:${timeSec % 60}"
-    }
-}
-
-fun Long.formatWithHours(): String {
-    val timeSec = this / 1000
-    val hours = timeSec / 3600
-    val minutes = (timeSec % 3600) / 60
-    val seconds = timeSec % 60
-
-    return "${
-        hours.toString().padStart(2, '0')
-    }:${
-        minutes.toString().padStart(2, '0')
-    }:${
-        seconds.toString().padStart(2, '0')
-    }"
 }

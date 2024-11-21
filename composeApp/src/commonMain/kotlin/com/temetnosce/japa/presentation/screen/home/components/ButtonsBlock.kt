@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.PlayArrow
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -25,13 +25,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
+import com.temetnosce.japa.utils.currentTimestamp
 import japa.composeapp.generated.resources.Res
 import japa.composeapp.generated.resources.ic_pause
 import japa.composeapp.generated.resources.ic_stop
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
-import com.temetnosce.japa.utils.currentTimestamp
 
 @Composable
 internal fun ButtonsBlock(
@@ -68,7 +68,7 @@ internal fun ButtonsBlock(
                 ),
         ) {
             Icon(
-                Icons.Rounded.MoreVert,
+                Icons.Rounded.Settings,
                 contentDescription = "Settings",
                 tint = Color.DarkGray,
                 modifier = Modifier.size(48.dp).graphicsLayer(rotationZ = 90f),

@@ -102,11 +102,10 @@ class HomeViewModel(
         _state.update { it.copy(stopWatchState = stopwatchState) }
     }
 
-    fun onChartSwipeRight() {
+    fun onChartSwipeRight() =
         loadData(startOfDayTimestamp(date = state.value.renderedDate.minus(1, DateTimeUnit.DAY)))
-    }
 
-    fun onChartSwipeLeft() {
+    fun onChartSwipeLeft() =
         loadData(startOfDayTimestamp(date = state.value.renderedDate.plus(1, DateTimeUnit.DAY)))
-    }
+
 }

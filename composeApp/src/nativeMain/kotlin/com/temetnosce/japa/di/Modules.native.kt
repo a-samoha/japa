@@ -1,6 +1,8 @@
 package com.temetnosce.japa.di
 
 import app.cash.sqldelight.driver.native.NativeSqliteDriver
+import com.temetnosce.japa.IosLocalizationProvider
+import com.temetnosce.japa.LocalizationProvider
 import com.temetnosce.japa.data.local.ChantedRoundsLocalDataSource
 import com.temetnosce.japa.data.local.ShlokasLocalDataSource
 import com.temetnosce.japa.db.LocalDb
@@ -19,6 +21,8 @@ actual val platformModule = module {
             name = "chanted_rounds.db",
         )
     }
+
+    singleOf(::IosLocalizationProvider) bind LocalizationProvider::class
 
     singleOf(::ChantedRoundsLocalDataSource) bind ChantedRoundsDataSource.Local::class
 

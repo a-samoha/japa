@@ -24,6 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.temetnosce.japa.LocalNavController
 import com.temetnosce.japa.domain.entity.ChantedRound
 import com.temetnosce.japa.navigateToEmendScreen
+import com.temetnosce.japa.navigateToSettingsScreen
 import com.temetnosce.japa.presentation.screen.home.components.ButtonsBlock
 import com.temetnosce.japa.presentation.screen.home.components.ChantedRounds
 import com.temetnosce.japa.presentation.screen.home.components.Chart
@@ -52,6 +53,15 @@ internal fun HomeScreen(
 
     HomeContent(
         state = state,
+        onSettingsClick = { navController.navigateToSettingsScreen() },
+        onPlayStopClick = {
+            if (state.stopWatchState != CHANT) {
+                viewModel.setStopwatchState(CHANT)
+            } else {
+                viewModel.showJapaPointsDialog(true)
+            }
+        },
+        onPauseClick = { viewModel.setStopwatchState(PAUSE) },
         onJapaStopwatchStop = { pair ->
             lastChantedRound = lastChantedRound?.copy(
                 index = state.chantedRounds.size + 1,
@@ -61,14 +71,6 @@ internal fun HomeScreen(
             )
             lastChantedRound?.let { viewModel.addChantedRound(it) }
             viewModel.setStopwatchState(CHANT)
-        },
-        onPauseClick = { viewModel.setStopwatchState(PAUSE) },
-        onPlayStopClick = {
-            if (state.stopWatchState != CHANT) {
-                viewModel.setStopwatchState(CHANT)
-            } else {
-                viewModel.showJapaPointsDialog(true)
-            }
         },
         onJapaPointsDialogDismiss = { chosenPoint ->
             if (chosenPoint == 0.toByte()) {
@@ -90,13 +92,14 @@ internal fun HomeScreen(
 @Composable
 private fun HomeContent(
     state: HomeState,
-    onJapaStopwatchStop: (Pair<Long, Long>) -> Unit,
-    onPauseClick: () -> Unit,
-    onPlayStopClick: () -> Unit,
-    onJapaPointsDialogDismiss: (chosenPoint: Byte) -> Unit,
-    onChantedRoundClick: (startTimestamp: Long) -> Unit,
-    onChartSwipeRight: () -> Unit,
-    onChartSwipeLeft: () -> Unit,
+    onSettingsClick: () -> Unit = {},
+    onPlayStopClick: () -> Unit = {},
+    onPauseClick: () -> Unit = {},
+    onJapaStopwatchStop: (Pair<Long, Long>) -> Unit = {},
+    onJapaPointsDialogDismiss: (chosenPoint: Byte) -> Unit = {},
+    onChantedRoundClick: (startTimestamp: Long) -> Unit = {},
+    onChartSwipeRight: () -> Unit = {},
+    onChartSwipeLeft: () -> Unit = {},
 ) {
 
     Column {
@@ -162,7 +165,7 @@ private fun HomeContent(
         ButtonsBlock(
             Modifier.fillMaxWidth().height(140.dp),
             state.stopWatchState,
-            onSettingsClick = { println("test onSettingsClick") },
+            onSettingsClick = onSettingsClick,
             onPauseClick = onPauseClick,
             onPlayStopClick = onPlayStopClick,
         )

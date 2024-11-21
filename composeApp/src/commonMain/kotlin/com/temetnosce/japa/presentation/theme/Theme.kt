@@ -6,7 +6,11 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.temetnosce.japa.domain.repository.SettingsRepository
+import org.koin.compose.koinInject
 
 private val lightScheme = lightColorScheme(
     primary = primaryLight,
@@ -250,17 +254,11 @@ val unspecified_scheme = ColorFamily(
 
 @Composable
 fun JapaAppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    darkTheme: Boolean = isJapaAppInDarkTheme(),
+    dynamicColor: Boolean = true, // Dynamic color is available on Android 12+
     content: @Composable() () -> Unit
 ) {
     val colorScheme = when {
-//      dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-//          val context = LocalContext.current
-//          if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-//      }
-
         darkTheme -> highContrastDarkColorScheme
         else -> highContrastLightColorScheme
     }
@@ -270,5 +268,16 @@ fun JapaAppTheme(
         typography = AppTypography(),
         content = content
     )
+}
+
+@Composable
+fun isJapaAppInDarkTheme(): Boolean {
+    val settingsRepo: SettingsRepository = koinInject()
+    val settings by settingsRepo.observe().collectAsStateWithLifecycle(settingsRepo.getSettings())
+    return if (settings.designUseSystemDarkTheme) {
+        isSystemInDarkTheme()
+    } else {
+        settings.designDarkTheme
+    }
 }
 

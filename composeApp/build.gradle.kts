@@ -39,6 +39,7 @@ kotlin {
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
 
+            implementation(libs.androidx.datastore.preferences)
             implementation(libs.sqlDelight.android)
         }
         val androidUnitTest by getting {

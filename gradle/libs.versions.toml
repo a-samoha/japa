@@ -8,6 +8,7 @@ androidx-espresso-core = "3.6.1"
 androidx-test-junit = "1.2.1"
 compose-plugin = "1.7.0"
 constraintlayoutComposeMultiplatform = "0.4.0"
+datastorePreferences = "1.1.1"
 junit = "4.13.2"
 kotlin = "2.0.21"
 kotlinxDatetime = "0.6.1"
@@ -32,6 +33,7 @@ kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref =
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }

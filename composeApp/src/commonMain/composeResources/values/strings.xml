@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
     <string name="stop_watch_text">0 %1$d:0 %2$d</string>
     <string name="shloka">Shloka</string>
     <string name="synonyms">Synonyms</string>

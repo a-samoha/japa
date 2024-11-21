@@ -1,8 +1,10 @@
 package com.temetnosce.japa
 
-import com.temetnosce.japa.domain.entity.Language
 
-class IosLocalizationProvider : LocalizationProvider {
+import com.temetnosce.japa.domain.entity.Language
+import platform.Foundation.NSUserDefaults
+
+class LocalizationProviderImpl : LocalizationProvider {
     override fun changeLang(language: Language) {
         val lang = when (language) {
             Language.EN -> "en"

@@ -1,10 +1,9 @@
 package com.temetnosce.japa
 
-import android.content.Context
 import com.temetnosce.japa.domain.entity.Language
 import java.util.Locale
 
-class AndroidLocalizationProvider(private val appContext: Context) : LocalizationProvider {
+class LocalizationProviderImpl() : LocalizationProvider {
 
     override fun changeLang(language: Language) {
         val locale = when (language) {
@@ -12,10 +11,6 @@ class AndroidLocalizationProvider(private val appContext: Context) : Localizatio
             Language.UA -> Locale("uk")
             Language.RU -> Locale("ru")
         }
-//        val config = appContext.resources.configuration.apply {
-//            setLocale(locale)
-//        }
         Locale.setDefault(locale)
     }
-
 }

@@ -1,8 +1,8 @@
 package com.temetnosce.japa.di
 
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
-import com.temetnosce.japa.AndroidLocalizationProvider
 import com.temetnosce.japa.LocalizationProvider
+import com.temetnosce.japa.LocalizationProviderImpl
 import com.temetnosce.japa.data.local.ChantedRoundsLocalDataSource
 import com.temetnosce.japa.data.local.SettingsDataSourceImpl
 import com.temetnosce.japa.data.local.ShlokasLocalDataSource
@@ -26,11 +26,11 @@ actual val platformModule = module {
         )
     }
 
-    singleOf(::AndroidLocalizationProvider) bind LocalizationProvider::class
-
-    singleOf(::ChantedRoundsLocalDataSource) bind ChantedRoundsDataSource.Local::class
+    singleOf(::LocalizationProviderImpl) bind LocalizationProvider::class
 
     singleOf(::SettingsDataSourceImpl) bind SettingsDataSource::class
+
+    singleOf(::ChantedRoundsLocalDataSource) bind ChantedRoundsDataSource.Local::class
 
     factoryOf(::ShlokasLocalDataSource) bind ShlokasDataSource.Local::class
 }

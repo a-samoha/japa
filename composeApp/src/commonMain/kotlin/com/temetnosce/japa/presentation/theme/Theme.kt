@@ -6,7 +6,6 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -261,7 +260,7 @@ fun JapaAppTheme(
     content: @Composable() () -> Unit
 ) {
     val colorScheme =
-        if (darkTheme) darkScheme
+        if (darkTheme) highContrastDarkColorScheme
         else highContrastLightColorScheme
 
     MaterialTheme(
@@ -274,7 +273,6 @@ fun JapaAppTheme(
 @Composable
 fun isJapaAppInDarkTheme(): Boolean {
     val settingsRepo: SettingsRepository = koinInject()
-    LaunchedEffect(0) { settingsRepo.fetch() }
     val settings by settingsRepo.observe().collectAsStateWithLifecycle(Settings())
     return if (settings.designUseSystemDarkTheme) {
         isSystemInDarkTheme() || settings.designDarkTheme

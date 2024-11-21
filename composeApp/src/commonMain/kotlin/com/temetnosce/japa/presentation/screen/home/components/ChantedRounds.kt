@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.TextUnit
@@ -74,10 +75,7 @@ internal fun ChantedRounds(
                     modifier = Modifier
                         .padding(vertical = 8.dp)
                         .border(1.dp, Color.Gray, RoundedCornerShape(4.dp))
-                        .background(
-                            MaterialTheme.colorScheme.primaryContainer,
-                            RoundedCornerShape(4.dp)
-                        )
+                        .clip(RoundedCornerShape(4.dp))
                         .padding(start = 14.dp, end = 12.dp, top = 4.dp, bottom = 4.dp)
                         .clickable { onItemClick(it.startTimestamp) },
                     horizontalArrangement = Arrangement.SpaceEvenly,

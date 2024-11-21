@@ -7,14 +7,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.runBlocking
 
 class SettingsRepositoryImpl(
     private val settingsDataSource: SettingsDataSource,
 ) : SettingsRepository {
 
-    private val settingsFlow = MutableStateFlow(Settings())
-
-    override suspend fun fetch() = settingsFlow.update { settingsDataSource.load() }
+    private val settingsFlow = MutableStateFlow(runBlocking { settingsDataSource.load() })
 
     override fun observe(): Flow<Settings> = settingsFlow.asStateFlow()
 
@@ -23,6 +22,6 @@ class SettingsRepositoryImpl(
     override suspend fun updateSettings(update: Settings): Result<Unit> =
         runCatching {
             settingsDataSource.edit(update)
-            fetch()
+            settingsFlow.update { getSettings() }
         }
 }

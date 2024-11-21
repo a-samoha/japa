@@ -1,9 +1,9 @@
 package com.temetnosce.japa.presentation.screen.home.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -43,47 +44,46 @@ internal fun ShlokaBlock(
     modifier: Modifier = Modifier
 ) {
     var isShlokaVisible by remember { mutableStateOf(true) }
-    var isSynonymsVisible by remember { mutableStateOf(true) }
+    var isSynonymsVisible by remember { mutableStateOf(false) }
     var isTranslationVisible by remember { mutableStateOf(true) }
 
-    Column(modifier = modifier.padding(16.dp)) {
+    Box {
         Text(
+            modifier = Modifier.padding(start = 20.dp, top = 6.dp).align(Alignment.TopStart),
             text = shloka.title,
             style = MaterialTheme.typography.titleLarge,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(8.dp))
-
-        LazyColumn {
-            item {
-                ShlokaSection(
-                    visible = isShlokaVisible,
-                    onToggleVisibility = { isShlokaVisible = !isShlokaVisible },
-                    title = stringResource(Res.string.shloka),
-                    content = shloka.shloka,
-                    modifier = Modifier.align(Alignment.Start)
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-            }
-            item {
-                ShlokaSection(
-                    visible = isSynonymsVisible,
-                    onToggleVisibility = { isSynonymsVisible = !isSynonymsVisible },
-                    title = stringResource(Res.string.synonyms),
-                    content = shloka.synonyms,
-                    modifier = Modifier.align(Alignment.Start)
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-            }
-            item {
-                ShlokaSection(
-                    visible = isTranslationVisible,
-                    onToggleVisibility = { isTranslationVisible = !isTranslationVisible },
-                    title = stringResource(Res.string.translation),
-                    content = shloka.translation,
-                    modifier = Modifier.align(Alignment.Start)
-                )
+        Column(modifier = modifier.padding(horizontal = 16.dp)) {
+            LazyColumn {
+                item {
+                    ShlokaSection(
+                        visible = isShlokaVisible,
+                        onToggleVisibility = { isShlokaVisible = !isShlokaVisible },
+                        title = stringResource(Res.string.shloka),
+                        content = shloka.shloka,
+                        modifier = Modifier.align(Alignment.Start)
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+                item {
+                    ShlokaSection(
+                        visible = isSynonymsVisible,
+                        onToggleVisibility = { isSynonymsVisible = !isSynonymsVisible },
+                        title = stringResource(Res.string.synonyms),
+                        content = shloka.synonyms,
+                        modifier = Modifier.align(Alignment.Start)
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+                item {
+                    ShlokaSection(
+                        visible = isTranslationVisible,
+                        onToggleVisibility = { isTranslationVisible = !isTranslationVisible },
+                        title = stringResource(Res.string.translation),
+                        content = shloka.translation,
+                        modifier = Modifier.align(Alignment.Start)
+                    )
+                }
             }
         }
     }
@@ -112,10 +112,8 @@ fun ShlokaSection(
                 modifier = Modifier
                     .padding(start = 16.dp, top = 8.dp, end = 8.dp, bottom = 8.dp)
                     .border(1.dp, Color.Gray, CircleShape)
-                    .background(
-                        MaterialTheme.colorScheme.primaryContainer,
-                        CircleShape
-                    ).size(24.dp),
+                    .clip(CircleShape)
+                    .size(24.dp),
                 onClick = onToggleVisibility,
             ) {
                 Icon(

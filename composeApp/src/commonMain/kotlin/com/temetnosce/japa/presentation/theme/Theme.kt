@@ -260,10 +260,9 @@ fun JapaAppTheme(
     dynamicColor: Boolean = true, // Dynamic color is available on Android 12+
     content: @Composable() () -> Unit
 ) {
-    val colorScheme = when {
-        darkTheme -> highContrastDarkColorScheme
-        else -> highContrastLightColorScheme
-    }
+    val colorScheme =
+        if (darkTheme) darkScheme
+        else highContrastLightColorScheme
 
     MaterialTheme(
         colorScheme = colorScheme,
@@ -278,7 +277,7 @@ fun isJapaAppInDarkTheme(): Boolean {
     LaunchedEffect(0) { settingsRepo.fetch() }
     val settings by settingsRepo.observe().collectAsStateWithLifecycle(Settings())
     return if (settings.designUseSystemDarkTheme) {
-        isSystemInDarkTheme()
+        isSystemInDarkTheme() || settings.designDarkTheme
     } else {
         settings.designDarkTheme
     }

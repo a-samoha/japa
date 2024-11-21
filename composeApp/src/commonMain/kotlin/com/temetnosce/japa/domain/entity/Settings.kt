@@ -12,9 +12,9 @@ sealed class Language(val isoFormat: String, val uiName: String) {
 
     data object English : Language("en", "eng")
 
-    data object Ukrainian : Language("uk", "ukr")
+    data object Ukrainian : Language("uk", "укр")
 
-    data object Russian : Language("ru", "rus")
+    data object Russian : Language("ru", "рус")
 
     companion object {
         fun fromString(raw: String): Language {

@@ -11,6 +11,7 @@ sealed interface ChantedRoundsDataSource {
         suspend fun get(startTimestamp: Long): Result<ChantedRoundDto>
         suspend fun save(round: ChantedRoundDto): Result<Unit>
         suspend fun update(round: ChantedRoundDto): Result<Unit>
+        suspend fun delete(startTimestamp: Long): Result<Unit>
     }
 
     interface Remote : ChantedRoundsDataSource

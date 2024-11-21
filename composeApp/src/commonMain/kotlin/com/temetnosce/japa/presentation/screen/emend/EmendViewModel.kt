@@ -28,7 +28,7 @@ class EmendViewModel(
     private fun loadData() {
         viewModelScope.launch {
             chantedRoundsRepo.getByTimestamp(startTimestamp)
-                .onFailure { println("Error: $it") }
+                .onFailure { println("Error: $it") } //todo show error msg
                 .onSuccess { round -> _state.update { it.copy(chantedRound = round) } }
         }
     }
@@ -39,14 +39,33 @@ class EmendViewModel(
 
     fun onAccept() {
         viewModelScope.launch {
+            _state.update { it.copy(isLoading = true) }
             chantedRoundsRepo.update(state.value.chantedRound)
-                .onFailure {
-                    _state.update { it.copy(isUpdatedSuccessfully = false) }
-                }
+                .onFailure { println("Error: $it") } //todo show error msg
                 .onSuccess {
-                    _state.update { it.copy(isUpdatedSuccessfully = true) }
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            isUpdatedSuccessfully = true
+                        )
+                    }
                 }
         }
     }
 
+    fun onDelete() {
+        viewModelScope.launch {
+            _state.update { it.copy(isLoading = true) }
+            chantedRoundsRepo.delete(state.value.chantedRound.startTimestamp)
+                .onFailure { println("Error: $it") } //todo show error msg
+                .onSuccess {
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            isUpdatedSuccessfully = true
+                        )
+                    }
+                }
+        }
+    }
 }

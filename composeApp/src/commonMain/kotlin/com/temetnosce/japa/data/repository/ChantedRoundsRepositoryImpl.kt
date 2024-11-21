@@ -53,4 +53,7 @@ class ChantedRoundsRepositoryImpl(
             )
         )
 
+    override suspend fun delete(startTimestamp: Long): Result<Unit> =
+        localDataSource.delete(startTimestamp)
+
 }

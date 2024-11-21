@@ -2,6 +2,7 @@
 <resources>
     <string name="ok">OK</string>
     <string name="cancel">Відміна</string>
+    <string name="delete">Видалити</string>
     <string name="language">Мова</string>
     <string name="systemDarkTheme">Тема як у телефоні</string>
     <string name="darkTheme">Нічний режим</string>
@@ -11,9 +12,10 @@
     <string name="synonyms">Дослівно</string>
     <string name="translation">Переклад</string>
     <string name="settings">Налаштування</string>
+    <string name="edit_round">Редагування</string>
+    <string name="duration">Тривалiсть</string>
     <string name="total">разом: </string>
     <string name="best">кращий: </string>
-    <string name="duration">Тривалiсть</string>
     <string name="min">Хвилин</string>
     <string name="sec">Секунд</string>
     <string name="points">Оцінка</string>

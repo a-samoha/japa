@@ -80,3 +80,11 @@ suspend fun LocalDb.updateByTimestamp(
         )
     }
 }
+
+suspend fun LocalDb.deleteByTimestamp(
+    startTimestamp: Long,
+): Result<Unit> = withContext(Dispatchers.IO) {
+    runCatching {
+        chantedRoundQueries.deleteByTimestamp(startTimestamp = startTimestamp)
+    }
+}

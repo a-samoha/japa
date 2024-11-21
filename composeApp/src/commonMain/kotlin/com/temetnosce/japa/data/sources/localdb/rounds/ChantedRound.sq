@@ -25,3 +25,6 @@ updateByTimestamp:
 UPDATE ChantedRound
 SET endTimestamp = ?, points = ?
 WHERE startTimestamp = ?;
+
+deleteByTimestamp:
+DELETE FROM ChantedRound WHERE startTimestamp = ?;

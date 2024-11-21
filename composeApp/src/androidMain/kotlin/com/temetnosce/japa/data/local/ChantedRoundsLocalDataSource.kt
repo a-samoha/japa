@@ -2,6 +2,7 @@ package com.temetnosce.japa.data.local
 
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.temetnosce.japa.data.dto.ChantedRoundDto
+import com.temetnosce.japa.data.sources.localdb.rounds.deleteByTimestamp
 import com.temetnosce.japa.data.sources.localdb.rounds.getRoundByStartTimestamp
 import com.temetnosce.japa.data.sources.localdb.rounds.getRoundsByDay
 import com.temetnosce.japa.data.sources.localdb.rounds.insertOrReplaceRound
@@ -41,5 +42,8 @@ class ChantedRoundsLocalDataSource(
             endTimestamp = round.endTimestamp,
             points = round.points,
         )
+
+    override suspend fun delete(startTimestamp: Long): Result<Unit> =
+        localDb.deleteByTimestamp(startTimestamp = startTimestamp)
 
 }

@@ -8,4 +8,5 @@ interface ChantedRoundsRepository {
     suspend fun getByTimestamp(startTimestamp: Long): Result<ChantedRound>
     suspend fun save(round: ChantedRound): Result<Unit>
     suspend fun update(round: ChantedRound): Result<Unit>
+    suspend fun delete(startTimestamp: Long): Result<Unit>
 }

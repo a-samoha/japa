@@ -16,7 +16,7 @@ class ShlokasLocalDataSource(
 
         val fileName = when (languageCode) {
             "en" -> "shlokas_en.json"
-            "uk" -> "shlokas_ua.json"
+            "uk" -> "shlokas_uk.json"
             "ru" -> "shlokas_ru.json"
             else -> "shlokas_en.json"
         }

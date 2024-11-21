@@ -31,11 +31,21 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.temetnosce.japa.LocalNavController
 import com.temetnosce.japa.domain.entity.ChantedRound
+import japa.composeapp.generated.resources.Res
+import japa.composeapp.generated.resources.cancel
+import japa.composeapp.generated.resources.duration
+import japa.composeapp.generated.resources.min
+import japa.composeapp.generated.resources.ok
+import japa.composeapp.generated.resources.points
+import japa.composeapp.generated.resources.sec
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
-// Emend is a synonym of 'revise'
 
+/**
+ * Emend is a synonym of 'revise'
+ */
 @Composable
 internal fun EmendScreen(
     startTimestamp: Long = 0L,
@@ -84,7 +94,7 @@ fun EmendContent(
                 Text(
                     modifier = Modifier
                         .padding(bottom = 8.dp),
-                    text = "Duration",
+                    text = stringResource(Res.string.duration),
                     fontSize = 20.sp
                 )
 
@@ -97,7 +107,7 @@ fun EmendContent(
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text("Min")
+                        Text(stringResource(Res.string.min))
                         TextField(
                             value = state.chantedRound.duration.substringBefore(":"),
                             onValueChange = {
@@ -114,7 +124,7 @@ fun EmendContent(
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text("Sec")
+                        Text(stringResource(Res.string.sec))
                         TextField(
                             value = state.chantedRound.duration.substringAfter(":"),
                             onValueChange = {
@@ -133,7 +143,7 @@ fun EmendContent(
                 }
 
                 Text(
-                    "Points",
+                    text = stringResource(Res.string.points),
                     fontSize = 20.sp,
                     modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
                 )
@@ -170,14 +180,14 @@ fun EmendContent(
                 modifier = Modifier.align(Alignment.BottomStart),
                 onClick = { navController.popBackStack() },
             ) {
-                Text("Cancel")
+                Text(stringResource(Res.string.cancel))
             }
 
             Button(
                 modifier = Modifier.align(Alignment.BottomEnd),
                 onClick = onAccept,
             ) {
-                Text("Ok")
+                Text(stringResource(Res.string.ok))
             }
         }
     }

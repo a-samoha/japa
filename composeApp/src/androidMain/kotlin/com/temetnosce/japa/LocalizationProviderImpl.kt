@@ -3,14 +3,10 @@ package com.temetnosce.japa
 import com.temetnosce.japa.domain.entity.Language
 import java.util.Locale
 
-class LocalizationProviderImpl() : LocalizationProvider {
+class LocalizationProviderImpl : LocalizationProvider {
 
     override fun changeLang(language: Language) {
-        val locale = when (language) {
-            Language.EN -> Locale("en")
-            Language.UA -> Locale("uk")
-            Language.RU -> Locale("ru")
-        }
+        val locale = Locale(language.isoFormat)
         Locale.setDefault(locale)
     }
 }

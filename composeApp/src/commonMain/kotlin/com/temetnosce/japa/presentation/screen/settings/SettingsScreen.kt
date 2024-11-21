@@ -38,10 +38,16 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.temetnosce.japa.LocalNavController
 import com.temetnosce.japa.LocalizationProvider
-import com.temetnosce.japa.domain.entity.Language
+import com.temetnosce.japa.domain.entity.Language.English
+import com.temetnosce.japa.domain.entity.Language.Russian
+import com.temetnosce.japa.domain.entity.Language.Ukrainian
 import com.temetnosce.japa.presentation.screen.settings.components.SettingsItem
 import japa.composeapp.generated.resources.Res
+import japa.composeapp.generated.resources.darkTheme
+import japa.composeapp.generated.resources.dscArrowBack
+import japa.composeapp.generated.resources.language
 import japa.composeapp.generated.resources.settings
+import japa.composeapp.generated.resources.systemDarkTheme
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
@@ -73,7 +79,7 @@ private fun SettingsContent(
                         IconButton(onClick = onBackPressed) {
                             Icon(
                                 Icons.AutoMirrored.Rounded.ArrowBack,
-                                contentDescription = "ArrowBack",
+                                contentDescription = stringResource(Res.string.dscArrowBack),
                                 tint = Color.DarkGray,
                                 modifier = Modifier.size(48.dp).padding(8.dp),
                             )
@@ -97,25 +103,20 @@ private fun SettingsContent(
 
                 val localizationProvider: LocalizationProvider = koinInject()
                 var expanded by remember { mutableStateOf(false) }
-                val languages = listOf("eng", "ukr", "rus")
-                val selectedLanguage = when (state.settings.language) {
-                    Language.EN -> "eng"
-                    Language.UA -> "ukr"
-                    Language.RU -> "rus"
-                }
+                val languages = listOf(English.uiName, Ukrainian.uiName, Russian.uiName)
 
                 SettingsItem(
-                    text = "Language",
+                    text = stringResource(Res.string.language),
                     startIcon = Icons.TwoTone.Build,
-                    onClick = { expanded = true }, // Открывает выпадающее меню при клике
+                    onClick = { expanded = true },
                     endValueContent = {
                         Box(
                             modifier = Modifier
                                 .padding(horizontal = 8.dp)
-                                .wrapContentSize(Alignment.TopEnd) // Правый верхний угол для выпадающего меню
+                                .wrapContentSize(Alignment.TopEnd)
                         ) {
                             Text(
-                                text = selectedLanguage,
+                                text = state.settings.language.uiName,
                                 modifier = Modifier
                                     .padding(8.dp)
                                     .clickable { expanded = true },
@@ -131,10 +132,10 @@ private fun SettingsContent(
                                         onClick = {
                                             expanded = false
                                             val selected = when (language) {
-                                                "eng" -> Language.EN
-                                                "ukr" -> Language.UA
-                                                "rus" -> Language.RU
-                                                else -> Language.EN
+                                                English.uiName -> English
+                                                Ukrainian.uiName -> Ukrainian
+                                                Russian.uiName -> Russian
+                                                else -> English
                                             }
                                             localizationProvider.changeLang(selected)
                                             processIntent(
@@ -151,7 +152,7 @@ private fun SettingsContent(
                 )
 
                 SettingsItem(
-                    text = "System dark theme",
+                    text = stringResource(Res.string.systemDarkTheme),
                     startIcon = Icons.TwoTone.Star,
                     onClick = {
                         processIntent(SettingsIntent.UpdateFlag.SystemDarkTheme(!state.settings.designUseSystemDarkTheme))
@@ -168,7 +169,7 @@ private fun SettingsContent(
                 )
 
                 SettingsItem(
-                    text = "Dark theme",
+                    text = stringResource(Res.string.darkTheme),
                     startIcon = Icons.TwoTone.Check,
                     onClick = {
                         processIntent(SettingsIntent.UpdateFlag.DarkTheme(!state.settings.designDarkTheme))

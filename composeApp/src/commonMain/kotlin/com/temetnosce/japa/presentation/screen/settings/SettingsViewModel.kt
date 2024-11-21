@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class SettingsViewModel(
     private val settingsRepo: SettingsRepository,
@@ -42,14 +43,16 @@ class SettingsViewModel(
 
     fun processIntent(intent: SettingsIntent) {
 
-        settingsRepo.updateSettings(
-            when (intent) {
-                is UserLanguage -> state.value.settings.copy(language = intent.language)
-                is SystemDarkTheme -> state.value.settings.copy(designUseSystemDarkTheme = intent.flag)
-                is DarkTheme -> state.value.settings.copy(designDarkTheme = intent.flag)
-            }
-        )
-            .onFailure { }
-            .onSuccess { }
+        viewModelScope.launch {
+            settingsRepo.updateSettings(
+                when (intent) {
+                    is UserLanguage -> state.value.settings.copy(language = intent.language)
+                    is SystemDarkTheme -> state.value.settings.copy(designUseSystemDarkTheme = intent.flag)
+                    is DarkTheme -> state.value.settings.copy(designDarkTheme = intent.flag)
+                }
+            )
+                .onFailure { }
+                .onSuccess { }
+        }
     }
 }

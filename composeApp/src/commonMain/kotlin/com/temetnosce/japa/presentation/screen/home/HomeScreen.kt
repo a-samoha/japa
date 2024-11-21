@@ -38,7 +38,10 @@ import com.temetnosce.japa.utils.formatNoHours
 import com.temetnosce.japa.utils.toFormattedString
 import com.temetnosce.japa.utils.today
 import japa.composeapp.generated.resources.Res
+import japa.composeapp.generated.resources.best
 import japa.composeapp.generated.resources.shloka_title
+import japa.composeapp.generated.resources.today
+import japa.composeapp.generated.resources.total
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -112,7 +115,7 @@ private fun HomeContent(
                 verticalArrangement = Arrangement.SpaceEvenly,
             ) {
                 Row {
-                    Text("total: ")
+                    Text(stringResource(Res.string.total))
                     Text(state.totalTime)
                 }
                 JapaStopWatch(
@@ -120,7 +123,7 @@ private fun HomeContent(
                     onStop = { onJapaStopwatchStop(it) }
                 )
                 Row {
-                    Text("best: ")
+                    Text(stringResource(Res.string.best))
                     Text(state.bestRound)
                 }
             }
@@ -146,7 +149,8 @@ private fun HomeContent(
                 .height(180.dp),
         ) {
             Text(
-                if (state.renderedDate == today()) "Today" else state.renderedDate.toFormattedString(),
+                text = if (state.renderedDate == today()) stringResource(Res.string.today)
+                else state.renderedDate.toFormattedString(),
                 color = Color.Gray,
                 modifier = Modifier.align(Alignment.TopEnd).padding(top = 8.dp, end = 16.dp)
             )

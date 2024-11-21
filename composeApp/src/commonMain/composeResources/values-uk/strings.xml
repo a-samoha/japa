@@ -2,11 +2,22 @@
 <resources>
     <string name="ok">OK</string>
     <string name="cancel">Відміна</string>
+    <string name="language">Мова</string>
+    <string name="systemDarkTheme">Тема як у телефоні</string>
+    <string name="darkTheme">Нічний режим</string>
     <string name="stop_watch_text">%2$d:%2$d</string>
+    <string name="shloka_title">БГ. %1$s</string>
     <string name="shloka">Шлока</string>
     <string name="synonyms">Дослівно</string>
     <string name="translation">Переклад</string>
     <string name="settings">Налаштування</string>
+    <string name="total">разом: </string>
+    <string name="best">кращий: </string>
+    <string name="duration">Тривалiсть</string>
+    <string name="min">Хвилин</string>
+    <string name="sec">Секунд</string>
+    <string name="points">Оцінка</string>
+    <string name="today">Сьогодні</string>
     <string name="chanted_rounds_hint">Тут буде відображено список прочитаних кругів</string>
     <string name="the_mind_was_attracted">Розум привабився смаком святих імен. Переважно повна увага.</string>
     <string name="emotion_of_humility">Повторювання з емоцією смирення, поява смаку, ентузіазм.</string>
@@ -16,5 +27,5 @@
     <string name="complete_indifference">Повна байдужість. Думки про мат. плоди. Розглядання речей навколо. Дуже нудне повторювання.</string>
     <string name="strong_drowsiness">Сильна сонливість, тупість, апатія, відраза до повторювання.</string>
 
-    <string name="shloka_title">Бг. %1$s</string>
+    <string name="dscArrowBack">Стрiлка назад</string>
 </resources>

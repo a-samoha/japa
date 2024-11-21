@@ -12,21 +12,17 @@ class SettingsRepositoryImpl(
     private val settingsDataSource: SettingsDataSource,
 ) : SettingsRepository {
 
-    private val settingsFlow: MutableStateFlow<Settings> =
-        MutableStateFlow(settingsDataSource.load())
+    private val settingsFlow = MutableStateFlow(Settings())
+
+    override suspend fun fetch() = settingsFlow.update { settingsDataSource.load() }
 
     override fun observe(): Flow<Settings> = settingsFlow.asStateFlow()
 
-    override fun updateSettings(update: Settings): Result<Unit> =
+    override suspend fun getSettings(): Settings = settingsDataSource.load()
+
+    override suspend fun updateSettings(update: Settings): Result<Unit> =
         runCatching {
-            settingsDataSource.save(update)
+            settingsDataSource.edit(update)
             fetch()
         }
-
-    private fun fetch() {
-        settingsFlow.update { settingsDataSource.load() }
-    }
-
-    override fun getSettings(): Settings =
-        settingsDataSource.load()
 }

@@ -7,45 +7,51 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.temetnosce.japa.domain.datasource.SettingsDataSource
 import com.temetnosce.japa.domain.entity.Language
+import com.temetnosce.japa.domain.entity.Language.English
 import com.temetnosce.japa.domain.entity.Settings
+import com.temetnosce.japa.domain.entity.SettingsKeys.designDarkTheme
+import com.temetnosce.japa.domain.entity.SettingsKeys.designUseSystemColorPalette
+import com.temetnosce.japa.domain.entity.SettingsKeys.designUseSystemDarkTheme
+import com.temetnosce.japa.domain.entity.SettingsKeys.developerMode
+import com.temetnosce.japa.domain.entity.SettingsKeys.language
+import com.temetnosce.japa.domain.entity.SettingsKeys.settings
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 
-private val Context.settingsDataStore by preferencesDataStore(name = "settings")
+private val Context.settingsDataStore by preferencesDataStore(name = settings.name)
 
 class SettingsDataSourceImpl(
     private val context: Context,
 ) : SettingsDataSource {
-    override fun load(): Settings {
-        val preferences = runBlocking { context.settingsDataStore.data.first() }
+
+    override suspend fun load(): Settings {
+        val preferences = context.settingsDataStore.data.first()
         return Settings(
             language =
-            Language.fromString(preferences[stringPreferencesKey("language")] ?: "en"),
+            Language.fromString(preferences[stringPreferencesKey(language.name)] ?: English.isoFormat),
             designUseSystemColorPalette =
-            preferences[booleanPreferencesKey("designUseSystemColorPalette")] ?: false,
+            preferences[booleanPreferencesKey(designUseSystemColorPalette.name)] ?: false,
             designUseSystemDarkTheme =
-            preferences[booleanPreferencesKey("designUseSystemDarkTheme")] ?: false,
+            preferences[booleanPreferencesKey(designUseSystemDarkTheme.name)] ?: false,
             designDarkTheme =
-            preferences[booleanPreferencesKey("designDarkTheme")] ?: false,
+            preferences[booleanPreferencesKey(designDarkTheme.name)] ?: false,
             developerMode =
-            preferences[booleanPreferencesKey("developerMode")] ?: false,
+            preferences[booleanPreferencesKey(developerMode.name)] ?: false,
         )
     }
 
-    override fun save(settings: Settings) {
-        runBlocking {
+    override suspend fun edit(settings: Settings): Result<Unit> =
+        runCatching {
             context.settingsDataStore.edit { preferences ->
-                preferences[stringPreferencesKey("language")] =
-                    settings.language.name.lowercase()
-                preferences[booleanPreferencesKey("designUseSystemColorPalette")] =
+                preferences[stringPreferencesKey(language.name)] =
+                    settings.language.isoFormat
+                preferences[booleanPreferencesKey(designUseSystemColorPalette.name)] =
                     settings.designUseSystemColorPalette
-                preferences[booleanPreferencesKey("designUseSystemDarkTheme")] =
+                preferences[booleanPreferencesKey(designUseSystemDarkTheme.name)] =
                     settings.designUseSystemDarkTheme
-                preferences[booleanPreferencesKey("designDarkTheme")] =
+                preferences[booleanPreferencesKey(designDarkTheme.name)] =
                     settings.designDarkTheme
-                preferences[booleanPreferencesKey("developerMode")] =
+                preferences[booleanPreferencesKey(developerMode.name)] =
                     settings.developerMode
             }
         }
-    }
 }

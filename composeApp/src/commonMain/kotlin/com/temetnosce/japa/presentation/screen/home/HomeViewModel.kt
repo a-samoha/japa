@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.temetnosce.japa.domain.entity.ChantedRound
 import com.temetnosce.japa.domain.repository.ChantedRoundsRepository
+import com.temetnosce.japa.domain.repository.SettingsRepository
 import com.temetnosce.japa.domain.repository.ShlokasRepository
 import com.temetnosce.japa.presentation.screen.home.components.StopWatchState
 import com.temetnosce.japa.utils.formatNoHours
@@ -25,6 +26,7 @@ import kotlinx.datetime.minus
 import kotlinx.datetime.plus
 
 class HomeViewModel(
+    private val settingsRepo: SettingsRepository,
     private val chantedRoundsRepo: ChantedRoundsRepository,
     private val shlokasRepo: ShlokasRepository,
 ) : ViewModel() {
@@ -90,7 +92,7 @@ class HomeViewModel(
     fun addChantedRound(chantedRound: ChantedRound) {
         viewModelScope.launch {
             chantedRoundsRepo.save(chantedRound)
-                .onFailure { println("Saving error: $it") }
+                .onFailure { println("Saving error: $it") } // todo show error msg
         }
     }
 

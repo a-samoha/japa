@@ -2,11 +2,22 @@
 <resources>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="language">Language</string>
+    <string name="systemDarkTheme">System dark mode</string>
+    <string name="darkTheme">Dark mode</string>
     <string name="stop_watch_text">0 %1$d:0 %2$d</string>
+    <string name="shloka_title">BG. %1$s</string>
     <string name="shloka">Shloka</string>
     <string name="synonyms">Synonyms</string>
     <string name="translation">Translation</string>
     <string name="settings">Settings</string>
+    <string name="duration">Duration</string>
+    <string name="total">total: </string>
+    <string name="best">best: </string>
+    <string name="min">Minutes</string>
+    <string name="sec">Seconds</string>
+    <string name="points">Points</string>
+    <string name="today">Today</string>
     <string name="chanted_rounds_hint">Here will be a list of the Chanted Rounds</string>
     <string name="the_mind_was_attracted">The mind was attracted by the taste of the holy names. Mostly full attention.</string>
     <string name="emotion_of_humility">Repetition with the emotion of humility, the emergence of taste, enthusiasm.</string>
@@ -16,5 +27,5 @@
     <string name="complete_indifference">Complete indifference. Thoughts about material gains. Looking at things around. Very boring repetition.</string>
     <string name="strong_drowsiness">Strong drowsiness, dullness, apathy, aversion to repetition.</string>
 
-    <string name="shloka_title">Bg. %1$s</string>
+    <string name="dscArrowBack">Arrow back</string>
 </resources>

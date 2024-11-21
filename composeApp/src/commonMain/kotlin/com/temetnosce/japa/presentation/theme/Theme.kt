@@ -6,9 +6,11 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.temetnosce.japa.domain.entity.Settings
 import com.temetnosce.japa.domain.repository.SettingsRepository
 import org.koin.compose.koinInject
 
@@ -273,7 +275,8 @@ fun JapaAppTheme(
 @Composable
 fun isJapaAppInDarkTheme(): Boolean {
     val settingsRepo: SettingsRepository = koinInject()
-    val settings by settingsRepo.observe().collectAsStateWithLifecycle(settingsRepo.getSettings())
+    LaunchedEffect(0) { settingsRepo.fetch() }
+    val settings by settingsRepo.observe().collectAsStateWithLifecycle(Settings())
     return if (settings.designUseSystemDarkTheme) {
         isSystemInDarkTheme()
     } else {

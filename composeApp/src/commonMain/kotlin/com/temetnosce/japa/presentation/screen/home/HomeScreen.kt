@@ -18,7 +18,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.temetnosce.japa.LocalNavController
@@ -84,9 +83,7 @@ internal fun HomeScreen(
             }
             viewModel.showJapaPointsDialog(false)
         },
-        onChantedRoundClick = { startTimestamp ->
-            navController.navigateToEmendScreen(startTimestamp)
-        },
+        onChantedRoundClick = { navController.navigateToEmendScreen(it) },
         onChartSwipeRight = { viewModel.onChartSwipeRight() },
         onChartSwipeLeft = { viewModel.onChartSwipeLeft() },
     )
@@ -120,27 +117,23 @@ private fun HomeContent(
                 }
                 JapaStopWatch(
                     state = state.stopWatchState,
-                    onStop = { onJapaStopwatchStop(it) }
+                    onStop = { onJapaStopwatchStop(it) },
                 )
                 Row {
                     Text(stringResource(Res.string.best))
                     Text(state.bestRound)
                 }
             }
-            VerticalDivider(
-                color = Color.Gray,
-                modifier = Modifier.padding(top = 16.dp)
-            )
+
+            VerticalDivider(modifier = Modifier.padding(top = 16.dp))
+
             ChantedRounds(
                 items = state.chantedRounds,
                 onItemClick = onChantedRoundClick,
             )
         }
 
-        HorizontalDivider(
-            color = Color.Gray,
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
-        )
+        HorizontalDivider(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp))
 
         Box(
             modifier = Modifier
@@ -151,7 +144,6 @@ private fun HomeContent(
             Text(
                 text = if (state.renderedDate == today()) stringResource(Res.string.today)
                 else state.renderedDate.toFormattedString(),
-                color = Color.Gray,
                 modifier = Modifier.align(Alignment.TopEnd).padding(top = 8.dp, end = 16.dp)
             )
             Chart(

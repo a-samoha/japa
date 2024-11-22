@@ -20,7 +20,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
@@ -60,8 +59,7 @@ internal fun ButtonsBlock(
             onClick = onSettingsClick,
             Modifier
                 .size(72.dp)
-                .border(1.dp, Color.Gray, CircleShape)
-                .clip(CircleShape),
+                .border(1.dp, Color.Gray, CircleShape),
         ) {
             Icon(
                 Icons.Rounded.Settings,
@@ -88,8 +86,7 @@ internal fun ButtonsBlock(
             },
             Modifier
                 .size(72.dp)
-                .border(1.dp, Color.Gray, CircleShape)
-                .clip(shape = CircleShape),
+                .border(1.dp, Color.Gray, CircleShape),
         ) {
             Icon(
                 painter = painterResource(Res.drawable.ic_pause), //Icons.Rounded.Delete,
@@ -143,8 +140,7 @@ fun RotatingIconButton(
         },
         modifier = Modifier
             .size(100.dp)
-            .border(1.dp, Color.Gray, CircleShape)
-            .clip(CircleShape),
+            .border(1.dp, Color.Gray, CircleShape),
     ) {
         if (isPlayingState)
             Icon(

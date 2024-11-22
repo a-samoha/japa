@@ -71,6 +71,7 @@ private fun SettingsContent(
     processIntent: (SettingsIntent) -> Unit = {},
     onBackPressed: () -> Unit = {},
 ) {
+   println("test SettingsContent ${state.settings.language}")
     Scaffold(
         topBar = {
             Column {
@@ -138,11 +139,7 @@ private fun SettingsContent(
                                                 else -> English
                                             }
                                             localizationProvider.changeLang(selected)
-                                            processIntent(
-                                                SettingsIntent.UserLanguage(
-                                                    selected
-                                                )
-                                            )
+                                            processIntent(SettingsIntent.UserLanguage(selected))
                                         }
                                     )
                                 }

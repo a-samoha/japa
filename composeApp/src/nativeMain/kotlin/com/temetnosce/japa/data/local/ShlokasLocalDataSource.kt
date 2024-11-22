@@ -2,15 +2,15 @@ package com.temetnosce.japa.data.local
 
 import com.temetnosce.japa.data.dto.ShlokaDtoList
 import com.temetnosce.japa.domain.datasource.ShlokasDataSource
+import com.temetnosce.japa.domain.entity.Language.English
+import com.temetnosce.japa.domain.entity.SettingsKeys.language
 import com.temetnosce.japa.domain.entity.Shloka
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.serialization.json.Json
 import platform.Foundation.NSBundle
-import platform.Foundation.NSLocale
 import platform.Foundation.NSString
 import platform.Foundation.NSUTF8StringEncoding
-import platform.Foundation.currentLocale
-import platform.Foundation.localeIdentifier
+import platform.Foundation.NSUserDefaults
 import platform.Foundation.stringWithContentsOfFile
 
 class ShlokasLocalDataSource : ShlokasDataSource.Local {
@@ -19,11 +19,11 @@ class ShlokasLocalDataSource : ShlokasDataSource.Local {
     override fun loadShlokas(): List<Shloka> {
 
         // Get current locale (e.g.: "en")
-        val languageCode = NSLocale
-            .currentLocale().localeIdentifier.take(2)
+        val languageCode = NSUserDefaults.standardUserDefaults()
+            .stringForKey(language.name) ?: English.isoFormat
 
         val fileName = when (languageCode) {
-            "uk" -> "shlokas_ua"
+            "uk" -> "shlokas_uk"
             "ru" -> "shlokas_ru"
             else -> "shlokas_en"
         }

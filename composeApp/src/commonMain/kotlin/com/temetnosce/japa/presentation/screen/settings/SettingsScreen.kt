@@ -71,7 +71,6 @@ private fun SettingsContent(
     processIntent: (SettingsIntent) -> Unit = {},
     onBackPressed: () -> Unit = {},
 ) {
-   println("test SettingsContent ${state.settings.language}")
     Scaffold(
         topBar = {
             Column {
